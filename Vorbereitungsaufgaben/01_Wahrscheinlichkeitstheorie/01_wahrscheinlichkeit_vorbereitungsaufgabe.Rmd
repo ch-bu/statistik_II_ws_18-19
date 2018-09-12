@@ -1,0 +1,120 @@
+---
+title: "Statistik II - Vorbereitungsaufgabe"
+subtitle: "01 Wahrscheinlichkeitstheorie"
+author: ""
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Wahrscheinlichkeitstheorie
+
+### Aufgabe 1
+
+Erkläre in eigenen Worten, warum man Würfeln oder das zufällige Ziehen einer Person aus einer Population jeweils als ein Zufallsexperiment verstehen kann.
+
+TODO: Hier bitte die Antwort einfügen. 
+
+
+### Aufgabe 2
+
+Erklärein eigenen Worten den Unterschied zwischen Elementarereignis, Ergebnisraum und Ereignis.
+
+TODO: Hier bitte die Antwort einfügen. 
+
+### Aufgabe 3
+
+Du hast zwei Mengen A und B, deren Elementarereignisse aus Personen mit bestimmten Merkmalen bestehen. Gebe ein konkretes Beispiel, welche Merkmale Personen aus beiden Mengen aufweisen müssten, damit der Durchschnitt von A und B eine leere Menge ist.
+
+TODO: Hier bitte die Antwort einfügen.
+
+
+## R Grundlagenwissen
+
+Stelle sicher, dass du [alle nötigen Softwares und Pakete installiert hast](https://github.com/ch-bu/statistik_II_ws_18-19), die wir für dieses Semester brauchen. 
+
+Zunächst laden wir das Paket [tidyverse](https://www.tidyverse.org/):
+
+```{r,message=FALSE, warning=FALSE}
+library(tidyverse)
+```
+
+Sollten es nicht möglich sein, tidyverse zu installieren, hole dir im [Slack Channel Hilfe](https://statistik-2.slack.com/messages/CCMG5NSN4/). 
+
+Tidyverse ist eine Gruppe an Paketen zur Datenanalyse mit einer einheitlichen Philosophie. Wir werden im Verlauf des Semesters starken Gebrauch des Pakets machen. Die einzelnen Funktionen wirst du im Verlauf des Seminars durch die Vor- und Nachbereitungsaufgaben kennen lernen. Um dich tiefer in tidyverse einzulesen, schaue dir das Bauch [R for Data Science](http://r4ds.had.co.nz/) an. Das Buch ist in der Online-Version kostenlos. 
+
+
+### Vektoren
+
+Erstelle einen Vektor mit den Zahlen 1, 5, und 6:
+
+```{r}
+# TODO: Hier den Vektor einfügen
+```
+
+
+Weiße dem Vektor die Variable `mein_vektor` zu. 
+
+```{r}
+# TODO: Hier die Variable mit dem Vektor einfügen
+```
+
+Berechne den Mittelwert des Vektors mit Hilfe des [Pipe Operators](https://magrittr.tidyverse.org/reference/pipe.html) `%>%`: 
+
+```{r}
+# TODO: Hier den Mittelwert berechnen
+```
+
+
+### Dataframes und Tibbles
+
+[Tibbles](https://tibble.tidyverse.org/reference/tibble-package.html) sind Dataframes mit einigen zusätzlichen Eigenschaften. Beispielsweise wird der Output reduziert, wenn du einen Tibble in der Konsole anzeigen lässt. Dataframes sind ein Datentyp in R, welcher verschiedene Variablen in einem Datentyp bündeln. 
+
+Erstelle einen Tibble mit folgenden beiden Vektoren: zahlen: `r c(1:4)` und buchstaben: `r c("a", "b", "c", "d")`. Weiße dem Tibble die Variable `my_tibble` zu:
+
+```{r}
+# TODO: Erstelle hier den Tibble
+my_tibble <- tibble(zahlen = c(1:4), buchstaben = c("a", "b", "c", "d"))
+```
+
+Zeige den Tibble mit der Funktion [View](https://www.rdocumentation.org/packages/utils/versions/3.5.1/topics/View) an.
+
+```{r}
+# TODO: Tibble mit View anzeigen. 
+```
+
+Erstelle einen Tibble mit folgenden beiden Vektoren: schuhgroesse: `rnorm(900, mean = 38, sd = 4)` und intelligenz: `rnorm(900, mean = 100, sd = 14)`. Weiße dem Tibble die Variable `sample_data` zu:
+
+```{r}
+# TODO: Erstelle den Tibble
+```
+
+Zeige dir die ersten 20 Reihen des Tibbles `sample_data` mit der [head Funktion](https://www.rdocumentation.org/packages/utils/versions/3.5.1/topics/head) an. 
+
+```{r}
+# TODO: Die ersten 20 Reihen anzeigen
+```
+
+Zeige die ersten 100 Werte der Variable `intelligenz` des Tibbles `sample_data` an:
+
+```{r}
+# TODO: Die ersten 100 Werte der Variable intelligenz
+```
+
+### Visualisierungen
+
+Erstelle ein Histogram der Variable intelligenz mit der Funktion [ggplot](https://ggplot2.tidyverse.org/reference/geom_histogram.html). 
+
+```{r}
+# TODO: Histogram erstellen
+```
+
+
+Konvertiere dieses Dokument nun in eine PDF-Datei. Klicke hierzu auf Knit -> Knit to PDF. Du findest den Button in der oberen Leiste dieses Fensters. Lade die PDF anschließend auf Ilias hoch. Solltest du Probleme haben, hole dir Hilfe im [Slack Channel Hilfe](https://statistik-2.slack.com/messages/CCMG5NSN4/).
+
+
