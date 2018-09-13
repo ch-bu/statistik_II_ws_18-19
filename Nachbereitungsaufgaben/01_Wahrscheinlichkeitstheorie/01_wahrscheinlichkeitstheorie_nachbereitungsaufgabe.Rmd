@@ -173,7 +173,6 @@ birthday_problem_probabilities <- c(1:100) %>%
 # TODO: Bitte hier den Befehl eintragen
 ```
 
-
 Zuletzt können wir das Geburtstagsproblem visualisieren:
 
 ```{r}
