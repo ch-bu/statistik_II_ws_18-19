@@ -1,0 +1,188 @@
+---
+title: "Statistik II - Nachbereitungsaufgabe"
+subtitle: "01 Wahrscheinlichkeitstheorie"
+author: ""
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+# Fragen zur Wahrscheinlichkeitsrechnung
+
+
+## Ereignisraum, Axiome der Wahrscheinlichkeit
+
+Sie haben N = 100 Personen zum Mögen von Statistik auf einer Skala von 1 = gar nicht bis 5 = total gerne befragt. Wie viele Elemente umfasst der Ergebnisraum?
+
+- [] 1
+- [] 5
+- [] 0
+- [] 100
+
+Wie lautet das Zeichen für den Ergebnisraum?
+
+- [] Delta
+- [] Beta
+- [] Omega
+- [] Alpha
+
+Wann ist die Wahrscheinlichkeit P = 1?
+
+- [] Wenn Anzahl möglicher Elementarereignisse kleiner als Anzahl günstiger Elementarereignisse ist
+- [] Wenn Anzahl möglicher Elementarereignisse größer als Anzahl günstiger Elementarereignisse ist.
+- [] Wenn Anzahl möglicher Elementarereignisse gleich Anzahl günstiger Elementarereignisse ist. 
+- [] Wenn es eine leere Menge gibt.
+
+Um die Wahrscheinlichkeit zu ermitteln, dividiert man...
+
+- [] die Anzahl der günstigen Ereignisse durch die Anzahl der möglichen Ereignisse
+- [] die Anzahl der möglichen Ereignisse durch die Anzahl der günstigen Ereignisse.
+- [] die Anzahl der positiven Ereignisse durch die Anzahl der negativen Ereignisse.
+- [] die Anzahl der negativen Ereignisse durch die Anzahl der positiven Ereignisse.
+
+
+## Bedingte und unbedingte Wahrscheinlichkeiten
+
+|                         | Regelmäßig laufen (B)            |        |
+|-------------------------|-----------------|-----------|--------|
+| Lebenszufriedenheit (A) | ja (B1)           | nein (B2) | Gesamt |
+| gering (A1)             | 30                | 70        | 100    |
+| hoch (A2)               | 80                | 120       | 200    |
+| Gesamt                  | 110               | 190       | 300    |
+
+Wie groß ist die Wahrscheinlichkeit P, eine Person zu ziehen, die eine hohe Lebenszufriedenheit hat?
+
+- [] 100/200
+- [] 100/300
+- [] 200/300
+
+
+Wie groß ist die Wahrscheinlichkeit, eine Person mit hoher Lebenszufriedenheit zu ziehen unter der Bedingung, dass sie nicht regelmäßig läuft?
+
+- [] 120/190
+- [] 70/190
+- [] 120/200
+
+
+Im Oktober 1995 hat der britische Ausschuss für die Sicherheit von Arzneimitteln eine Warnung herausgegeben, dass orale Verhütungsmittel der dritten Generation das Risiko von potenziell lebensbedrohlichen Blutgerinnseln bei der Behandlung von die Beine oder die Lunge doppelt, das heißt zu 100%. Nehmen wir an, du oder dein Partner hast das Verhütungsmittel zweiter Generation bisher genommen und ihr überlegt nun, ob ihr auf das Verhütungsmittel dritter Generation umsteigen sollt. Wie würdest du handeln? Versuche die Fragen mit deinem Wissen um die Wahrscheinlichkeitsrechnung zu beantworten. 
+
+TODO: Trage bitte hier deine Antwort ein.
+
+# R Anwendungsaufgaben
+
+## Pakete installieren
+
+Stelle sicher, dass du [alle nötigen Softwares und Pakete installiert hast](https://github.com/ch-bu/statistik_II_ws_18-19), die wir für dieses Semester brauchen. 
+
+Zunächst laden wir das Paket [tidyverse](https://www.tidyverse.org/):
+
+```{r,message=FALSE, warning=FALSE}
+library(tidyverse)
+```
+
+Sollten es nicht möglich sein, tidyverse zu installieren, hole dir im [Slack Channel Hilfe](https://statistik-2.slack.com/messages/CCMG5NSN4/). 
+
+Tidyverse ist eine Gruppe an Paketen zur Datenanalyse mit einer einheitlichen Philosophie. Wir werden im Verlauf des Semesters starken Gebrauch des Pakets machen. Die einzelnen Funktionen wirst du im Verlauf des Seminars durch die Vor- und Nachbereitungsaufgaben kennen lernen. Um dich tiefer in tidyverse einzulesen, schaue dir das Bauch [R for Data Science](http://r4ds.had.co.nz/) an. Das Buch ist in der Online-Version kostenlos. 
+
+
+## Das Geburtstagsproblem 
+
+In der Wahrscheinlichkeitstheorie bezeichnet das Geburtstagsproblem die Wahrscheinlichkeit, dass zwei Personen in einem Raum mit N-Menschen den gleichen Geburtstag haben. Die meisten Menschen unterschätzen die Wahrscheinlichkeit für ein solches Ereignis. In dieser Aufgabe werden wir dieses Problem anhand von R lösen. Wie wahrscheinlich ist es, dass zwei Personen in einem Raum mit N-Menschen den gleichen Geburtstag haben? 
+
+Zunächst vereinfachen wir das Problem, indem wir davon ausgehen, dass der Raum 23 Personen enthält. Wir fragen uns daher: Wie wahrscheinlich ist es, dass es in einem Raum mit 23 Personen zwei Personen gibt, die den gleichen Geburtstag haben? 
+
+Erstelle zunächst eine Variable people und weiße der Variable den Wert 23 zu:
+
+```{r}
+# TODO: Hier die Variable people erstellen
+```
+
+Die Geburtstage der 23 Personen sind unser Ergebnisraum. Zunächst machen wir ein einfaches Zufallsexperiment und ziehen die erste Person. Wenn wir eine Person ziehen, liegt die Wahrscheinlichkeit keine zwei Personen mit dem gleichen Geburtstag zu ziehen bei `365/365`. Schließlich gibt es keine zweite Person, die wir vergleichen können. 
+
+Wie groß ist nun die Wahrscheinlichkeit, dass *keine* zwei Personen den gleichen Geburtstag haben, wenn wir eine weitere Person ziehen? Versuche dieses Ereignis in R zu berechnen. Ähnlich, wie wir es gerade getan haben (`365/365`). 
+
+```{r}
+# TODO: Hier die Wahrscheinlichkeit eintragen
+```
+
+Wir können dieses Problem auch auf unsere 23 Personen formalisieren, indem wir diese Berechnung wiederholen. Hierfür brauchen wir den [Pipe Operator](https://magrittr.tidyverse.org/reference/pipe.html) `%>%`. Hier ein kleines Beispiel
+
+```{r}
+c(1:7) %>% mean
+```
+
+Wir erstellen einen Vektor und füttern den Output des Vektors in die Funktion `mean`. Wir hätten auch sagen können: `c(1:7) %>% mean(.)`, oder, falls wir fehlende Werte haben: `c(1:7) %>% mean(., na.rm = TRUE)`. Der `.` gibt das Objekt an, welches von der linken Seite des Operators weiter gegeben wurde. 
+
+Zusätzlich brauchen wir die Funktion [map](https://purrr.tidyverse.org/reference/map.html). Mit Map können wir willkürliche Berechnungen für Elemente einer Liste oder eines Vektors durchführen: 
+
+```{r}
+c(1:23) %>% map_dbl(~ .**2)
+```
+
+In diesem Beispiel quadrieren wir die einzelnen Werte des Vektors `c(1:23)`. 
+
+Erstelle als nächstes eine Sequenz der Zahlen 365 bis 1. Vervollständige hierfür den Wert `NULL` in folgendem Befehl:
+
+`day_in_year_sequence <- seq(NULL:1) %>% 
+  sort(., decreasing = NULL)
+`
+
+```{r}
+# TODO: Bitte hier den Befehl eintragen
+```
+
+Nun können wir die Wahrscheinlichkeit berechnen, dass 23 Personen, die wir Stück für Stück aus einem Raum ziehen *nicht* den gleichen Geburtstag haben. Tausche hierfür in folgendem Code die `NULL` durch die richtigen Elemente aus:
+
+`
+(probabilites_dependent <- day_in_year_sequence NULL
+  map_dbl(~ NULL/365))
+`
+
+Durch die umspannende Klammer können wir das Ergebnis direkt ausgeben lassen.
+
+```{r}
+# TODO: Bitte hier den Befehl eintragen
+```
+
+Da es sich um eine bedingte Wahrscheinlichkeit handelt, müssen wir nun die einzelnen Ereignisse miteinander multiplizieren.
+
+Zunächst berechnen wir die Wahrscheinlichkeit, dass bei 23 Leuten in einem Raum zwei Personen den gleichen Geburtstag haben. Tausche hierfür in folgendem Code die `NULL` durch die richtigen Elemente aus und führe den Befehl aus:
+
+`
+NULL - prod(probabilites_dependent[NULL])
+`
+
+```{r}
+# TODO: Bitte hier den Befehl eintragen
+```
+
+Als nächstes müssen wir das Problem allgemein für 1 bis 100 Personen in einem Raum lösen. Hierfür können wir erneut die Funktion `map` verwenden. Tausche hierfür in folgendem Code die `NULL` durch die richtigen Elemente aus und führe den Befehl aus:
+
+`
+birthday_problem_probabilities <- c(1:100) %>% 
+  NULL(~ 1 - prod(probabilites_dependent[c(1:NULL)]))
+`
+
+```{r}
+# TODO: Bitte hier den Befehl eintragen
+```
+
+
+Zuletzt können wir das Geburtstagsproblem visualisieren:
+
+```{r}
+# ggplot(NULL, aes(c(1:100), birthday_problem_probabilities)) +
+#   geom_point() +
+#   theme_minimal() +
+#   xlab("N Personen im Raum") +
+#   ylab("Wahrscheinlichkeit gleicher Geburtstag 2 Personen")
+```
+
+Aus der Visualisierung kannst du erkennen, wie groß die Wahrscheinlichkeit bei N-Personen in einem Raum ist, dass zwei Personen den gleichen Geburtstag haben. 
+
