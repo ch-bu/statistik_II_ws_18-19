@@ -23,7 +23,7 @@ TODO: Hier bitte die Antwort einfügen.
 
 ### Aufgabe 2
 
-Erklärein eigenen Worten den Unterschied zwischen Elementarereignis, Ergebnisraum und Ereignis.
+Erkläre in eigenen Worten den Unterschied zwischen Elementarereignis, Ergebnisraum und Ereignis.
 
 TODO: Hier bitte die Antwort einfügen. 
 
@@ -58,16 +58,28 @@ Erstelle einen Vektor mit den Zahlen 1, 5, und 6:
 ```
 
 
-Weiße dem Vektor die Variable `mein_vektor` zu. 
+Weiße dem Vektor die Variable `mein_vektor` zu: 
 
 ```{r}
 # TODO: Hier die Variable mit dem Vektor einfügen
 ```
 
+### Pipe Operator
+
 Berechne den Mittelwert des Vektors mit Hilfe des [Pipe Operators](https://magrittr.tidyverse.org/reference/pipe.html) `%>%`: 
 
 ```{r}
 # TODO: Hier den Mittelwert berechnen
+```
+
+Beschreibe in eigenen Worten, was der Pipe Operator macht:
+
+TODO: Bitte hier deine Antwort eintragen.
+
+Erstelle ein eigenes Beispiel mit einem Pipe-Operator:
+
+```{r}
+# TODO: Hier dein Beispiel einfügen
 ```
 
 
