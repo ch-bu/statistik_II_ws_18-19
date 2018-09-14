@@ -1,0 +1,212 @@
+---
+title: "Statistik II - Nachbereitungsaufgabe"
+subtitle: "02 Wahrscheinlichkeitsverteilungen"
+author: ""
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+# Fragen zur Wahrscheinlichkeitsverteilungen
+
+Was trifft zu?
+
+- [] Man trifft gewöhnlich Vorhersagen über die Population auf der Grundlage einer Stichprobe. 
+- [] Man trifft gewöhnlich Vorhersagen über die Stichprobe auf der Grundlage einer Population. 
+- [] Man trifft gewöhnlich Vorhersagen über die Population auf der Grundlage mehrerer Stichproben.
+
+Was trifft zu (mehrere Antworten möglich)?
+
+- [] Die Verteilung von Häufigkeiten von (theoretisch unendlich vielen) Stichproben ist ein Beispiel für eine Stichprobenkennwerteverteilung
+- [] Die Verteilung von Varianzen von (theoretisch unendlich vielen) Stichproben ist ein Beispiel für eine Stichprobenkennwerteverteilung. 
+- [] Die Verteilung von Mittelwerten von (theoretisch unendlich vielen) Stichproben ist ein Beispiel für eine Stichprobenkennwerteverteilung.
+- [] Die Verteilung von Einzelwerten von Untersuchungsobjekten von (theoretisch unendlich vielen) Stichproben ist ein Beispiel für eine Stichprobenkennwerteverteilung. 
+
+Zieht man aus einer Population größere Stichproben, dann... (mehrere Antworten möglich)
+
+- [] sind die Mittelwerte dieser Stichproben näher am Mittelwert der Population.  
+- [] beeinflussen Extremwerte in diesen Stichproben die Mittelwertsbildung stärker
+- [] sind die Mittelwerte dieser Stichproben weiter weg vom Mittelwert der Population. 
+
+Auf der Grundlage der deskriptiven Statistiken einer Stichprobe kann man eine Vorhersage darüber treffen, ...
+
+- [] mit welcher Wahrscheinlichkeit ein konkreter Populationsmittelwert auftritt. 
+- [] in welchem Bereich der Mittelwert der Population mit einer gewissen Wahrscheinlichkeit liegt, aus der die Stichprobe gezogen wurde. 
+- [] aus welchen Populationen die Stichprobe stammt. 
+- [] warum eine Stichprobe nicht aus einer Population stammt.  
+
+Sie machen mit Hilfe eines Konfidenzintervalls eine Vorhersage über den Populationsmittelwert aufgrund einer Stichprobe. Nachdem Sie in einer Vollerhebung doch noch den tatsächlichen Populationsmittelwert ermittelt haben, stellen Sie fest, dass Ihre Vorhersage falsch war und der tatsächliche Mittelwert viel größer ist. Woran kann die fehlerhafte Vorhersage liegen? (Mehrere Antworten möglich)
+
+- [] Die Streuung in der Population wurde unterschätzt. 
+- [] Die gezogene Stichprobe war nicht repräsentativ für die Population.  
+- [] Ihre Stichprobe war zu groß.  
+- [] Sie haben eine zu große Wahrscheinlichkeit für das Konfidenzintervall gewählt (z.B. 99% statt 95%). 
+
+
+# R Anwendungsaufgaben
+
+### Der Titanicdatensatz
+
+Zunächst simulieren wir eine Population. Nehmen wir an, wir untersuchen die Passagiere der Titanic (= Population). Zunächst müssen wir den Datensatz als Tibble einlesen:
+
+```{r message=FALSE}
+library(tidyverse)
+titanic <- read_csv("titanic.csv")
+```
+
+Welche Variablennamen umfasst der Datensatz? 
+
+```{r}
+colnames(titanic)
+```
+
+Es gibt ein paar interessante Variablen. Schauen wir mal, wie viele der `r nrow(titanic)` Passagiere überlebt haben?
+
+```{r}
+titanic %>% 
+  group_by(survived) %>%
+  count()
+```
+
+Aha, die Mehrzahl der Passagiere ist gestorben. Man sagt immer, dass Personen der dritten Klasse schlechtere Chancen hatten zu überleben, stimmt das?
+
+```{r}
+(survived_per_class <- titanic %>% 
+  group_by(survived, pclass) %>%
+  count() %>%
+  ungroup())
+```
+
+Aus der Tabelle können wir nicht wirklich einfach unsere Frage beantworten. Machen wir einen Balkendiagram daraus. 
+
+Da die Variable pclass ein Integer ist, müssen wir diese zunächst in einen Faktor umwandeln:
+
+```{r}
+died_per_class <- survived_per_class %>%
+  mutate(
+    pclass = factor(pclass)
+  ) %>%
+  filter(survived == 0)
+```
+
+
+```{r}
+ggplot(died_per_class, aes(pclass, n, group = pclass)) +
+  geom_bar(stat = "identity", aes(fill = pclass)) +
+  xlab("Passagierklasse") +
+  ylab("Anzahl der Überlebenden")
+```
+
+
+Wer war eigentlich der älteste Passagier auf der Titanic? 
+
+```{r}
+titanic %>% arrange(desc(age)) %>%
+  head(n = 1)
+```
+
+### Zentrales Grenzwerttheorem 
+
+Das zentrale Grenzwerttheorem bedeutet, dass Stichprobenkennwertverteilungen des Mittelwerts mit steigenden Stichproben einer Normalverteilung um den Populationsmittelwert entsprechen. In dieser Aufgabe simulieren wir das zentrale Grenzwerttheorem. 
+
+Wir untersuchen das Grenzwerttheorem anhand der Variable `age` des Titanicdatensatzes:
+
+```{r}
+ggplot(titanic, aes(age)) +
+  geom_histogram()
+```
+
+Diese Verteilung ist unsere Population. Um das zentrale Grenzwerttheorem zu testen, müssen wir aus dieser Population viele Stichproben ziehen. Auf Grundlage des zentralen Grenzwerttheorems erwarten wir, dass die Stichprobenkennwertverteilung dieser Stichproben mit steigenden Stichproben sich einer Normalverteilung annähert. 
+
+Wir beginnen mit einem einfacheren Problem. Wie sieht die Stichprobenkennwertverteilung der Mittelwerte aus, wenn wir 20 Stichproben (N = 30) aus der Population ziehen? 
+
+```{r}
+samples_20 <- c(1:20) %>% 
+  map(~ sample_n(titanic, 30) %>% {.$age}) %>%
+  map_dbl(~ mean(., na.rm = TRUE))
+
+hist(samples_20)
+```
+
+Ok, das sieht nicht nach einer Normalverteilung aus. Was passiert, wenn wir 50 Stichproben aus der Population ziehen und daraus unsere Stichprobenkennwertverteilung berechnen? 
+
+```{r}
+samples_20 <- c(1:50) %>% 
+  map(~ sample_n(titanic, 30) %>% {.$age}) %>%
+  map_dbl(~ mean(., na.rm = TRUE))
+
+hist(samples_20)
+```
+
+Aha, das sieht schon mehr nach einer Normalverteilung aus. Versuchen wir als nächstes das Problem zu formalisieren, indem wir ganz viele dieser Simulationen umsetzen. Zunächst ist es sinnvoll, unseren Code zu Berechnung der Werte der Stichprobenverteilung in eine Funktion zu packen:
+
+```{r}
+create_sample_distribution <- function(number_of_samples, my_dataframe) {
+  sample_means <- c(1:number_of_samples) %>% 
+    map(~ sample_n(my_dataframe, 30) %>% {.$age}) %>%
+    map_dbl(~ mean(., na.rm = TRUE))
+  
+  return(sample_means)
+}
+```
+
+Schauen wir, ob die Funktion funktioniert:
+
+```{r}
+create_sample_distribution(20, titanic)
+```
+
+Sehr gut, wir können nun Stichprobenkennwertverteilungen für willkürliche N berechnen. Als nächstes möchten wir Stichprobenkennwertverteilungen von 1 bis 100 Stichproben mit dieser Funktion erstellen:
+
+```{r}
+create_multiple_sample_distributions <- function(dataframe) {
+  sample_means <- seq(1, 300, by = 10) %>%
+    map_dfr(~ tibble(sample      = rep(., .), 
+                     sample_id   = c(1:.), 
+                     sample_mean = create_sample_distribution(., titanic)))
+  return(sample_means)
+}
+
+sample_means <- create_multiple_sample_distributions(titanic)
+```
+
+
+```{r}
+ggplot(sample_means, aes(x = sample_mean)) +
+  geom_histogram(binwidth = 1) +
+  facet_wrap(~ sample) +
+  xlab("Sample distributions") +
+  ylab("Häufigkeit")
+```
+
+TODO: Was kannst du aus dieser Visualisierung bezüglich des zentralen Grenzwerttheorems erkennen? 
+
+Was passiert allerdings, wenn unsere ursprüngliche Verteilung nicht normalverteilt ist? 
+
+```{r}
+non_normal_distribution <- tibble(age = rnbinom(3000, 5, .5))
+
+non_normal_distribution$age %>% hist
+```
+
+```{r}
+sample_means_non_normal <- create_multiple_sample_distributions(non_normal_distribution)
+
+ggplot(sample_means_non_normal, aes(x = sample_mean)) +
+  geom_histogram(binwidth = 1) +
+  facet_wrap(~ sample) +
+  xlab("Sample distributions") +
+  ylab("Häufigkeit")
+```
+
+TODO: Beschreibe in deinen eigenen Worten, was du nun über das zentrale Grenzwerttheorem sagen kannst. Versuche deine Antwort auf die nicht-normalverteilte Verteilung der Population zu beantworten. 
+
+
+## Freiwillige Zusatzsaufgabe: Konfidenzintervalle
+
