@@ -51,41 +51,41 @@ Sie machen mit Hilfe eines Konfidenzintervalls eine Vorhersage über den Populat
 
 # R Anwendungsaufgaben
 
+```{r message=FALSE}
+library(tidyverse)
+```
+
 ### Der Titanicdatensatz
 
 Zunächst simulieren wir eine Population. Nehmen wir an, wir untersuchen die Passagiere der Titanic (= Population). Zunächst müssen wir den Datensatz als Tibble einlesen:
 
-```{r message=FALSE}
-library(tidyverse)
-titanic <- read_csv("titanic.csv")
+```{r}
+# TODO: Lese den Datensatz mit read_csv ein
+#       titanic.csv und weise dem Datensatz die Variable
+#       titanic zu
 ```
 
-Welche Variablennamen umfasst der Datensatz? 
+Welche Variablennamen umfasst der Datensatz? Gebe dir die Variablennamen mit `colnames` aus:
 
 ```{r}
-colnames(titanic)
+# TODO: colnames nutzen
 ```
 
-Es gibt ein paar interessante Variablen. Schauen wir mal, wie viele der `r nrow(titanic)` Passagiere überlebt haben?
+Es gibt ein paar interessante Variablen. Schauen wir mal, wie viele der `r nrow(titanic)` Passagiere überlebt haben? Nutze hierfür den Pipe-Operator und die Funktion [count](https://dplyr.tidyverse.org/reference/tally.html). 0 bedeutet gestorben, 1 bedeutet überlebt.
 
 ```{r}
-titanic %>% 
-  group_by(survived) %>%
-  count()
+# TODO: Überlebende zählen
 ```
 
-Aha, die Mehrzahl der Passagiere ist gestorben. Man sagt immer, dass Personen der dritten Klasse schlechtere Chancen hatten zu überleben, stimmt das?
+Aha, die Mehrzahl der Passagiere ist gestorben. Man sagt immer, dass Personen der dritten Klasse schlechtere Chancen hatten zu überleben, stimmt das? Verwende wieder die `count`-Funktion und übergebe als Argumente die Variablen `survived` und `pclass`. 
 
 ```{r}
-(survived_per_class <- titanic %>% 
-  group_by(survived, pclass) %>%
-  count() %>%
-  ungroup())
+# TODO: Überlebende nach Klasse zählen
 ```
 
 Aus der Tabelle können wir nicht wirklich einfach unsere Frage beantworten. Machen wir einen Balkendiagram daraus. 
 
-Da die Variable pclass ein Integer ist, müssen wir diese zunächst in einen Faktor umwandeln:
+Da die Variable pclass ein Integer ist, müssen wir diese zunächst in einen Faktor umwandeln und das Ergebnis nach den überlebenden [filtern](https://dplyr.tidyverse.org/reference/filter.html):
 
 ```{r}
 died_per_class <- survived_per_class %>%
@@ -95,23 +95,26 @@ died_per_class <- survived_per_class %>%
   filter(survived == 0)
 ```
 
+Jetzt können wir die überlebenden nach Klasse visualisieren. Vervollständige hierfür den folgenden Code. Erstelle ein Balkendiagram (siehe [hier](https://ggplot2.tidyverse.org/reference/index.html)).
 
-```{r}
-ggplot(died_per_class, aes(pclass, n, group = pclass)) +
-  geom_bar(stat = "identity", aes(fill = pclass)) +
+`
+ggplot(died_per_class, aes(pclass, n, group = NULL)) +
+  NULL(stat = "identity", aes(fill = pclass)) +
   xlab("Passagierklasse") +
   ylab("Anzahl der Überlebenden")
-```
-
-
-Wer war eigentlich der älteste Passagier auf der Titanic? 
+`
 
 ```{r}
-titanic %>% arrange(desc(age)) %>%
-  head(n = 1)
+# TODO: Balkendiagram erstellen
 ```
 
-### Zentrales Grenzwerttheorem 
+Wer war eigentlich der älteste Passagier auf der Titanic? Nutze [arrange](https://dplyr.tidyverse.org/reference/arrange.html) und [head](https://www.rdocumentation.org/packages/utils/versions/3.5.1/topics/head) und den Pipe-Operator, um die Fragen zu beantworten. 
+
+```{r}
+# TODO: Ältester Passagier
+```
+
+### Freiwillige Aufgabe: Zentrales Grenzwerttheorem 
 
 Das zentrale Grenzwerttheorem bedeutet, dass Stichprobenkennwertverteilungen des Mittelwerts mit steigenden Stichproben einer Normalverteilung um den Populationsmittelwert entsprechen. In dieser Aufgabe simulieren wir das zentrale Grenzwerttheorem. 
 
@@ -122,9 +125,9 @@ ggplot(titanic, aes(age)) +
   geom_histogram()
 ```
 
-Diese Verteilung ist unsere Population. Um das zentrale Grenzwerttheorem zu testen, müssen wir aus dieser Population viele Stichproben ziehen. Auf Grundlage des zentralen Grenzwerttheorems erwarten wir, dass die Stichprobenkennwertverteilung dieser Stichproben mit steigenden Stichproben sich einer Normalverteilung annähert. 
+Diese Verteilung ist unsere Population. Um das zentrale Grenzwerttheorem zu testen, müssen wir aus dieser Population viele Stichproben ziehen. Auf Grundlage des zentralen Grenzwerttheorems erwarten wir, dass die Stichprobenkennwertverteilungen dieser Stichproben mit steigenden Stichproben sich einer Normalverteilung annähern. 
 
-Wir beginnen mit einem einfacheren Problem. Wie sieht die Stichprobenkennwertverteilung der Mittelwerte aus, wenn wir 20 Stichproben (N = 30) aus der Population ziehen? 
+Wir beginnen mit einem einfachen Problem. Wie sieht die Stichprobenkennwertverteilung der Mittelwerte aus, wenn wir 20 Stichproben (N = 30) aus der Population ziehen? 
 
 ```{r}
 samples_20 <- c(1:20) %>% 
@@ -162,7 +165,7 @@ Schauen wir, ob die Funktion funktioniert:
 create_sample_distribution(20, titanic)
 ```
 
-Sehr gut, wir können nun Stichprobenkennwertverteilungen für willkürliche N berechnen. Als nächstes möchten wir Stichprobenkennwertverteilungen von 1 bis 100 Stichproben mit dieser Funktion erstellen:
+Sehr gut, wir können nun Stichprobenkennwertverteilungen für willkürliche N berechnen. Als nächstes möchten wir Stichprobenkennwertverteilungen von 1 bis 300 Stichproben mit dieser Funktion erstellen:
 
 ```{r}
 create_multiple_sample_distributions <- function(dataframe) {
@@ -176,6 +179,7 @@ create_multiple_sample_distributions <- function(dataframe) {
 sample_means <- create_multiple_sample_distributions(titanic)
 ```
 
+Diese Stichprobenkennwertverteilungen können wir nun visualisieren:
 
 ```{r}
 ggplot(sample_means, aes(x = sample_mean)) +
@@ -205,8 +209,4 @@ ggplot(sample_means_non_normal, aes(x = sample_mean)) +
   ylab("Häufigkeit")
 ```
 
-TODO: Beschreibe in deinen eigenen Worten, was du nun über das zentrale Grenzwerttheorem sagen kannst. Versuche deine Antwort auf die nicht-normalverteilte Verteilung der Population zu beantworten. 
-
-
-## Freiwillige Zusatzsaufgabe: Konfidenzintervalle
-
+TODO: Beschreibe in deinen eigenen Worten, was du nun über das zentrale Grenzwerttheorem für nicht-normalverteilte Populationen sagen kannst. Versuche deine Antwort auf die nicht-normalverteilte Verteilung der Population zu beantworten. 

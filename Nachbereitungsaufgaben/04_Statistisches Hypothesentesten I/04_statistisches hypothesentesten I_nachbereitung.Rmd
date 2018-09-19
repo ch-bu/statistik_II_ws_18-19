@@ -1,0 +1,254 @@
+---
+title: "Statistik II - Nachbereitungsaufgabe"
+subtitle: "04 Statistisches Hypothesentesten"
+author: ""
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+# Fragen zum statistischen Hypothesentesten I
+-
+Bringen Sie die Schritte in die richtige Reihenfolge.
+
+* Aufstellen eines statistischen Hypothesenpaars 
+* Bestimmung der statistischen Kennwerte 
+* Bestimmung der Stichprobenkennwerteverteilung für Nullhypothese 
+* Bestimmung der Wahrscheinlichkeit p(E|H0) für Auftreten von Stichprobenergebnis E unter H0 
+* Deutung der Wahrscheinlichkeit
+
+Die Alternativhypothese nimmt Folgendes an:
+
+- [] Einen Unterschied
+- [] Keinen Zusammenhang
+- [] Eine Veränderung
+- [] Eine Veränderung
+- [] Einen Zusammenhang in der nicht erwarteten Richtung
+
+Zur Überprüfung der statistischen Signifikanz zieht man folgende Verteilung heran:
+
+- [] Populationsverteilung 
+- [] Stichprobenverteilung
+- [] Stichprobenkennwertverteilung
+- [] Gleichverteilung
+
+Ein Ergebnis ist signifikant, wenn der empirische Wert für ein Stichprobenergebnis (z.B. Mittelwert)...
+
+- [] gleich dem kritischen Wert ist und damit genau 5% der Fläche der Verteilung abschneidet. 
+- [] größer dem kritischen Wert ist und dabei mehr als 5% der Fläche der Verteilung auf der rechten Seite abschneidet. 
+- [] größer dem kritischen Wert ist und dabei weniger als 5% der Verteilung auf der rechten Seite abschneidet. 
+- [] kleiner dem kritischen Wert ist und dabei weniger als 5% der Verteilung auf der linken Seite abschneidet.
+
+Wenn man einen statistisch signifikanten Mittelwert von 10 bei einem Signifikanzniveau von 5% erhält (bei einer Population mit dem Mittelwert 6), dann...
+
+- [] sind 5% der Stichproben fehleranfällig. 
+- [] könnte der Mittelwert der Stichprobe in höchstens 1% aller Fälle doch von der Population mit einem Mittelwert on 6 stammen. 
+- [] schneidet der Wert 10 weniger als 5% der Fläche der Stichprobenkennwerteverteilung mit dem Mittelwert 6 auf der rechten Seite ab. 
+
+
+# R-Anwendungsaufgaben
+
+In dieser Aufgabe setzen wir das PASSEND System an einem konkreten Beispiel um. Als Beispiel verwenden wir einen Datensatz zum Thema Diät. 78 Personen haben an einer Diät teilgenommen und ihr Gewicht über 6 Wochen gemessen. Wir möchten nun heraus finden, ob die Diät hilft, mehr als 3.5 Kilo durch die Diät abgenommen haben.
+
+Zunächst laden wir das Paket tidyverse und den Datensatz `diet.csv`:
+
+```{r}
+# TODO: tidyverse laden
+# TODO: diet.csv einlesen und als diet speichern
+```
+
+Betrachte den Datensatz mit `glimpse`:
+
+```{r}
+# TODO: Datensatz mit glimpse betrachten
+```
+
+Zähle die Anzahl der Personen mit `nrow`:
+
+```{r}
+# TODO: Anzahl der Personen zählen
+```
+
+Uns liegen lediglich die Variablen `pre.weight` und `weight6weeks` vor, nicht aber eine Variable für die **Veränderung des Gewichts* über die sechs Wochen. Erstelle daher mit [mutate](https://dplyr.tidyverse.org/reference/mutate.html) die Variable `weight_diff` und speichere das Ergebnis erneut im Datensatz diet:
+
+```{r}
+# TODO: Die Variable weight_diff erstellen
+#       1. Nutze den Pipe-Operator um diet auf die Funktion mutate zu übertragen
+#       2. Nutze mutate um die neue Variable weight_diff zu erstellen
+#       3. Ziehe pre.weight von weight6weeks ab und verwende abs (siehe ?abs) für den absoluten Wert
+```
+
+## 1. Aufstellen eines statistischen Hypothesenpaars (PAssend)
+
+Zunächst müssen wir ein statistisches Hypothesenpaar aufstellen. Formuliere bitte in deinen eigenen Worten die beiden Hypothesen. Erinnere dich, dass wir untersuchen möchten, ob die Diät zu einer Gewichtsreduzierung von mehr als 3.5 Kilo führt.
+
+* Nullhypothese ($H_0$): TODO
+* Alternativhypothese ($H_1$): TODO
+
+## 2. Bestimmung der statistischen Kennwerte (paSsend)
+
+Um unsere Hypothese zu prüfen, benötigen wir die Populationskennwerte und die Stichprobenkennwerte. Für die Population gelten folgende Werte. Tragen die fehlenden Werte durch eine kurze R-Funktion ein (hier: NULL). 
+
+* Populationsmittelwert: $\mu$ = 3.5
+* Populationsstandardabweichung: $\sigma$ = 2
+* Stichprobenmittelwert: $M$ = `r NULL`
+* Stichprobengröße: $N$ = `r NULL`
+
+## 3. Bestimmung der Stichprobenkennwertverteilung für Nullhypothese (pasSend)
+
+Wir benötigen eine Stichprobenkennwertverteilung, um die Nullhypothese zu prüfen. Erinnere dich, dass wir bisher die Normalverteilung und die Standardnormalverteilung (z-Verteilung) als Stichprobenkennwertverteilung kennen gelernt haben. Auf der X-Achse dieser Verteilungen ist die Ausprägung der untersuchten Variablen (z.B. Gewichtsveränderung) abgetragen, die Y-Achse visualisiert die Dichte. Wir verwenden für die Y-Achse die Dichte, da es sich bei der Variable Gewichtsreduzierung um eine stetige Variable und keine diskrete Variable handelt. 
+
+Die Stichprobenkennwertverteilung können wir einmal visualisieren:
+
+```{r}
+ggplot(tibble(x = c(-4, 11)), aes(x)) +  
+  stat_function(fun = dnorm,
+                args = list(mean = 3.5, sd = 2),
+                geom = "area",
+                fill = "#998ec3") +
+  ylab("Dichte P(x)") +
+  xlab("Z-Score")
+```
+
+Diese Stichprobenkennwertverteilung erhalten wir, wenn wir aus einer Population mit dem Mittelwert 3.5 und einer Standardabweichung 2 unendliche viele Mittelwerte berechnen und diese als Histogram darstellen. Wir müssen lediglich die Häufigkeiten auf der Y-Achse als Dichtefunktion darstellen und erhalten diese Stichprobenkennwertverteilung.
+
+
+## 4. Bestimmung der Wahrcheinlichkeit $p(E|H_0)$ für Auftreten von Stichprobenergebnis $E$ unter $H_0$ (passENd)
+
+Wann gehen wir nun davon aus, dass unsere Diät funktioniert? Wenn wir nun einen Mittelwert aus unserer Stichprobe berechnen, müsste dieser Wert in Anbetracht unserer Stichprobenkennwertverteilung *sehr ungewöhnlich*, das heißt *statistisch signifikant* sein. Herkömmlicherweiße sprechen wir von sehr ungewöhnlich, wenn das Auftreten für einen solchen Mittelwert unter einer Wahrscheinlichkeit von 5% liegt. Bevor wir dies visualisieren, beantworte folgende Frage:
+
+Handelt es sich bei unserer Hypothese um eine gerichtete oder ungerichtete Hypothese? 
+
+TODO: Antwort einfügen
+
+Normalerweise standardisieren wir die Stichprobenkennwertverteilung der Mittelwerte auf eine Standardnormalverteilung. Erinnere dich, dass die Standardnormalverteilung einen Mittelwert von 0 und eine Standardabweichung von 1 hat: 
+
+```{r}
+ggplot(tibble(x = c(-5, 5)), aes(x)) +  
+  stat_function(fun = dnorm,
+                args = list(mean = 0, sd = 1),
+                geom = "area",
+                fill = "#998ec3") +
+  ylab("Dichte P(x)") +
+  xlab("Z-Score")
+```
+
+Visualisieren wir nun den Bereich, der uns dazu bringen würde, die H0 abzulehnen und die H1 anzunehmen:
+
+```{r}
+ggplot(tibble(x = c(-5, 5)), aes(x)) +  
+  stat_function(fun = dnorm,
+                args = list(mean = 0, sd = 1),
+                geom = "area",
+                fill = "#998ec3") +
+  stat_function(fun = dnorm,
+                args = list(mean = 0, sd = 1),
+                xlim = c(qnorm(0.95, 0, 1), 
+                         qnorm(0.99999, 0, 1)),
+                geom = "area",
+                fill = "green", 
+                color = "green") +
+  ylab("Dichte P(x)") +
+  xlab("Z-Score")
+```
+
+Fällt unser Mittelwert in den grünen Bereich, dann ..
+
+# TODO: Trage ein, was wir dann bezüglich unserer Hypothese annehmen.
+# TODO: Beschreibe, was der grüne Bereich darstellt.
+# TODO: Wie steht der grüne Bereich mit der Wahrscheinlichkeit p(E|H0) in Verbindung? 
+
+Ab welchem Wert behaupten wir eigentlich, dass unser Ereignis (der z-Wert der Gewichtsreduzierung der Stichprobe) ungewöhnlich ist? Dafür können wir die Funktion `qnorm` verwenden. Die Funktion hat ein zentrales Argument (siehe: `?qnorm`): `p`. `p` steht das Percentil, für welches wir den korrespondierenden Z-Wert erhalten möchten: 
+
+```{r}
+# TODO: Löse folgende Funktion qnorm(NULL)
+```
+
+Alternativ können wir ebenso die Wahrscheinlichkeit für einen bestimmten Z-Wert mit `pnorm` bestimmen. Das zentrale Argument dieser Funktion ist `q`. `q` steht für den Z-Wert für dessen wir die die Dichte erhalten möchten. 
+
+```{r}
+pnorm(1.5)
+```
+
+# TODO: Was bedeutet der Output dieser Funktion? 
+
+
+## 5. Deutung der Wahrscheinlichkeit (passenD)
+
+Zuletzt können wir unsere Hypothese prüfen. Wir müssen zunächst unseren Mittelwert in einen [z-Wert](http://www.statisticshowto.com/probability-and-statistics/z-score/) umrechnen. Dafür benutzen wir folgende Formel:
+
+$
+z = \frac{M - \mu}{\frac{\sigma}{\sqrt{n}}}
+$
+
+
+```{r}
+# TODO: Berechne den Z-Wert für unsere Stichprobe
+#       Weise dem Wert die Variable z_score zu
+#       Im Nenner steht der Mittelwert minues unseren Populationsmittelwertes
+#       Im Zähler steht der Standardfehler unserer Stichprobe
+#       Tipp: Benutze folgende Funktionen: mean, sd, sqrt, nrow
+z_score <- (NULL(diet$weight_diff) - NULL) / 
+  (NULL(diet$weight_diff) / NULL(NULL(diet)))
+```
+
+Nun können wir diesen Z-Wert auf unserer Stichprobenkennwertverteilung abtragen:
+
+```{r}
+ggplot(tibble(x = c(-5, 5)), aes(x)) +  
+  stat_function(fun = dnorm,
+                args = list(mean = 0, sd = 1),
+                geom = "area",
+                fill = "#998ec3") +
+  stat_function(fun = dnorm,
+                args = list(mean = 0, sd = 1),
+                xlim = c(qnorm(0.95, 0, 1), 
+                         qnorm(0.99999, 0, 1)),
+                geom = "area",
+                fill = "green", 
+                color = "green") +
+  geom_vline(xintercept = z_score) +
+  ylab("Dichte P(x)") +
+  xlab("Z-Score")
+```
+
+# TODO: Wie deutest du dieses Ergebnis bezüglich der Hypothese? Warum? 
+
+Nehmen wir zuletzt an, dass jemand dir die *wahre* Stichprobenkennwertverteilung der Stichprobe verrät. Im Folgenden siehst du in lia die wahre Stichprobenkennwertverteilung und in blau die erwartete Stichprobenverteilung nach der H0. Der lila Strich kennzeichnet den Mittelwert der wahren Stichprobenkennwertverteilung, der schwarze Strich den Z-Wert deiner Stichprobe. 
+
+```{r}
+ggplot(tibble(x = c(-5,45)5, aes(x)) +  
+  stat_function(fun = dnorm,
+                args = list(mean = 0, sd = 1),
+                geom = "area",
+                fill = "#998ec3") +
+  stat_function(fun = dnorm,
+                args = list(mean = 0, sd = 1),
+                xlim = c(qnorm(0.95, 0, 1), 
+                         qnorm(0.99999, 0, 1)),
+                geom = "area",
+                fill = "green", 
+                color = "green") +
+  stat_function(fun = dnorm,
+                args = list(mean = 1.5, 
+                            sd = 1),
+                geom = "area",
+                fill = "purple",
+                alpha = .4) +
+  geom_vline(xintercept = 1.5, color = "purple") +
+  geom_vline(xintercept = z_score) +
+  ylab("Dichte P(x)") +
+  xlab("Z-Score")
+```
+
+Welchen statistischen Fehler haben wir mit unserem Experiment begangen? 
+
+# TODO: Beschreibe den statistischen Fehler, den wir begangen haben. 
+# TODO: Warum ist unser Z-Wert nicht gleich dem Mittelwert der wahren Stichprobenkennwertverteilung?
+
