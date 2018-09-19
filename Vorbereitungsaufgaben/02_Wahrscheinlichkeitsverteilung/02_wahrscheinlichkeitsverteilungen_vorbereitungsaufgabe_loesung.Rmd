@@ -1,0 +1,211 @@
+---
+title: "Statistik II - Nachbereitungsaufgabe"
+subtitle: "02 Wahrscheinlichkeitsverteilungen"
+author: ""
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+# Fragen zur Wahrscheinlichkeitsverteilungen
+
+## Frage 1
+
+Bitte vervollständige folgenden Satz:
+
+Eine Zufallsvariable ist eine *TODO*, die den Ergebnissen eines Zufallsexperiments (d.h. Elementarereignissen oder Ereignissen) reelle *TODO* zuordnet.
+
+
+## Frage 2
+
+Ordnen Sie folgende Definitionen den richtigen Begriffen zu:
+
+* Unendlich viele Ausprägungen zwischen zwei Ausprägungen
+* Keine weiteren Ausprägungen zwischen zwei benachbarten Ausprägungen
+
+* Diskrete Zufallsvariable
+* Stetige Zufallsvariable
+
+
+## Frage 3
+
+Bitte vervollständige folgenden Satz:
+
+Bei Wahrscheinlichkeitsfunktionen von stetigen Zufallsvariablen ist auf der y-Achse nicht die *TODO* abgetragen, sondern die *TODO*
+
+## Frage 4
+
+Bitte vervollständige folgenden Satz:
+
+In Tabellen mit z-Werten stehen in den einzelnen Zellen *TODO* die für das Auftreten der Werte von - unendlich bis zu dem jeweiligen *TODO* .
+
+
+# R Anwendungsaufgaben
+
+```{r}
+library(tidyverse)
+```
+
+Im Seminar haben wir bereits die Normalverteilung und die Standardnormalverteilung kennen gelernt. In dieser Aufgabe macht ihr euch mit dem T-Test und der T-Verteilung vertraut Der T-Test wird verwendet, um Unterschiede zwischen Mittelwerten zu prüfen. Beispielsweise können wir mit Hilfe des T-Tests berechnen, ob der Mittelwert einer Stichprobe von Filmen (Mittelwert 1) dem Mittelwert einer anderen Stichprobe unterschiedlich ist.
+
+Als Beispiel verwenden wir einen Filmdatensatz. Zunächst müssen wir die Daten einlesen, mit Hilfe derer wir diese Frage beantworten. Nutzt hierfür die `read_csv` Funktion und vervollständigt folgenden Befehl:
+
+`
+movies <- NULL("movies.csv")
+`
+
+```{r}
+# TODO: Hier den Dataframe crime einfügen
+movies <- read_csv("movies.csv")
+```
+
+Als nächstes schauen wir uns die Variablennamen des Datensatzes an:
+
+```{r}
+colnames(movies)
+```
+
+Die Variable `Runtime (Minutes)` ist etwas kompliziert geschrieben. Wir benennen daher die Variable um. Hierfür verwenden wir die [rename Funktion](https://dplyr.tidyverse.org/reference/select.html):
+
+`
+movies <- TODO %>%
+  rename(TODO = `Runtime (Minutes)`)
+`
+
+```{r}
+# TODO: Ändere den Namen der Variable Runtime (Minutes) zu minutes
+movies <- movies %>%
+  rename(minutes = `Runtime (Minutes)`)
+```
+
+Zunächst schauen wir uns die Variable mit Hilfe eines Histograms an. Vervollständige hierfür bitte folgende Befehle:
+
+`
+ggplot(NULL, aes(NULL)) +
+  geom_histogram(fill = "blue", color = "black")
+`
+
+```{r}
+# TODO: Hier Histogram eingeben
+ggplot(movies, aes(minutes)) +
+  geom_histogram(fill = "#f1a340", color = "black")
+```
+
+Wir können aus dem Histogram erkennen, dass die populären Filme durchschnittlich zwischen 90 und 130 Minuten dauern. Deskriptiv können wir den Mittelwert und die Standardverteilung dieser Verteilung bestimmen:
+
+```{r}
+# TODO: Bitte Mittelwert und Standardabweichungen der Variable ausgeben lassen
+```
+
+### Den Datensatz kennen lernen
+
+Finde den längsten Film im Datensatz. Verwende hierfür die Funktion [arrange](https://dplyr.tidyverse.org/reference/arrange.html), head und den Pipe-Operator:
+
+```{r}
+# TODO: Längsten Film finden
+```
+
+Wie viele Filme haben mehr als 400 Millionen Dollar eingespielt? Verwende hierfür die [Filter Funktion](https://dplyr.tidyverse.org/reference/filter.html), den Pipe-Operator und die Funktion count:
+
+`
+movies %>%
+  TODO: Filme filtern %>%
+  count()
+`
+
+```{r}
+# TODO: Filme filtern
+```
+
+
+## Die T-Verteilung
+
+Die T-Verteilung ist der Standardnormalverteilung sehr ähnlich. In ihrer Form ist die Verteilung lediglich weniger hoch und breiter. In unserem Beispiel könnten wir auch die Standardnormalerverteilung oder Z-Verteilung heran ziehen, da bei einem steigendem N (hier 1000), die T-Verteilung der Z-Verteilung immer mehr entspricht. Beide Verteilungen zählen zu den stetigen Verteilungen. 
+
+### Simulation der T-Verteilung
+
+Um zu verstehen, wie die T-Verteilung zu Stande kommt machen wir eine Simulation. Als Population nehmen wir die 1000 Filme aus unserem Datensatz mit verschiedenen Ausprägungen der Variable `minuten`. Zunächst simulieren wir 4000 Experimente. Das Ereignis dieses Zufallsexperiments umfasst das Ziehen der Länge von 30 Filmen. Wir ziehen also 4000 mal eine Stichprobe von 30 Filmen aus unserer Population. 
+
+```{r}
+set.seed(787)
+samples <- c(1:4000) %>% map(~ sample_n(movies, 30) %>% 
+                               {.$minutes})
+```
+
+Für jedes dieser Stichproben berechnen wir den T-Wert, der mit folgender Formel berechnet wird. Durch den T-Wert können wir Werte standardisieren:
+
+$$
+t = \frac{\bar{x} - \mu}{\frac{s}{\sqrt{n}}}
+$$
+
+* $\mu$: Mittelwert der Population (hier Mittelwert der Länge der Filme)
+* $\bar{x}$: Mittelwert des Samples
+* $s$: Standardabweichung des Samples
+* $t$: T-Wert
+
+Berechnen wir nun den T-Wert für jedes dieser 4000 Samples:
+
+```{r}
+t_values <- samples %>% 
+  map_dbl(~ (mean(.) - mean(movies$minutes)) / (sd(.) / sqrt(length(.))))
+```
+
+Diese T-Werte können wir uns auch anzeigen lassen:
+
+`
+ggplot(NULL, aes(t_values)) +
+  NULL(fill = "#f1a340", color = "black") +
+  xlab("T-Werte") +
+  ylab("Häufigkeit")
+`
+
+```{r}
+# TODO: Erstelle ein Histogram der T-Werte 
+ggplot(NULL, aes(t_values)) +
+  geom_histogram(fill = "#f1a340", color = "black") +
+  xlab("T-Werte") +
+  ylab("Häufigkeit")
+```
+
+Was wir nun sehen ist eine *Häufigkeitsverteilung* der T-Werte. Wir müssen diese Werte noch zu einer Dichtefunktion umwandeln und visualisieren:
+
+```{r}
+ggplot(NULL, aes(t_values)) +
+  geom_density(fill = "#f1a340", alpha = .5) +
+  xlab("T-Werte") +
+  ylab("Dichte")
+```
+
+Was du hier siehst ist die T-Verteilung. Damit wir uns aber sicher sind, dass diese Simulation tatsächlich einer T-Verteilung entspricht, können wir die T-Verteilung darüber legen:
+
+```{r}
+ggplot(NULL, aes(t_values)) +
+  geom_density(fill = "#f1a340", alpha = .5) +
+  geom_area(stat = "function", fun = dt, 
+            fill = "#998ec3", alpha = .5, 
+            args = list(df = 29)) +
+  xlab("T-Werte") +
+  ylab("Dichte")
+```
+
+In der Tat entspricht unsere Verteilung der T-Verteilung. Die T-Verteilung ist also nichts anderes als die Verteilung von unendlich vielen T-Werten, die wir aus einer Population ziehen. Aus dieser Häufigkeitsverteilung bilden wir eine Dichtefunktion, die wir später verwenden können, um Mittelwertsunterschiede zu bestimmen. Auf Grundlage der T-Verteilung werden wir später bestimmen können, ob sich zwei Mittelwerte voneinander unterschieden. Beispielsweise können wir anhand dieser T-Verteilung bestimmen, ob ein Mittelwert einer Stichprobe im Vergleich zum Mittelwert der Population ungewöhnlich ist. Ein T-Wert von 2.4 zum Beispiel, der aus dem Mittelwert berechnet werden kann wäre ein solch ungewöhnlicher Wert, da die Fläche rechts diesen T-Werts sehr gering ist:
+
+
+```{r}
+ggplot(NULL, aes(t_values)) +
+  geom_area(stat = "function", fun = dt, 
+            fill = "#998ec3", alpha = .5, 
+            args = list(df = 29)) +
+  geom_vline(xintercept = 2.4) +
+  xlab("T-Werte") +
+  ylab("Dichte")
+```
+
+Die Fläche rechts von einem T-Wert von 2.4 ist in diesem Beispiel: `dt(2.4, 29)`. Einen solchen Wert zu erhalten, wenn man annimmt, dass die Stichprobe aus der Population ist sehr ungewöhnlich oder besser gesagt signifikant ;). 
+
