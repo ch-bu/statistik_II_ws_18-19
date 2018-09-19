@@ -70,11 +70,14 @@ Wie groß ist die Wahrscheinlichkeit, eine Person mit hoher Lebenszufriedenheit 
 - [] 120/200
 
 
-Im Oktober 1995 hat der britische Ausschuss für die Sicherheit von Arzneimitteln eine Warnung herausgegeben, dass orale Verhütungsmittel der dritten Generation das Risiko von potenziell lebensbedrohlichen Blutgerinnseln bei der Behandlung von die Beine oder die Lunge doppelt, das heißt zu 100%. Nehmen wir an, du oder dein Partner hast das Verhütungsmittel zweiter Generation bisher genommen und ihr überlegt nun, ob ihr auf das Verhütungsmittel dritter Generation umsteigen sollt. Wie würdest du handeln? Versuche die Fragen mit deinem Wissen um die Wahrscheinlichkeitsrechnung zu beantworten. 
+Im Oktober 1995 hat der britische Ausschuss für die Sicherheit von Arzneimitteln eine Warnung herausgegeben, dass orale Verhütungsmittel der dritten Generation das Risiko von potenziell lebensbedrohlichen Blutgerinnseln bei der Behandlung von die Beine oder die Lunge doppelt, das heißt zu 100%. Nehmen wir an, du oder dein Partner hast das Verhütungsmittel zweiter Generation bisher genommen und ihr überlegt nun, ob ihr auf das Verhütungsmittel dritter Generation umsteigen solltet. Wie würdest du handeln? Versuche die Fragen mit deinem Wissen um die Wahrscheinlichkeitsrechnung zu beantworten. 
 
 TODO: Trage bitte hier deine Antwort ein.
 
+
 # R Anwendungsaufgaben
+
+Der Zweck der Nachbereitungsaufgaben besteht darin, dich mit R vertraut zu machen und einige Kernkonzepte des Seminars vertieft zu behandeln. 
 
 ## Pakete installieren
 
@@ -84,14 +87,113 @@ Zunächst laden wir das Paket [tidyverse](https://www.tidyverse.org/):
 
 ```{r,message=FALSE, warning=FALSE}
 library(tidyverse)
+library(lubridate) # Installieren mit install.packages("lubridate")
 ```
 
 Sollten es nicht möglich sein, tidyverse zu installieren, hole dir im [Slack Channel Hilfe](https://statistik-2.slack.com/messages/CCMG5NSN4/). 
 
 Tidyverse ist eine Gruppe an Paketen zur Datenanalyse mit einer einheitlichen Philosophie. Wir werden im Verlauf des Semesters starken Gebrauch des Pakets machen. Die einzelnen Funktionen wirst du im Verlauf des Seminars durch die Vor- und Nachbereitungsaufgaben kennen lernen. Um dich tiefer in tidyverse einzulesen, schaue dir das Bauch [R for Data Science](http://r4ds.had.co.nz/) an. Das Buch ist in der Online-Version kostenlos. 
 
+## Geburtstagsdatensatz 
 
-## Das Geburtstagsproblem 
+Für die folgenden Aufgaben verwenden wir einen Datensatz berühmter Personen, die zwischen 2007 und 2016 gestorben sind. Zunächst müssen wir den Datensatz einlesen. In diesem Fall handelt es sich um eine CSV-Datei, deren Werte durch *Kommas* getrennt sind. Für einen solchen Datensatz verwenden wir in diesem Semester die Funktion [read_csv](https://readr.tidyverse.org/reference/read_delim.html) aus dem Paket readr, welches durch Tidyverse bereit gestellt wird. 
+
+```{r}
+# TODO: Lese den Datensatz mit read_csv ein und speicher den Datensatz
+#       in der Variable celebs. Der Datensatz lautet celeb_dataset.csv
+```
+
+Im nächsten Schritt machen wir uns mit dem Datensatz vertraut.
+
+Am Anfang ist es immer ratsam, sich die Variablen des Datensatzes anzuschauen. [Glimpse](https://tibble.tidyverse.org/reference/glimpse.html) ist hierfür recht praktisch. 
+
+```{r}
+# TODO: Nutze glimpse, um den Datensatz anzuschauen
+```
+
+Wie viele Reihen hat der Datensatz? 
+
+```{r}
+# TODO: Gebe dir die Anzahl der Reihen mit der Funktion nrow() aus
+#       https://www.rdocumentation.org/packages/base/versions/3.5.1/topics/nrow
+```
+
+Was war die häufigste Todesursache unter den Prominenten? Um Werte zu zählen, können wir die [count](https://dplyr.tidyverse.org/reference/tally.html) Funktion verwenden. Um die Liste in eine Reihenfolge zu bringen, brauchen wir die Funktion [arrange](https://dplyr.tidyverse.org/reference/arrange.html). Vervollständige folgenden Befehl und führ in dann aus (NULL ersetzen):
+
+`
+celebs %>%
+  count(cause_of_death) %>%
+  arrange(desc(NULL))
+`
+
+```{r}
+# TODO: Hier den Code einfügen
+```
+
+In diesem Befehl haben wir zum ersten Mal von dem [Pipe-Operator](https://magrittr.tidyverse.org/reference/pipe.html) gebrauch gemacht. Der Pipe Operator vereinfacht die Lesbarkeit deines Codes, indem wir Funktionen nicht mehr verschachteln müssen. Hier ein Beispiel:
+
+```{r}
+mean(c(1, 2, 3))
+c(1, 2, 3) %>% mean
+c(1, 2, 3) %>% mean(., na.rm = TRUE)
+c(1, 2, 3) %>% mean(.)
+```
+
+Jeder dieser Befehle ist inhaltlich gleich. Der Unterschied besteht darin, dass wir die Funktionen aneinander reihen, statt sie zu verschachteln. Der Pipe Operator füttert den Output der linken Seite (hier: `c(1, 2, 3)`) in das erste Argument der rechten Funktion (hier: `mean(.)`). Der Punkte steht für den Output, welcher übergeben wird.
+
+Unser Count-Beispiel könnte daher auch folgendermaßen aussehen: 
+
+```{r}
+count(celebs, cause_of_death)
+```
+
+Stattdessen übergeben wir den Output des Dataframes (celebs) in die Funktion count:
+
+```{r}
+celebs %>%
+  count(., cause_of_death)
+```
+
+Als letztes möchten wir sehen, wie sich die Geburtstage der Prominenten verteilen. Die Variable `date_of_birth` liegt bereits als date-Variable vor (siehe glimpse), von daher können wir die Geburtstage in einem Histogram abtragen. Versuche folgenden Code zu vervollständigen (siehe [ggplot2](https://ggplot2.tidyverse.org/reference/geom_histogram.html):
+
+`
+ggplot(celebs, aes(x = NULL)) + 
+  NULL +
+  xlab("Geburtstag") +
+  ylab("Häufigkeit")
+`
+
+```{r}
+# TODO: Histogram erstellen
+```
+
+Ok, wir wollten eigentlich die Geburtstage unabhängig vom Jahr betrachten, um zu prüfen, ob die Geburtstage über das Jahr uniformverteilt sind. Dazu müssen wir eine neue Variable erstellen. Hierfür nutzen wir die Funktion [mutate](https://dplyr.tidyverse.org/reference/mutate.html). Wir haben das Glück, dass die Variable date_of_birth gut strukturiert ist und die Struktur `2014-03-13` hat. Wir müssen daher nichts anderes tun als die ersten 5 Zeichen des Strings mit dem Jahr 2018 zu ersetzen und eine Datevariable daraus zu erstellen (siehe [ymd](https://lubridate.tidyverse.org/reference/ymd.html)).
+
+```{r}
+celebs <- celebs %>%
+  mutate(
+    birthday = date_of_birth %>% 
+      substring(6, length(.)) %>%
+      paste0("2018-", .) %>%
+      ymd(.)
+  )
+```
+
+Nun können wir schauen, wie sich die Geburtstage über das Jahr verteilen. Vervollständige dafür folgenden Code:
+
+`
+ggplot(celebs, aes(NULL)) +
+  NULL(fill = "steelblue", 
+                 color = "black") +
+  scale_x_date(date_breaks = "4 week", 
+               date_labels = "%W")
+`
+
+```{r}
+# TODO: Histogram hier einfügen
+```
+
+## Freiwillige Aufgabe: Das Geburtstagsproblem 
 
 In der Wahrscheinlichkeitstheorie bezeichnet das Geburtstagsproblem die Wahrscheinlichkeit, dass zwei Personen in einem Raum mit N-Menschen den gleichen Geburtstag haben. Die meisten Menschen unterschätzen die Wahrscheinlichkeit für ein solches Ereignis. In dieser Aufgabe werden wir dieses Problem anhand von R lösen. Wie wahrscheinlich ist es, dass zwei Personen in einem Raum mit N-Menschen den gleichen Geburtstag haben? 
 
