@@ -220,35 +220,69 @@ ggplot(tibble(x = c(-5, 5)), aes(x)) +
 
 # TODO: Wie deutest du dieses Ergebnis bezüglich der Hypothese? Warum? 
 
-Nehmen wir zuletzt an, dass jemand dir die *wahre* Stichprobenkennwertverteilung der Stichprobe verrät. Im Folgenden siehst du in lia die wahre Stichprobenkennwertverteilung und in blau die erwartete Stichprobenverteilung nach der H0. Der lila Strich kennzeichnet den Mittelwert der wahren Stichprobenkennwertverteilung, der schwarze Strich den Z-Wert deiner Stichprobe. 
+Nehmen wir zuletzt an, dass jemand dir die *wahre* Stichprobenkennwertverteilung der Stichprobe verrät. Im Folgenden siehst du in lila die wahre Stichprobenkennwertverteilung und in blau die erwartete Stichprobenverteilung nach der H0.
 
 ```{r}
-ggplot(tibble(x = c(-5,45)5, aes(x)) +  
+ggplot(tibble(x = c(-5,5)), aes(x)) +  
   stat_function(fun = dnorm,
                 args = list(mean = 0, sd = 1),
                 geom = "area",
                 fill = "#998ec3") +
   stat_function(fun = dnorm,
+                args = list(mean = 1.5, 
+                            sd = 1),
+                geom = "area",
+                fill = "#c3998e",
+                alpha = .7) +
+    stat_function(fun = dnorm,
                 args = list(mean = 0, sd = 1),
                 xlim = c(qnorm(0.95, 0, 1), 
                          qnorm(0.99999, 0, 1)),
                 geom = "area",
                 fill = "green", 
                 color = "green") +
-  stat_function(fun = dnorm,
-                args = list(mean = 1.5, 
-                            sd = 1),
-                geom = "area",
-                fill = "purple",
-                alpha = .4) +
-  geom_vline(xintercept = 1.5, color = "purple") +
-  geom_vline(xintercept = z_score) +
   ylab("Dichte P(x)") +
   xlab("Z-Score")
 ```
 
-Welchen statistischen Fehler haben wir mit unserem Experiment begangen? 
+Aus der Visualisierung können wir erkennen, dass die "wahre" Stichprobenkennwertverteilung (H1) in der Tat eine andere ist als die angenommene Stichprobenkennwertverteilung (H0). Der grüne Bereich kennzeichnet den Fehler 1. Art (Alpha-Fehler). Versuche in der nächsten Visualisierung den Fehler 2. Art (Beta-Fehler) zu visualisieren. 
 
-# TODO: Beschreibe den statistischen Fehler, den wir begangen haben. 
-# TODO: Warum ist unser Z-Wert nicht gleich dem Mittelwert der wahren Stichprobenkennwertverteilung?
+```{r}
+ggplot(tibble(x = c(-5,5)), aes(x)) +  
+  # Angenommene Stichprobenkennwertverteilung (H0)
+  stat_function(fun = dnorm,
+                args = list(mean = 0, sd = 1),
+                geom = "area",
+                fill = NA, color = "black",
+                linetype = 2) +
+  # Wahre Stichprobenkennwertverteilung (H1)
+  stat_function(fun = dnorm,
+                args = list(mean = 1.5, 
+                            sd = 1),
+                geom = "area",
+                fill = "#c3998e",
+                alpha = .7) +
+  # Fehler 2. Art
+  stat_function(fun = dnorm,
+              args = list(mean = 1.5, 
+                          sd = 1),
+              xlim = c(qnorm(NULL, 0, 1),  # Null durch korrekten Wert ersetzen
+                       qnorm(NULL, 0, 1)), # Null durch korrekten Wert ersetzen
+              geom = "area",
+              fill = "#8eb8c3", 
+              color = "#8eb8c3") +
+  # Fehler 1. Art
+  stat_function(fun = dnorm,
+              args = list(mean = 0, sd = 1),
+              xlim = c(qnorm(0.95, 0, 1), 
+                       qnorm(0.99999, 0, 1)),
+              geom = "area",
+              fill = "green", 
+              color = "green") +
+  ylab("Dichte P(x)") +
+  xlab("Z-Score")
+```
+
+# TODO: Beschreibe auf Grundlage der Visualisierung, was der Alpha Fehler ist.
+# TODO: Beschreibe auf Grundlage der Visualisierung, was der Beta Fehler ist 
 
