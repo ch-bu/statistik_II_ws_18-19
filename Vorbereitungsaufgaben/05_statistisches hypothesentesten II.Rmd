@@ -1,6 +1,6 @@
 ---
 title: "Statistik II - Vorbereitungsaufgabe"
-subtitle: "04 - Statistisches Hypothesentesten I"
+subtitle: "05 - Statistisches Hypothesentesten II"
 author: ""
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output:
@@ -16,13 +16,10 @@ knitr::opts_chunk$set(echo = TRUE)
 
 Für diese Vorbereitungsaufgabe schreibst du eine Erklärung zum Thema Statistisches Hypothesentesten Unter einer Erklärung versteht man einen Text, der in Lehr-Lern-Kontexten eingesetzt wird, um das Wissen oder Verstehen von Lernenden zu erweitern. Deine Erklärung sollte in etwa 1000 Wörter umfassen und für eine\*n Erstsemester\*in welche\*r kein Vorwissen über Statistisches Hypothesentesten hat, geschrieben sein. Folgende Begriffe solltest du in deiner Erklärung verwenden:
 
-* Nullhypothese
-* Alternativhypothese
-* Statistische Hypothese
-* z-Test
 * Signifikanzniveau
-* Fehlerarten
-
+* Alpha-Fehler
+* Beta-Fehler
+* Teststärke
 
 Schreibe einen Fließtext (keine Aufzählungen). Achte bei der Anfertigung der Erklärung darauf, dass deine Zielgruppe in der Lage ist, den Text ohne Zuhilfenahme anderer Materialien zu verstehen.
 

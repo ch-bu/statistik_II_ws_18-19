@@ -1,0 +1,224 @@
+---
+title: "Statistik II - Nachbereitungsaufgabe"
+subtitle: "04 Statistisches Hypothesentesten"
+author: ""
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+# Fragen zum statistischen Hypothesentesten I
+
+
+Liegt ein Stichprobenergebnis (z.B. Mittelwert) bei ungerichteter Hypothese im Ablehnungsbereich der Nullhypothese, so...
+
+- [] ist das Ergebnis signifikant.
+- [] wäre das Ergebnis auch bei gerichteter Hypothese signifikant. 
+- [] schneidet der Wert für das Stichprobenergebnis weniger als 2.5% der Fläche in der Richtung ab.
+- [] ist das Ergebnis nicht signifikant. 
+
+Der beta-Fehler meint...
+
+- [] die Irrtumswahrscheinlichkeit bei Annahme der H1 für ein Stichprobenergebnis
+- [] die Irrtumswahrscheinlichkeit bei Annahme der H0 für ein Stichprobenergebnis. 
+- [] die Irrtumswahrscheinlichkeit bei Ablehnung der H1 für ein Stichprobenergebnis. 
+
+Um einen hohen alpha- oder beta-Fehler zu vermeiden, ...
+
+- [] verändere ich den Stichprobenumfang. 
+- [] verändere ich die angegebene Größe in der Alternativhypothese. 
+- [] ändere ich nichts.
+- [] wähle ich ein anderes Signifikanzniveau.
+
+So gut wie jedes Stichprobenergebnis kann signifikant werden, .. (eine Antwort ist richtig).
+
+- [] wenn ich eine ausreichend große Stichprobe wähle. 
+- [] wenn ich eine andere Null- und Alternativhypothese wähle. 
+- [] wenn ich das richtige statistische Auswertungsverfahren wähle. 
+- [] wenn ich eine ausreichend repräsentative Stichprobe wähle. 
+
+Sie trainieren ein Jahr lang eine Gruppe von Läufer_innen, die sie so gut machen wollen, dass sie bei Olympia antreten können. Sie finden, dass das Lauftempo dieser Läufer_innen in der Tat signifikant besser ist als das von normalen Läufer_innen. Können Ihre Läufer_innen bei Olympia antreten? (eine Antwort ist richtig)
+
+- [] Ja, weil das Ergebnis signifikant ist.
+- [] Dies kann man so nicht beantworten, weil es auch wichtig ist zu wissen, wie viel besser die Läufer_innen sind. 
+- [] Nein, das Ergebnis müsste noch signifikanter sein. 
+
+
+# R-Anwendungsaufgaben
+
+```{r}
+# TODO: Lade Tidyverse
+```
+
+PISA ist eine internationale Schulstudie, welche in einem dreijährigen Turnus von der Gemeinschaft für Wirtschaftliche Zusammenarbeit (OECD) durchgeführt wird. Unter anderem erhebt PISA den Leistungsstand von Schüler\*innen in der Lese- und Rechtschreibfähigkeit, sowie in der Fähigkeit wissenschaftliche Sachverhalte zu begreifen. 
+
+In dieser Anwendungsaufgabe werden wir den Datensatz im Detail analysieren und dadurch deine Fähigkeiten, Daten mit R zu analysieren versuchen zu verbessern. Der Datensatz heißt `pisa.csv`. 
+
+Zunächst laden wir den Datensatz:
+
+```{r}
+# TODO: Datensatz mit read_csv einlesen und der Variable pisa zuordnen
+```
+
+Wie viele Reihen und Spalten hat der Datensatz? 
+
+```{r}
+# ToDO: Verwende die dim Funktion, um die Reihen und Spalten zu erhalten
+```
+
+Welche Variablen umfasst der Datensatz?
+
+```{r}
+# TODO: Verwende glimpse, um den Datensatz zu betrachten
+#       https://tibble.tidyverse.org/reference/glimpse.html
+```
+
+
+
+## Datenbereinigung
+
+Der Datensatz enthält ein paar Variablen, welche wir später nicht mehr brauchen werden. Entferne daher folgende Variablen: `Country Code`, `Series Code`, `2013 [YR2013]` und `2014 [YR2014]`.
+
+```{r}
+# TODO: Entferne die Variablen aus dem Datensatz
+#       TIPP: https://dplyr.tidyverse.org/reference/select.html (select verwenden)
+#       TIPP: Verwenden ein - Symbol vor der Variable
+#       TIPP: Speichere den Output von select erneut in PISA. Verwende den Pipe-Operator
+#       TIPP: Umschließe die Variable mit `variablennamen`. 
+```
+
+Nun haben wir alle wichtigen Variablen in unserem Datensatz. Die Variablennamen enthalten allerdings Leerzeichen und sind schwierig zu verstehen. Wir möchten die Variablennamen folgendermaßen ändern:
+
+* Country Name  -> country_name
+* Series Name   -> series_name
+* 2015 [YR2015] -> score
+
+```{r}
+# TODO: Benenne die drei Variablen um
+#       TIPP: https://dplyr.tidyverse.org/reference/select.html -> rename Funktion
+#       TIPP: Umschließe die alte Variable mit `variablenname` (da die Variable leerzeichen enthält)
+#       TIPP: der neue Variablenname steht links vom = Zeichen
+#       TIPP: Trenne die Änderungen mit einem Komma
+#       TIPP: Speichere den Output von select erneut in PISA. Verwende den Pipe-Operator
+```
+
+Die Variable score ist immer noch als Character gespeichert. Characters stehen für Zeichenketten. Score ist allerdings ein numerischer Wert. Ändern wir das daher:
+
+```{r}
+options(digits=5)
+pisa$score <- pisa$score %>% as.double
+```
+
+
+Die Variable series_name enthält sowohl die Domäne (z.B. Mathematik, Lesen) als auch der durchschnittliche Wert des Geschlechts. Damit wir nachher spezifische Aussagen für die Geschlechter machen können, müssen wir diese Variable in zwei Variablen auftrennen (siehe [separate](https://tidyr.tidyverse.org/reference/separate.html)):
+
+```{r}
+pisa <- pisa %>% 
+  separate(series_name, c("domain", "sex"), sep = "[.]")
+```
+
+Wenn wir nun den Dataframe ansehen, stellen wir fest, dass die Variable sex immer noch Leerzeichen enthält. Löschen wir diese:
+
+```{r}
+# TODO: Entferne die Leerzeichen in der Variable sex mit mutate und str_trim
+#       TIPP: https://stringr.tidyverse.org/reference/str_trim.html
+#       TIPP: https://dplyr.tidyverse.org/reference/mutate.html
+#       TIPP: Hier siehst du ein Template
+pisa <- NULL %>%
+  NULL(
+    sex = sex %>% NULL
+  )
+```
+
+Zuletzt ist unsere Variable `domain` noch unsauber. Statt `Mean performance on the mathematics scale` möchten wir `mathematics` erhalten. 
+
+```{r}
+# TODO: Vervollständige folgenden Code
+#       str_extract: https://stringr.tidyverse.org/reference/str_extract.html
+pisa <- NULL %>%
+  mutate(
+    domain = NULL %>% str_extract("(mathematics|reading|science)")
+  )
+```
+
+Wunderbar, nun haben wir einen sauberen Datensatz und können den Datensatz analysieren
+
+
+## Explorative Datenanalyse
+
+Zunächst möchten wir wissen, wie viele Länder an der Studie teilgenommen haben:
+
+```{r}
+# TODO: Zähle die Länder, die an der Studie teilgenommen haben
+#       TIPP: Verwende unique: https://dplyr.tidyverse.org/reference/tally.html
+#       TIPP: Verwende length: https://stat.ethz.ch/R-manual/R-devel/library/base/html/length.html
+```
+
+Wie gut waren die Studierenden über alle Länder hinweg in den drei Domänen? 
+
+```{r}
+# TODO: Berechne den Mittelwert für jedes der drei Domänen
+#       TIPP: Nutze group_by: https://dplyr.tidyverse.org/reference/group_by.html
+#       TIPP: Nutze summarise: https://dplyr.tidyverse.org/reference/summarise.html
+pisa %>% 
+  # Wir müssen die Daten nach sex == NA filtern, da
+  # uns nur die geschlechts unabhängigen Werte interessieren
+  filter(is.na(sex)) %>%
+  NULL(domain) %>%
+  NULL(mean = NULL %>% NULL(., na.rm = TRUE))
+```
+
+Wie stark streuen die Werte für die drei Domänen eigentlich? Erstellen wir einen Boxplot, um die Streuung zu betrachten:
+
+```{r}
+# TODO: Vervollständige den Boxplot. Ersetze NULL
+#       TIPP: https://ggplot2.tidyverse.org/reference/geom_boxplot.html
+ggplot(pisa, aes(x = domain, y = score, fill = NULL)) +
+  NULL()
+```
+
+Welches Land hat eigentlich im Leseverständnis am besten abgeschlossen? 
+
+```{r}
+# TODO: Sortiere die Leistung der Länder nach dem Leseverständnis ihrer Schüler
+reading_score_descending <- pisa %>%
+  # Nutze filter, um den Datensatz nach den Lesefertigeiten zu filtern
+  filter(is.na(sex), NULL) %>%
+  # Sortiere die Werte nach der Lesefähigkeit mit arrange:
+  # https://dplyr.tidyverse.org/reference/arrange.html
+  NULL(desc(NULL)) %>%
+  # Filter die Länder, die fehlende Werte haben (Nutze is.na und ! davor)
+  # https://dplyr.tidyverse.org/reference/filter.html
+  filter(NULL)
+```
+
+Das Ergebnis können wir zum Schluss visualisieren:
+
+```{r}
+ggplot(reading_score_descending, aes(reorder(country_name, score), 
+                                     score, fill = score)) +
+  geom_bar(stat = "identity") + 
+  # Das Koordinatensystem umdrehen
+  coord_flip() +
+  scale_fill_continuous(type = "viridis") +
+  guides(fill = FALSE)
+```
+
+
+Können Frauen eigentlich wirklich besser lesen als Männer? 
+
+```{r}
+# TODO: Versuche selbstständig aus den Funktionen, die du heute gelernt hast
+#       diese Frage zu beantworten. Es genügt, wenn du die Mittelwerte 
+#       zwischen Männern und Frauen vergleichst.
+```
+
+
+
+

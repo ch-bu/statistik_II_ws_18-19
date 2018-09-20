@@ -21,7 +21,6 @@ Bitte vervollständige folgenden Satz:
 
 Eine Zufallsvariable ist eine *TODO*, die den Ergebnissen eines Zufallsexperiments (d.h. Elementarereignissen oder Ereignissen) reelle *TODO* zuordnet.
 
-
 ## Frage 2
 
 Ordnen Sie folgende Definitionen den richtigen Begriffen zu:
@@ -31,7 +30,6 @@ Ordnen Sie folgende Definitionen den richtigen Begriffen zu:
 
 * Diskrete Zufallsvariable
 * Stetige Zufallsvariable
-
 
 ## Frage 3
 

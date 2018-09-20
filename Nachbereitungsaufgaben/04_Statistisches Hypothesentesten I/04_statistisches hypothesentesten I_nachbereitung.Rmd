@@ -54,7 +54,7 @@ Wenn man einen statistisch signifikanten Mittelwert von 10 bei einem Signifikanz
 
 # R-Anwendungsaufgaben
 
-In dieser Aufgabe setzen wir das PASSEND System an einem konkreten Beispiel um. Als Beispiel verwenden wir einen Datensatz zum Thema Diät. 78 Personen haben an einer Diät teilgenommen und ihr Gewicht über 6 Wochen gemessen. Wir möchten nun heraus finden, ob die Diät hilft, mehr als 3.5 Kilo durch die Diät abgenommen haben.
+In dieser Aufgabe setzen wir das PASSEND System an einem konkreten Beispiel um. Als Beispiel verwenden wir einen Datensatz zum Thema Diät. 78 Personen haben an einer Diät teilgenommen und ihr Gewicht über 6 Wochen gemessen. Wir möchten nun heraus finden, ob die Diät hilft, mehr als 3.5 Kilo durch die Diät abzunehmen.
 
 Zunächst laden wir das Paket tidyverse und den Datensatz `diet.csv`:
 
