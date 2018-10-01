@@ -25,4 +25,22 @@ Schreibe einen Fließtext (keine Aufzählungen). Achte bei der Anfertigung der E
 
 # Erklärung zum Thema Statistisches Hypothesentesten
 
-TODO: Füge hier deine ~ 800 Wörter lange Erklärung ein. 
+> TODO: Füge hier deine ~ 800 Wörter lange Erklärung ein. 
+
+## Fragen zur Revision
+
+Wie lange hast du an der Erklärung geschrieben? 
+
+> TODO: Bitte in Minuten angeben
+
+Wie stark hast du dich gerade beim Verfassen der Erklärung angestrengt (1: Sehr stark angestrengt; 9: gar nicht angestrengt)?  
+
+> TODO: Bitte Antwort hier eintragen
+
+Wie schwierig war es für dich die Erklärung zu verfassen (1: Sehr schwierig, 9 gar nicht schwierig)? 
+
+> TODO: Bitte Antwort hier eintragen
+
+Wie verständlich schätzt du deine Erklärung ein (1: Sehr verständlich; 5 gar nicht verständlich)? 
+
+> TODO: Bitte Antwort hier eintragen
