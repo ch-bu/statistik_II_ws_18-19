@@ -13,112 +13,128 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 
-# Fragen zur Wahrscheinlichkeitsrechnung
+# Revision deiner Erklärung zum Thema Wahrscheinlichkeitstheorie
+
+Als Vorbereitungsaufgaben hast du eine Erklärung zum Thema Wahrscheinlichkeitstheorie geschrieben. Nun sollst du diese Erklärung revidieren. Revidieren bedeutet, dass du (1) deine Erklärung auf Richtigkeit und Korrektheit überprüfst, und (2) deine Erklärung nach den Kriterien der Richtigkeit und Korrektheit überarbeitest. Achte bei dieser Revision auf folgender Leitfragen:
+
+* Hast du in das übergeordnete Thema deiner Erklärung eingeführt? 
+* Hast du die relevanten Konzepte deiner Erklärung benannt und ausreichend erklärt? 
+* Hast du die relevanten Konzepte deiner Erklärung logisch und sinnvoll miteinander verbunden? 
+* Hast du die relevanten Konzepte deiner Erklärung durch gute Beispiele illustriert? 
+
+Nimm dir für die Revision deiner Erklärung in etwa 45 Minuten Zeit und versuche auf die Erklärung hinsichtlich dieser Leitfragen zu überarbeiten. 
+
+> TODO: Füge hier deine revidierte Erklärung ein.
 
 
-## Ereignisraum, Axiome der Wahrscheinlichkeit
+## Fragen zur Revision
 
-Sie haben N = 100 Personen zum Mögen von Statistik auf einer Skala von 1 = gar nicht bis 5 = total gerne befragt. Wie viele Elemente umfasst der Ergebnisraum?
+Wie lange hast du an der Revision geschrieben? 
 
-- [] 1
-- [] 5
-- [] 0
-- [] 100
+> TODO: Bitte in Minuten angeben
 
-Wie lautet das Zeichen für den Ergebnisraum?
+Wie stark hast du dich gerade bei der Revisions der Erklärung angestrengt (1: Sehr stark angestrengt; 9: gar nicht angestrengt)?  
 
-- [] Delta
-- [] Beta
-- [] Omega
-- [] Alpha
+> TODO: Bitte Antwort hier eintragen
 
-Wann ist die Wahrscheinlichkeit P = 1?
+Wie schwierig war es für dich die Erklärung zu revidieren (1: Sehr schwierig, 9 gar nicht schwierig)? 
 
-- [] Wenn Anzahl möglicher Elementarereignisse kleiner als Anzahl günstiger Elementarereignisse ist
-- [] Wenn Anzahl möglicher Elementarereignisse größer als Anzahl günstiger Elementarereignisse ist.
-- [] Wenn Anzahl möglicher Elementarereignisse gleich Anzahl günstiger Elementarereignisse ist. 
-- [] Wenn es eine leere Menge gibt.
+> TODO: Bitte Antwort hier eintragen
 
-Um die Wahrscheinlichkeit zu ermitteln, dividiert man...
+Wie verständlich schätzt du deine revidierte Erklärung ein (1: Sehr verständlich; 5 gar nicht verständlich)? 
 
-- [] die Anzahl der günstigen Ereignisse durch die Anzahl der möglichen Ereignisse
-- [] die Anzahl der möglichen Ereignisse durch die Anzahl der günstigen Ereignisse.
-- [] die Anzahl der positiven Ereignisse durch die Anzahl der negativen Ereignisse.
-- [] die Anzahl der negativen Ereignisse durch die Anzahl der positiven Ereignisse.
-
-
-## Bedingte und unbedingte Wahrscheinlichkeiten
-
-|                         | Regelmäßig laufen (B)            |        |
-|-------------------------|-----------------|-----------|--------|
-| Lebenszufriedenheit (A) | ja (B1)           | nein (B2) | Gesamt |
-| gering (A1)             | 30                | 70        | 100    |
-| hoch (A2)               | 80                | 120       | 200    |
-| Gesamt                  | 110               | 190       | 300    |
-
-Wie groß ist die Wahrscheinlichkeit P, eine Person zu ziehen, die eine hohe Lebenszufriedenheit hat?
-
-- [] 100/200
-- [] 100/300
-- [] 200/300
-
-
-Wie groß ist die Wahrscheinlichkeit, eine Person mit hoher Lebenszufriedenheit zu ziehen unter der Bedingung, dass sie nicht regelmäßig läuft?
-
-- [] 120/190
-- [] 70/190
-- [] 120/200
-
-
-Im Oktober 1995 hat der britische Ausschuss für die Sicherheit von Arzneimitteln eine Warnung herausgegeben, dass orale Verhütungsmittel der dritten Generation das Risiko von potenziell lebensbedrohlichen Blutgerinnseln bei der Behandlung von die Beine oder die Lunge doppelt, das heißt zu 100%. Nehmen wir an, du oder dein Partner hast das Verhütungsmittel zweiter Generation bisher genommen und ihr überlegt nun, ob ihr auf das Verhütungsmittel dritter Generation umsteigen solltet. Wie würdest du handeln? Versuche die Fragen mit deinem Wissen um die Wahrscheinlichkeitsrechnung zu beantworten. 
-
-TODO: Trage bitte hier deine Antwort ein.
+> TODO: Bitte Antwort hier eintragen
 
 
 # R Anwendungsaufgaben
 
-Der Zweck der Nachbereitungsaufgaben besteht darin, dich mit R vertraut zu machen und einige Kernkonzepte des Seminars vertieft zu behandeln. 
+Der Zweck der Nachbereitungsaufgaben besteht darin, dich mit R vertraut zu machen und die Inhalte des Seminars in R anzuwenden. Du wirst in diesen Nachbereitungsaufgaben lernen, wie man Pakete einliest, Pakete installiert, Befehle ausführt, Befehle sucht, Daten explorativ untersucht, Daten konfirmatorisch untersucht und Daten visualisiert. Bei den Aufgaben geht es *nicht* darum, dass du Befehle auswendig lernst, sondern lernst, Daten mit R zu analysieren. Die Nachbereitungsaufgaben verfolgen die Idee des [Overlearning](https://en.wikipedia.org/wiki/Overlearning). Du wirst die gleichen Befehle immer wieder neu anwenden, bis du sie automatisch durchführen kannst. 
+
+In den ersten Wochen des Seminars wirst du vor allem Daten einlesen und explorativ analysieren. Später wirst du zudem statistische Verfahren des Seminars anwenden. Zudem gibt es vereinzelt noch freiwillige Vertiefungsaufgaben. Diese Aufgaben sind inhaltlich schwerer und sind *nicht verpflichtend*. 
+
 
 ## Pakete installieren
 
-Stelle sicher, dass du [alle nötigen Softwares und Pakete installiert hast](https://github.com/ch-bu/statistik_II_ws_18-19), die wir für dieses Semester brauchen. 
+Stelle sicher, dass du [alle nötigen Softwares und Pakete installiert hast](https://github.com/ch-bu/statistik_II_ws_18-19), die wir für dieses Semester brauchen. Wir verwenden im Laufe des Seminars immer wieder ähnliche R-Pakete (z.B. tidyverse, afex, psych). Für diese Vorbereitungsaufgabe brauchen wir die Pakete tidyverse und lubridate. Jedes Paket muss zunächst installiert werden, bevor es geladen werden  kann. Mit folgendem Befehl kannst du diese beiden Pakete installieren (siehe auch [hier](https://www.r-bloggers.com/installing-r-packages/)):
 
-Zunächst laden wir das Paket [tidyverse](https://www.tidyverse.org/):
+```{r}
+# Zum Ausführen bitte die letzten beiden Zeilen auskommentieren:
+# Mehr INformationen: https://intelligea.wordpress.com/2013/06/30/inline-and-block-comments-in-r/
+# install.packages("tidyverse")
+# install.packages("lubridate")
+```
+
+Damit wir die Befehle der Pakete ausführen können, müssen wir die Pakete erst laden:
 
 ```{r,message=FALSE, warning=FALSE}
-library(tidyverse)
+library(tidyverse) # Installieren mit install.packages("tidyverse")
 library(lubridate) # Installieren mit install.packages("lubridate")
 ```
 
-Sollten es nicht möglich sein, tidyverse zu installieren, hole dir im [Slack Channel Hilfe](https://statistik-2.slack.com/messages/CCMG5NSN4/). 
+Sollten es nicht möglich sein, die Pakete zu installieren, hole dir im [Slack Channel Hilfe](https://statistik-2.slack.com/messages/CCMG5NSN4/). 
 
-Tidyverse ist eine Gruppe an Paketen zur Datenanalyse mit einer einheitlichen Philosophie. Wir werden im Verlauf des Semesters starken Gebrauch des Pakets machen. Die einzelnen Funktionen wirst du im Verlauf des Seminars durch die Vor- und Nachbereitungsaufgaben kennen lernen. Um dich tiefer in tidyverse einzulesen, schaue dir das Bauch [R for Data Science](http://r4ds.had.co.nz/) an. Das Buch ist in der Online-Version kostenlos. 
+Tidyverse ist eine Gruppe an Paketen zur Datenanalyse mit einer einheitlichen Philosophie. Wir werden im Verlauf des Semesters starken Gebrauch des Pakets machen. Die einzelnen Funktionen wirst du im Verlauf des Seminars durch die Vor- und Nachbereitungsaufgaben kennen lernen. Um dich tiefer in tidyverse einzulesen, schaue dir das Buch [R for Data Science](http://r4ds.had.co.nz/) an. Das Buch ist in der Online-Version kostenlos. 
 
 ## Geburtstagsdatensatz 
 
-Für die folgenden Aufgaben verwenden wir einen Datensatz berühmter Personen, die zwischen 2007 und 2016 gestorben sind. Zunächst müssen wir den Datensatz einlesen. In diesem Fall handelt es sich um eine CSV-Datei, deren Werte durch *Kommas* getrennt sind. Für einen solchen Datensatz verwenden wir in diesem Semester die Funktion [read_csv](https://readr.tidyverse.org/reference/read_delim.html) aus dem Paket readr, welches durch Tidyverse bereit gestellt wird. 
+Für die folgenden Aufgaben verwenden wir einen Datensatz berühmter Personen, die zwischen 2007 und 2016 gestorben sind. Zunächst müssen wir den Datensatz einlesen. In diesem Fall handelt es sich um eine CSV-Datei, deren Werte durch *Kommas* getrennt sind. Für einen solchen Datensatz verwenden wir in diesem Semester die Funktion [read_csv](https://readr.tidyverse.org/reference/read_delim.html) aus dem Paket readr, welches durch Tidyverse bereit gestellt wird. Die Funktion read_csv geht davon aus, dass die Daten durch ein **Komma** getrennt sind. Hier siehst du die ersten Zeilen des Datensatzes.
+
+```
+year,month,name,age,desc,cause_of_death,nationality,page_size,date_of_birth,date_of_death
+2013,9,Zvonko Bušić,9,"Croatian airplane hijacker (TWA Flight 355), suicide by gunshot",suicide by gunshot,Croatian,,,
+2013,9,Joaquim Justino Carreira,9,"Portuguese-born Brazilian Roman Catholic prelate, Bishop of Roman Catholic Diocese of Guarulhos (since 2011)",,Portuguese-born Brazilian Roman Catholic,,,
+2013,9,Pál Csernai,9,"Hungarian footballer and manager (FC Bayern Munich, North Korea national football team)",,Hungarian,,,
+2013,9,Ignacio Eizaguirre,9,"Spanish footballer (Valencia CF, Real Sociedad, Spain national football team)",,Spanish,,,
+2013,9,Ole Ernst,9,Danish actor,,Danish,,,
+```
+
+Währen die Daten durch ein **Semikolon** getrennt, müssten wir die [read_csv2]((https://readr.tidyverse.org/reference/read_delim.html) Funktion verwenden: 
+
+```
+year;month;name;age;desc;cause_of_death;nationality;page_size;date_of_birth;date_of_death
+2013;9;Zvonko Bušić;9;"Croatian airplane hijacker (TWA Flight 355); suicide by gunshot";suicide by gunshot;Croatian;;;
+2013;9;Joaquim Justino Carreira;9;"Portuguese-born Brazilian Roman Catholic prelate; Bishop of Roman Catholic Diocese of Guarulhos (since 2011)";;Portuguese-born Brazilian Roman Catholic;;;
+2013;9;Pál Csernai;9;"Hungarian footballer and manager (FC Bayern Munich; North Korea national football team)";;Hungarian;;;
+2013;9;Ignacio Eizaguirre;9;"Spanish footballer (Valencia CF; Real Sociedad; Spain national football team)";;Spanish;;;
+2013;9;Ole Ernst;9;Danish actor;;Danish;;;
+```
 
 ```{r}
 # TODO: Lese den Datensatz mit read_csv ein und speicher den Datensatz
 #       in der Variable celebs. Der Datensatz lautet celeb_dataset.csv
+# TIPP: Variblen deklarieren - https://www.statmethods.net/management/variables.html
 ```
 
-Im nächsten Schritt machen wir uns mit dem Datensatz vertraut.
-
-Am Anfang ist es immer ratsam, sich die Variablen des Datensatzes anzuschauen. [Glimpse](https://tibble.tidyverse.org/reference/glimpse.html) ist hierfür recht praktisch. 
+Am Anfang der Analyse eines Datensatzes ist es immer ratsam, sich die Variablen des Datensatzes anzuschauen. [Glimpse](https://tibble.tidyverse.org/reference/glimpse.html) ist hierfür recht praktisch. 
 
 ```{r}
 # TODO: Nutze glimpse, um den Datensatz anzuschauen
 ```
 
-Wie viele Reihen hat der Datensatz? 
+Wie viele Reihen hat der Datensatz?
 
 ```{r}
 # TODO: Gebe dir die Anzahl der Reihen mit der Funktion nrow() aus
 #       https://www.rdocumentation.org/packages/base/versions/3.5.1/topics/nrow
 ```
 
-Was war die häufigste Todesursache unter den Prominenten? Um Werte zu zählen, können wir die [count](https://dplyr.tidyverse.org/reference/tally.html) Funktion verwenden. Um die Liste in eine Reihenfolge zu bringen, brauchen wir die Funktion [arrange](https://dplyr.tidyverse.org/reference/arrange.html). Vervollständige folgenden Befehl und führ in dann aus (NULL ersetzen):
+Wir werden immer wieder den [Pipe-Operator](https://magrittr.tidyverse.org/reference/pipe.html) verwenden. Der Pipe Operator vereinfacht die Lesbarkeit deines Codes, indem wir Funktionen nicht mehr verschachteln müssen. Hier ein Beispiel:
+
+```{r}
+mean(c(1, 2, 3))
+c(1, 2, 3) %>% mean
+c(1, 2, 3) %>% mean(., na.rm = TRUE)
+c(1, 2, 3) %>% mean(.)
+```
+
+Jeder dieser Befehle ist inhaltlich gleich. Der Unterschied besteht darin, dass wir die Funktionen aneinander reihen, statt sie zu verschachteln. Der Pipe Operator füttert den Output der linken Seite (hier: `c(1, 2, 3)`) in das erste Argument der rechten Funktion (hier: `mean(.)`). Der Punkte steht für den Output, welcher übergeben wird. 
+
+```{r}
+# TODO: Bereche mit Hilfe des Pipe-Operators den Mittelwert der Variable age im 
+#       Datensatz celebs
+```
+
+Im nächsten Schritt verwenden wir den Pipe-Operator für ein schwierigeres Beispiel. Was war die häufigste Todesursache unter den Prominenten? Um Werte zu zählen, können wir die [count](https://dplyr.tidyverse.org/reference/tally.html) Funktion verwenden. Um die Liste in eine Reihenfolge zu bringen, brauchen wir die Funktion [arrange](https://dplyr.tidyverse.org/reference/arrange.html). Vervollständige folgenden Befehl und führe ihn dann aus (NULL ersetzen):
 
 `
 celebs %>%
@@ -128,18 +144,9 @@ celebs %>%
 
 ```{r}
 # TODO: Hier den Code einfügen
+# TIPP: Führe zunächst die count Funktion aus und schaue,
+#       welche Variablennamen ausgegeben werden
 ```
-
-In diesem Befehl haben wir zum ersten Mal von dem [Pipe-Operator](https://magrittr.tidyverse.org/reference/pipe.html) gebrauch gemacht. Der Pipe Operator vereinfacht die Lesbarkeit deines Codes, indem wir Funktionen nicht mehr verschachteln müssen. Hier ein Beispiel:
-
-```{r}
-mean(c(1, 2, 3))
-c(1, 2, 3) %>% mean
-c(1, 2, 3) %>% mean(., na.rm = TRUE)
-c(1, 2, 3) %>% mean(.)
-```
-
-Jeder dieser Befehle ist inhaltlich gleich. Der Unterschied besteht darin, dass wir die Funktionen aneinander reihen, statt sie zu verschachteln. Der Pipe Operator füttert den Output der linken Seite (hier: `c(1, 2, 3)`) in das erste Argument der rechten Funktion (hier: `mean(.)`). Der Punkte steht für den Output, welcher übergeben wird.
 
 Unser Count-Beispiel könnte daher auch folgendermaßen aussehen: 
 
@@ -152,6 +159,11 @@ Stattdessen übergeben wir den Output des Dataframes (celebs) in die Funktion co
 ```{r}
 celebs %>%
   count(., cause_of_death)
+
+# ODER
+
+celebs %>%
+  count(cause_of_death)
 ```
 
 Als letztes möchten wir sehen, wie sich die Geburtstage der Prominenten verteilen. Die Variable `date_of_birth` liegt bereits als date-Variable vor (siehe glimpse), von daher können wir die Geburtstage in einem Histogram abtragen. Versuche folgenden Code zu vervollständigen (siehe [ggplot2](https://ggplot2.tidyverse.org/reference/geom_histogram.html):
@@ -165,9 +177,26 @@ ggplot(celebs, aes(x = NULL)) +
 
 ```{r}
 # TODO: Histogram erstellen
+# TIPP: Schaue dir das erste Beispiel im Link zu ggplot2 an
+#       https://ggplot2.tidyverse.org/reference/geom_histogram.html
 ```
 
-Ok, wir wollten eigentlich die Geburtstage unabhängig vom Jahr betrachten, um zu prüfen, ob die Geburtstage über das Jahr uniformverteilt sind. Dazu müssen wir eine neue Variable erstellen. Hierfür nutzen wir die Funktion [mutate](https://dplyr.tidyverse.org/reference/mutate.html). Wir haben das Glück, dass die Variable date_of_birth gut strukturiert ist und die Struktur `2014-03-13` hat. Wir müssen daher nichts anderes tun als die ersten 5 Zeichen des Strings mit dem Jahr 2018 zu ersetzen und eine Datevariable daraus zu erstellen (siehe [ymd](https://lubridate.tidyverse.org/reference/ymd.html)).
+Nun wollen wir sehen, ob die Geburtstage innerhalb eines Jahres uniform verteilt sind. Dazu müssen wir die Geburtstage unabhängig vom Jahr betrachten. Hierzu müssen wir eine neue Variable erstellen. Um neue Variablen zu erstellen, nutzen wir in diesem Seminar hautsächlich die Funktion [mutate](https://dplyr.tidyverse.org/reference/mutate.html). Orientiere dich an folgendem Code:
+
+`
+celebs <- celebs %>%
+  mutate(
+    test = TODO
+  )
+`
+
+```{r}
+# TODO: Erstelle eine neue Variable mit dem Namen test.
+#       Die Variable sollte folgendermaßen berechnet werden:
+#       age**2 (Das Alter der Personen im Quadrat)
+```
+
+Wir haben das Glück, dass die Variable date_of_birth gut strukturiert ist und die Struktur `2014-03-13` hat. Wir müssen daher nichts anderes tun als die ersten 5 Zeichen des Strings mit dem Jahr 2018 zu ersetzen und eine Datevariable daraus zu erstellen (siehe [ymd](https://lubridate.tidyverse.org/reference/ymd.html)).
 
 ```{r}
 celebs <- celebs %>%
@@ -184,7 +213,7 @@ Nun können wir schauen, wie sich die Geburtstage über das Jahr verteilen. Verv
 `
 ggplot(celebs, aes(NULL)) +
   NULL(fill = "steelblue", 
-                 color = "black") +
+       color = "black") +
   scale_x_date(date_breaks = "4 week", 
                date_labels = "%W")
 `
@@ -192,6 +221,7 @@ ggplot(celebs, aes(NULL)) +
 ```{r}
 # TODO: Histogram hier einfügen
 ```
+
 
 ## Freiwillige Aufgabe: Das Geburtstagsproblem 
 
@@ -231,12 +261,14 @@ In diesem Beispiel quadrieren wir die einzelnen Werte des Vektors `c(1:23)`.
 
 Erstelle als nächstes eine Sequenz der Zahlen 365 bis 1. Vervollständige hierfür den Wert `NULL` in folgendem Befehl:
 
-`day_in_year_sequence <- seq(NULL:1) %>% 
+`day_in_year_sequence <- seq(from = NULL, to = 1) %>% 
   sort(., decreasing = NULL)
 `
 
 ```{r}
 # TODO: Bitte hier den Befehl eintragen
+# TIPP: https://stat.ethz.ch/R-manual/R-devel/library/base/html/sort.html
+#       https://www.rdocumentation.org/packages/base/versions/3.5.1/topics/seq
 ```
 
 Nun können wir die Wahrscheinlichkeit berechnen, dass 23 Personen, die wir Stück für Stück aus einem Raum ziehen *nicht* den gleichen Geburtstag haben. Tausche hierfür in folgendem Code die `NULL` durch die richtigen Elemente aus:
