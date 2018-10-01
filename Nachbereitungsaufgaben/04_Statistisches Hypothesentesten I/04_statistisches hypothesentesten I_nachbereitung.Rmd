@@ -1,6 +1,6 @@
 ---
 title: "Statistik II - Nachbereitungsaufgabe"
-subtitle: "04 Statistisches Hypothesentesten"
+subtitle: "04 Statistisches Hypothesentesten I"
 author: ""
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output:
@@ -13,43 +13,43 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 
-# Fragen zum statistischen Hypothesentesten I
--
-Bringen Sie die Schritte in die richtige Reihenfolge.
+# Revision deiner Erklärung zum Thema Statistisches Hypothesentesten I
 
-* Aufstellen eines statistischen Hypothesenpaars 
-* Bestimmung der statistischen Kennwerte 
-* Bestimmung der Stichprobenkennwerteverteilung für Nullhypothese 
-* Bestimmung der Wahrscheinlichkeit p(E|H0) für Auftreten von Stichprobenergebnis E unter H0 
-* Deutung der Wahrscheinlichkeit
+Als Vorbereitungsaufgaben hast du eine Erklärung zum Thema Statistisches Hypothesentesten I geschrieben. Nun sollst du diese Erklärung revidieren. Revidieren bedeutet, dass du (1) deine Erklärung auf Richtigkeit und Korrektheit überprüfst, und (2) deine Erklärung nach den Kriterien der Richtigkeit und Korrektheit überarbeitest.
 
-Die Alternativhypothese nimmt Folgendes an:
+Verwende für die Revision das **visuelle Feedback**, welches dir über [Slack](https://statistik-2.slack.com/messages/CCN7ZMYE6) zur Verfügung gestellt wird. Versuche aus dem visuellen Feedback folgende Leitfragen zu beantworten und in deiner Revision einzupflegen:
 
-- [] Einen Unterschied
-- [] Keinen Zusammenhang
-- [] Eine Veränderung
-- [] Eine Veränderung
-- [] Einen Zusammenhang in der nicht erwarteten Richtung
+* Hast du in das übergeordnete Thema deiner Erklärung eingeführt? 
+* Hast du die relevanten Konzepte deiner Erklärung benannt und ausreichend erklärt? 
+* Hast du die relevanten Konzepte deiner Erklärung logisch und sinnvoll miteinander verbunden?
+* Hast du die relevanten Konzepte deiner Erklärung durch gute Beispiele illustriert?
 
-Zur Überprüfung der statistischen Signifikanz zieht man folgende Verteilung heran:
+Nimm dir für die Revision deiner Erklärung in etwa 45 Minuten Zeit und versuche auf die Erklärung hinsichtlich dieser Leitfragen zu überarbeiten. 
 
-- [] Populationsverteilung 
-- [] Stichprobenverteilung
-- [] Stichprobenkennwertverteilung
-- [] Gleichverteilung
+> TODO: Füge hier deine revidierte Erklärung ein.
 
-Ein Ergebnis ist signifikant, wenn der empirische Wert für ein Stichprobenergebnis (z.B. Mittelwert)...
 
-- [] gleich dem kritischen Wert ist und damit genau 5% der Fläche der Verteilung abschneidet. 
-- [] größer dem kritischen Wert ist und dabei mehr als 5% der Fläche der Verteilung auf der rechten Seite abschneidet. 
-- [] größer dem kritischen Wert ist und dabei weniger als 5% der Verteilung auf der rechten Seite abschneidet. 
-- [] kleiner dem kritischen Wert ist und dabei weniger als 5% der Verteilung auf der linken Seite abschneidet.
+## Fragen zur Revision
 
-Wenn man einen statistisch signifikanten Mittelwert von 10 bei einem Signifikanzniveau von 5% erhält (bei einer Population mit dem Mittelwert 6), dann...
+Wie lange hast du an der Revision geschrieben? 
 
-- [] sind 5% der Stichproben fehleranfällig. 
-- [] könnte der Mittelwert der Stichprobe in höchstens 1% aller Fälle doch von der Population mit einem Mittelwert on 6 stammen. 
-- [] schneidet der Wert 10 weniger als 5% der Fläche der Stichprobenkennwerteverteilung mit dem Mittelwert 6 auf der rechten Seite ab. 
+> TODO: Bitte in Minuten angeben
+
+Wie stark hast du dich gerade bei der Revisions der Erklärung angestrengt (1: Sehr stark angestrengt; 9: gar nicht angestrengt)?  
+
+> TODO: Bitte Antwort hier eintragen
+
+Wie schwierig war es für dich die Erklärung zu revidieren (1: Sehr schwierig, 9 gar nicht schwierig)? 
+
+> TODO: Bitte Antwort hier eintragen
+
+Wie verständlich schätzt du deine revidierte Erklärung ein (1: Sehr verständlich; 5 gar nicht verständlich)? 
+
+> TODO: Bitte Antwort hier eintragen
+
+Wie gut konntest du auf Grundlage des visuellen Feedbacks Revisionen ableiten (1: Gar nicht, 2: wenig, 3: mittelmäßig, 4: gut, 5 sehr gut)? 
+
+> TODO: Bitte in Minuten angeben
 
 
 # R-Anwendungsaufgaben
@@ -75,7 +75,7 @@ Zähle die Anzahl der Personen mit `nrow`:
 # TODO: Anzahl der Personen zählen
 ```
 
-Uns liegen lediglich die Variablen `pre.weight` und `weight6weeks` vor, nicht aber eine Variable für die **Veränderung des Gewichts* über die sechs Wochen. Erstelle daher mit [mutate](https://dplyr.tidyverse.org/reference/mutate.html) die Variable `weight_diff` und speichere das Ergebnis erneut im Datensatz diet:
+Uns liegen lediglich die Variablen `pre.weight` und `weight6weeks` vor, nicht aber eine Variable für die *Veränderung des Gewichts über die sechs Wochen*. Erstelle daher mit [mutate](https://dplyr.tidyverse.org/reference/mutate.html) die Variable `weight_diff` und speichere das Ergebnis erneut im Datensatz diet:
 
 ```{r}
 # TODO: Die Variable weight_diff erstellen
@@ -93,7 +93,7 @@ Zunächst müssen wir ein statistisches Hypothesenpaar aufstellen. Formuliere bi
 
 ## 2. Bestimmung der statistischen Kennwerte (paSsend)
 
-Um unsere Hypothese zu prüfen, benötigen wir die Populationskennwerte und die Stichprobenkennwerte. Für die Population gelten folgende Werte. Tragen die fehlenden Werte durch eine kurze R-Funktion ein (hier: NULL). 
+Um unsere Hypothese zu prüfen, benötigen wir die Populationskennwerte und die Stichprobenkennwerte. Für die Population gelten folgende Werte. Trage die fehlenden Werte durch eine kurze R-Funktion ein (hier: NULL). 
 
 * Populationsmittelwert: $\mu$ = 3.5
 * Populationsstandardabweichung: $\sigma$ = 2
@@ -116,7 +116,7 @@ ggplot(tibble(x = c(-4, 11)), aes(x)) +
   xlab("Z-Score")
 ```
 
-Diese Stichprobenkennwertverteilung erhalten wir, wenn wir aus einer Population mit dem Mittelwert 3.5 und einer Standardabweichung 2 unendliche viele Mittelwerte berechnen und diese als Histogram darstellen. Wir müssen lediglich die Häufigkeiten auf der Y-Achse als Dichtefunktion darstellen und erhalten diese Stichprobenkennwertverteilung.
+Diese Stichprobenkennwertverteilung erhalten wir, wenn wir aus einer Population mit dem Mittelwert 3.5 und einer Standardabweichung 2 tausende viele Mittelwerte berechnen und diese als Histogram darstellen. Wir müssen lediglich die Häufigkeiten auf der Y-Achse als Dichtefunktion darstellen und erhalten diese Stichprobenkennwertverteilung.
 
 
 ## 4. Bestimmung der Wahrcheinlichkeit $p(E|H_0)$ für Auftreten von Stichprobenergebnis $E$ unter $H_0$ (passENd)
@@ -125,9 +125,9 @@ Wann gehen wir nun davon aus, dass unsere Diät funktioniert? Wenn wir nun einen
 
 Handelt es sich bei unserer Hypothese um eine gerichtete oder ungerichtete Hypothese? 
 
-TODO: Antwort einfügen
+> TODO: Antwort einfügen
 
-Normalerweise standardisieren wir die Stichprobenkennwertverteilung der Mittelwerte auf eine Standardnormalverteilung. Erinnere dich, dass die Standardnormalverteilung einen Mittelwert von 0 und eine Standardabweichung von 1 hat: 
+Um unsere Hypothese zu prüfen, verwendet man allerdings selten die unstandardisierte Stichprobenkennwertverteilung mit dem realen Mittelwert und der realen Standardabweichung, sondern standardisieren diese Werte durch z.B. eine Z-Transformation zu einer Standardnormalverteilung. Erinnere dich, dass die Standardnormalverteilung einen Mittelwert von 0 und eine Standardabweichung von 1 hat. Hier siehst du die Standardnormalverteilung visualisiert.
 
 ```{r}
 ggplot(tibble(x = c(-5, 5)), aes(x)) +  
@@ -139,7 +139,7 @@ ggplot(tibble(x = c(-5, 5)), aes(x)) +
   xlab("Z-Score")
 ```
 
-Visualisieren wir nun den Bereich, der uns dazu bringen würde, die H0 abzulehnen und die H1 anzunehmen:
+Visualisieren wir nun den Bereich, der uns dazu bringen würde, die H0 abzulehnen und die H1 anzunehmen.
 
 ```{r}
 ggplot(tibble(x = c(-5, 5)), aes(x)) +  
@@ -160,15 +160,21 @@ ggplot(tibble(x = c(-5, 5)), aes(x)) +
 
 Fällt unser Mittelwert in den grünen Bereich, dann ..
 
-# TODO: Trage ein, was wir dann bezüglich unserer Hypothese annehmen.
-# TODO: Beschreibe, was der grüne Bereich darstellt.
-# TODO: Wie steht der grüne Bereich mit der Wahrscheinlichkeit p(E|H0) in Verbindung? 
+> TODO: Trage ein, was wir dann bezüglich unserer Hypothese annehmen.
+
+> TODO: Beschreibe, was der grüne Bereich darstellt.
+
+> TODO: Wie steht der grüne Bereich mit der Wahrscheinlichkeit p(E|H0) in Verbindung? 
 
 Ab welchem Wert behaupten wir eigentlich, dass unser Ereignis (der z-Wert der Gewichtsreduzierung der Stichprobe) ungewöhnlich ist? Dafür können wir die Funktion `qnorm` verwenden. Die Funktion hat ein zentrales Argument (siehe: `?qnorm`): `p`. `p` steht das Percentil, für welches wir den korrespondierenden Z-Wert erhalten möchten: 
 
 ```{r}
 # TODO: Löse folgende Funktion qnorm(NULL)
+# TIPP: Für NULL musst du das Percentil eintragen, welches uns
+#       dazu bringt, die H0 abzulehnen.
 ```
+
+> TODO: Was ist dieser Wert? Wie steht dieser Wert mit der Entscheidung für oder gegen unsere H0 in Verbindung. 
 
 Alternativ können wir ebenso die Wahrscheinlichkeit für einen bestimmten Z-Wert mit `pnorm` bestimmen. Das zentrale Argument dieser Funktion ist `q`. `q` steht für den Z-Wert für dessen wir die die Dichte erhalten möchten. 
 
@@ -176,7 +182,7 @@ Alternativ können wir ebenso die Wahrscheinlichkeit für einen bestimmten Z-Wer
 pnorm(1.5)
 ```
 
-# TODO: Was bedeutet der Output dieser Funktion? 
+> TODO: Was bedeutet der Output dieser Funktion? 
 
 
 ## 5. Deutung der Wahrscheinlichkeit (passenD)
@@ -198,7 +204,7 @@ z_score <- (NULL(diet$weight_diff) - NULL) /
   (NULL(diet$weight_diff) / NULL(NULL(diet)))
 ```
 
-Nun können wir diesen Z-Wert auf unserer Stichprobenkennwertverteilung abtragen:
+Nun können wir diesen Z-Wert in unserer Stichprobenkennwertverteilung abtragen:
 
 ```{r}
 ggplot(tibble(x = c(-5, 5)), aes(x)) +  
@@ -218,7 +224,7 @@ ggplot(tibble(x = c(-5, 5)), aes(x)) +
   xlab("Z-Score")
 ```
 
-# TODO: Wie deutest du dieses Ergebnis bezüglich der Hypothese? Warum? 
+> TODO: Wie deutest du dieses Ergebnis bezüglich der Hypothese? Warum? 
 
 Nehmen wir zuletzt an, dass jemand dir die *wahre* Stichprobenkennwertverteilung der Stichprobe verrät. Im Folgenden siehst du in lila die wahre Stichprobenkennwertverteilung und in blau die erwartete Stichprobenverteilung nach der H0.
 
@@ -283,6 +289,11 @@ ggplot(tibble(x = c(-5,5)), aes(x)) +
   xlab("Z-Score")
 ```
 
-# TODO: Beschreibe auf Grundlage der Visualisierung, was der Alpha Fehler ist.
-# TODO: Beschreibe auf Grundlage der Visualisierung, was der Beta Fehler ist 
+> TODO: Beschreibe auf Grundlage der Visualisierung, was der Alpha Fehler ist.
 
+> TODO: Beschreibe auf Grundlage der Visualisierung, was der Beta Fehler ist 
+
+TIPPs: 
+
+* Du kannst den Alphafehler und Betafehler auch mit mit folgender Webseite simulieren: http://rpsychologist.com/d3/NHST/. 
+* Für den Alphafehler musst du die Stichprobenkennwertverteilung der Nullhypothese betrachten. Für den Betafehler musst du die *wahre* Stichprobenkennwertverteilung betrachten. 

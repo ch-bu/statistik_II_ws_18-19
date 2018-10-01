@@ -1,6 +1,6 @@
 ---
 title: "Statistik II - Nachbereitungsaufgabe"
-subtitle: "04 Statistisches Hypothesentesten"
+subtitle: "04 Statistisches Hypothesentesten II"
 author: ""
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output:
@@ -13,41 +13,43 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 
-# Fragen zum statistischen Hypothesentesten I
+# Revision deiner Erklärung zum Thema Statistisches Hypothesentesten II
+
+Als Vorbereitungsaufgaben hast du eine Erklärung zum Thema Statistisches Hypothesentesten II geschrieben. Nun sollst du diese Erklärung revidieren. Revidieren bedeutet, dass du (1) deine Erklärung auf Richtigkeit und Korrektheit überprüfst, und (2) deine Erklärung nach den Kriterien der Richtigkeit und Korrektheit überarbeitest. 
+
+Verwende für die Revision das **visuelle Feedback**, welches dir über [Slack](https://statistik-2.slack.com/messages/CCN7ZMYE6) zur Verfügung gestellt wird. Versuche aus dem visuellen Feedback folgende Leitfragen zu beantworten und in deiner Revision einzupflegen:
+
+* Hast du in das übergeordnete Thema deiner Erklärung eingeführt? 
+* Hast du die relevanten Konzepte deiner Erklärung benannt und ausreichend erklärt? 
+* Hast du die relevanten Konzepte deiner Erklärung logisch und sinnvoll miteinander verbunden?
+* Hast du die relevanten Konzepte deiner Erklärung durch gute Beispiele illustriert?
+
+Nimm dir für die Revision deiner Erklärung in etwa 45 Minuten Zeit und versuche auf die Erklärung hinsichtlich dieser Leitfragen zu überarbeiten. 
+
+> TODO: Füge hier deine revidierte Erklärung ein.
 
 
-Liegt ein Stichprobenergebnis (z.B. Mittelwert) bei ungerichteter Hypothese im Ablehnungsbereich der Nullhypothese, so...
+## Fragen zur Revision
 
-- [] ist das Ergebnis signifikant.
-- [] wäre das Ergebnis auch bei gerichteter Hypothese signifikant. 
-- [] schneidet der Wert für das Stichprobenergebnis weniger als 2.5% der Fläche in der Richtung ab.
-- [] ist das Ergebnis nicht signifikant. 
+Wie lange hast du an der Revision geschrieben? 
 
-Der beta-Fehler meint...
+> TODO: Bitte in Minuten angeben
 
-- [] die Irrtumswahrscheinlichkeit bei Annahme der H1 für ein Stichprobenergebnis
-- [] die Irrtumswahrscheinlichkeit bei Annahme der H0 für ein Stichprobenergebnis. 
-- [] die Irrtumswahrscheinlichkeit bei Ablehnung der H1 für ein Stichprobenergebnis. 
+Wie stark hast du dich gerade bei der Revisions der Erklärung angestrengt (1: Sehr stark angestrengt; 9: gar nicht angestrengt)?  
 
-Um einen hohen alpha- oder beta-Fehler zu vermeiden, ...
+> TODO: Bitte Antwort hier eintragen
 
-- [] verändere ich den Stichprobenumfang. 
-- [] verändere ich die angegebene Größe in der Alternativhypothese. 
-- [] ändere ich nichts.
-- [] wähle ich ein anderes Signifikanzniveau.
+Wie schwierig war es für dich die Erklärung zu revidieren (1: Sehr schwierig, 9 gar nicht schwierig)? 
 
-So gut wie jedes Stichprobenergebnis kann signifikant werden, .. (eine Antwort ist richtig).
+> TODO: Bitte Antwort hier eintragen
 
-- [] wenn ich eine ausreichend große Stichprobe wähle. 
-- [] wenn ich eine andere Null- und Alternativhypothese wähle. 
-- [] wenn ich das richtige statistische Auswertungsverfahren wähle. 
-- [] wenn ich eine ausreichend repräsentative Stichprobe wähle. 
+Wie verständlich schätzt du deine revidierte Erklärung ein (1: Sehr verständlich; 5 gar nicht verständlich)? 
 
-Sie trainieren ein Jahr lang eine Gruppe von Läufer_innen, die sie so gut machen wollen, dass sie bei Olympia antreten können. Sie finden, dass das Lauftempo dieser Läufer_innen in der Tat signifikant besser ist als das von normalen Läufer_innen. Können Ihre Läufer_innen bei Olympia antreten? (eine Antwort ist richtig)
+> TODO: Bitte Antwort hier eintragen
 
-- [] Ja, weil das Ergebnis signifikant ist.
-- [] Dies kann man so nicht beantworten, weil es auch wichtig ist zu wissen, wie viel besser die Läufer_innen sind. 
-- [] Nein, das Ergebnis müsste noch signifikanter sein. 
+Wie gut konntest du auf Grundlage des visuellen Feedbacks Revisionen ableiten (1: Gar nicht, 2: wenig, 3: mittelmäßig, 4: gut, 5 sehr gut)? 
+
+> TODO: Bitte in Minuten angeben
 
 
 # R-Anwendungsaufgaben
@@ -79,8 +81,6 @@ Welche Variablen umfasst der Datensatz?
 #       https://tibble.tidyverse.org/reference/glimpse.html
 ```
 
-
-
 ## Datenbereinigung
 
 Der Datensatz enthält ein paar Variablen, welche wir später nicht mehr brauchen werden. Entferne daher folgende Variablen: `Country Code`, `Series Code`, `2013 [YR2013]` und `2014 [YR2014]`.
@@ -102,7 +102,7 @@ Nun haben wir alle wichtigen Variablen in unserem Datensatz. Die Variablennamen 
 ```{r}
 # TODO: Benenne die drei Variablen um
 #       TIPP: https://dplyr.tidyverse.org/reference/select.html -> rename Funktion
-#       TIPP: Umschließe die alte Variable mit `variablenname` (da die Variable leerzeichen enthält)
+#       TIPP: Umschließe die alte Variable mit `variable name` (da die Variable leerzeichen enthält)
 #       TIPP: der neue Variablenname steht links vom = Zeichen
 #       TIPP: Trenne die Änderungen mit einem Komma
 #       TIPP: Speichere den Output von select erneut in PISA. Verwende den Pipe-Operator
@@ -115,7 +115,6 @@ options(digits=5)
 pisa$score <- pisa$score %>% as.double
 ```
 
-
 Die Variable series_name enthält sowohl die Domäne (z.B. Mathematik, Lesen) als auch der durchschnittliche Wert des Geschlechts. Damit wir nachher spezifische Aussagen für die Geschlechter machen können, müssen wir diese Variable in zwei Variablen auftrennen (siehe [separate](https://tidyr.tidyverse.org/reference/separate.html)):
 
 ```{r}
@@ -127,16 +126,16 @@ Wenn wir nun den Dataframe ansehen, stellen wir fest, dass die Variable sex imme
 
 ```{r}
 # TODO: Entferne die Leerzeichen in der Variable sex mit mutate und str_trim
-#       TIPP: https://stringr.tidyverse.org/reference/str_trim.html
-#       TIPP: https://dplyr.tidyverse.org/reference/mutate.html
-#       TIPP: Hier siehst du ein Template
+#       TIPP: str_trim: https://stringr.tidyverse.org/reference/str_trim.html
+#       TIPP: mutate:   https://dplyr.tidyverse.org/reference/mutate.html
+#       TIPP: Verwende dieses Template
 pisa <- NULL %>%
   NULL(
     sex = sex %>% NULL
   )
 ```
 
-Zuletzt ist unsere Variable `domain` noch unsauber. Statt `Mean performance on the mathematics scale` möchten wir `mathematics` erhalten. 
+Zuletzt ist unsere Variable `domain` noch unsauber. Statt `Mean performance on the mathematics scale` möchten wir `mathematics` etc. erhalten. 
 
 ```{r}
 # TODO: Vervollständige folgenden Code
@@ -183,7 +182,7 @@ ggplot(pisa, aes(x = domain, y = score, fill = NULL)) +
   NULL()
 ```
 
-Welches Land hat eigentlich im Leseverständnis am besten abgeschlossen? 
+Welches Land hat im Leseverständnis am besten abgeschlossen? 
 
 ```{r}
 # TODO: Sortiere die Leistung der Länder nach dem Leseverständnis ihrer Schüler
@@ -210,13 +209,14 @@ ggplot(reading_score_descending, aes(reorder(country_name, score),
   guides(fill = FALSE)
 ```
 
-
 Können Frauen eigentlich wirklich besser lesen als Männer? 
 
 ```{r}
 # TODO: Versuche selbstständig aus den Funktionen, die du heute gelernt hast
 #       diese Frage zu beantworten. Es genügt, wenn du die Mittelwerte 
 #       zwischen Männern und Frauen vergleichst.
+#       Wenn du dich richtig herausfordern möchtest. Versuche den Unterschied
+#       zwischen MÄnnern und Frauen durch einen Boxplot zu visualiseren.
 ```
 
 

@@ -12,64 +12,69 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+# Revision deiner Erklärung zum Thema Wahrscheinlichkeitsverteilungen
 
-# Fragen zur Wahrscheinlichkeitsverteilungen
+Als Vorbereitungsaufgaben hast du eine Erklärung zum Thema Wahrscheinlichkeitsverteilungen geschrieben. Nun sollst du diese Erklärung revidieren. Revidieren bedeutet, dass du (1) deine Erklärung auf Richtigkeit und Korrektheit überprüfst, und (2) deine Erklärung nach den Kriterien der Richtigkeit und Korrektheit überarbeitest. Achte bei dieser Revision auf folgender Leitfragen:
 
-## Frage 1
+* Hast du in das übergeordnete Thema deiner Erklärung eingeführt? 
+* Hast du die relevanten Konzepte deiner Erklärung benannt und ausreichend erklärt? 
+* Hast du die relevanten Konzepte deiner Erklärung logisch und sinnvoll miteinander verbunden? 
+* Hast du die relevanten Konzepte deiner Erklärung durch gute Beispiele illustriert? 
 
-Bitte vervollständige folgenden Satz:
+Nimm dir für die Revision deiner Erklärung in etwa 45 Minuten Zeit und versuche auf die Erklärung hinsichtlich dieser Leitfragen zu überarbeiten. 
 
-Eine Zufallsvariable ist eine *TODO*, die den Ergebnissen eines Zufallsexperiments (d.h. Elementarereignissen oder Ereignissen) reelle *TODO* zuordnet.
+> TODO: Füge hier deine revidierte Erklärung ein.
 
-## Frage 2
 
-Ordnen Sie folgende Definitionen den richtigen Begriffen zu:
+## Fragen zur Revision
 
-* Unendlich viele Ausprägungen zwischen zwei Ausprägungen
-* Keine weiteren Ausprägungen zwischen zwei benachbarten Ausprägungen
+Wie lange hast du an der Revision geschrieben? 
 
-* Diskrete Zufallsvariable
-* Stetige Zufallsvariable
+> TODO: Bitte in Minuten angeben
 
-## Frage 3
+Wie stark hast du dich gerade bei der Revisions der Erklärung angestrengt (1: Sehr stark angestrengt; 9: gar nicht angestrengt)?  
 
-Bitte vervollständige folgenden Satz:
+> TODO: Bitte Antwort hier eintragen
 
-Bei Wahrscheinlichkeitsfunktionen von stetigen Zufallsvariablen ist auf der y-Achse nicht die *TODO* abgetragen, sondern die *TODO*
+Wie schwierig war es für dich die Erklärung zu revidieren (1: Sehr schwierig, 9 gar nicht schwierig)? 
 
-## Frage 4
+> TODO: Bitte Antwort hier eintragen
 
-Bitte vervollständige folgenden Satz:
+Wie verständlich schätzt du deine revidierte Erklärung ein (1: Sehr verständlich; 5 gar nicht verständlich)? 
 
-In Tabellen mit z-Werten stehen in den einzelnen Zellen *TODO* die für das Auftreten der Werte von - unendlich bis zu dem jeweiligen *TODO* .
+> TODO: Bitte Antwort hier eintragen
 
 
 # R Anwendungsaufgaben
 
+Lade zunächst das Paket tidyverse:
+
 ```{r, message=FALSE, warning=FALSE}
-library(tidyverse)
+# TODO: tidyverse laden
+# TIPP: https://www.dummies.com/programming/r/how-to-install-load-and-unload-packages-in-r/
 ```
 
-In dieser Anwendungsaufgabe üben wir die Arbeit mit Dataframes am Beispiel eines Filmdatensatzes. Zunächst müssen wir die Daten einlesen, mit Hilfe derer wir diese Frage beantworten. Nutzt hierfür die `read_csv` Funktion und vervollständigt folgenden Befehl:
+In dieser Anwendungsaufgabe üben wir die Arbeit mit Dataframes am Beispiel eines Filmdatensatzes. Zunächst müssen wir die Daten einlesen, mit Hilfe derer wir diese Frage beantworten. Nutze hierfür die `read_csv` Funktion und vervollständige folgenden Befehl:
 
 `
 movies <- NULL("movies.csv")
 `
 
 ```{r}
-# TODO: Hier den Dataframe crime einfügen
+# TODO: Hier den Dataframe movies einfügen
 ```
 
-Als nächstes schauen wir uns die Variablennamen des Datensatzes an:
+Als nächstes schauen wir uns die Variablennamen des Datensatzes mit [colnames](https://stat.ethz.ch/R-manual/R-devel/library/base/html/colnames.html) an:
 
 ```{r}
-colnames(movies)
+# TODO: Variablennamen mit Colnames anschauen
 ```
 
 Schaue dir die Variablen noch genauer mit der Funktion `glimpse` an:
 
 ```{r}
 # TODO: Hier Glimpse eingeben
+# TIPP: https://tibble.tidyverse.org/reference/glimpse.html
 ```
 
 Die Variable `Runtime (Minutes)` ist etwas kompliziert geschrieben. Wir benennen daher die Variable um. Hierfür verwenden wir die [rename Funktion](https://dplyr.tidyverse.org/reference/select.html):
@@ -83,7 +88,7 @@ movies <- TODO %>%
 # TODO: Ändere den Namen der Variable Runtime (Minutes) zu minutes
 ```
 
-Zunächst schauen wir uns die Variable mit Hilfe eines Histograms an. Vervollständige hierfür bitte folgende Befehle:
+Zunächst schauen wir uns die Variable mit Hilfe eines Histograms an. Vervollständige hierfür bitte folgenden Befehl:
 
 `
 ggplot(NULL, aes(NULL)) +
@@ -92,21 +97,25 @@ ggplot(NULL, aes(NULL)) +
 
 ```{r}
 # TODO: Hier Histogram eingeben
+# TIPP: https://ggplot2.tidyverse.org/reference/geom_histogram.html
 ```
 
 Wir können aus dem Histogram erkennen, dass die populären Filme durchschnittlich zwischen 90 und 130 Minuten dauern. Deskriptiv können wir den Mittelwert und die Standardverteilung dieser Verteilung bestimmen:
 
 ```{r}
 # TODO: Bitte Mittelwert und Standardabweichungen der Variable ausgeben lassen
+# TIPP: ?mean UND ?sd in der Konsole eingeben
 ```
 
-### Den Datensatz kennen lernen
 
 Finde den längsten Film im Datensatz. Verwende hierfür die Funktion [arrange](https://dplyr.tidyverse.org/reference/arrange.html), head und den Pipe-Operator:
 
 ```{r}
 # TODO: Längsten Film finden
+# TIPP: https://www.rdocumentation.org/packages/utils/versions/3.5.1/topics/head
+#       https://dplyr.tidyverse.org/reference/arrange.html
 ```
+
 
 Wie viele Filme haben mehr als 400 Millionen Dollar eingespielt? Verwende hierfür die [Filter Funktion](https://dplyr.tidyverse.org/reference/filter.html), den Pipe-Operator und die Funktion count:
 
@@ -133,6 +142,7 @@ movies %>%
 # TODO: Häufigkeit der Filme pro Jahr ausgeben
 ```
 
+
 ## Freiwillige Zusatzsaufgabe: T-Verteilung
 
 Die [T-Verteilung](https://de.wikipedia.org/wiki/Studentsche_t-Verteilung) ist der Standardnormalverteilung sehr ähnlich. In ihrer Form ist die Verteilung lediglich weniger hoch und breiter. Je größer eine Stichprobe ist, desto stärker ähnelt die T-Verteilung der Standardnormalverteilung. Die T-Verteilungen zählt zu den stetigen Verteilungen. 
@@ -154,7 +164,7 @@ Schaue dir die ersten Stichproben mit der `head`-Funktion an:
 ```
 
 
-Für jedes dieser 4000 Stichproben berechnen wir den T-Wert, der mit folgender Formel berechnet wird. Durch den T-Wert können wir Werte standardisieren:
+Für jedes dieser 4000 Stichproben berechnen wir den T-Wert, der mit folgender Formel berechnet wird:
 
 $$
 t = \frac{\bar{x} - \mu}{\frac{s}{\sqrt{n}}}
@@ -208,7 +218,7 @@ ggplot(NULL, aes(t_values)) +
 
 In der Tat entspricht unsere Verteilung der T-Verteilung. Warum ist unsere simulierte Verteilung ungleichmäßig? Weil jede Simulation durch statistisches Rauschen begleitet ist und nicht durch eine Formel berechnet wird. 
 
-Die T-Verteilung ist also nichts anderes als die Verteilung von ganz vielen T-Werten, die wir aus einer Population ziehen. Aus dieser Häufigkeitsverteilung bilden wir eine Dichtefunktion, die wir später verwenden können, um Mittelwertsunterschiede zu bestimmen. Auf Grundlage der T-Verteilung werden wir später im Seminar bestimmen können, ob sich zwei Mittelwerte voneinander unterschieden. Beispielsweise können wir anhand dieser T-Verteilung bestimmen, ob ein Mittelwert einer Stichprobe im Vergleich zum Mittelwert der Population ungewöhnlich ist. Ein T-Wert von 2.4 zum Beispiel, der aus dem Mittelwert einer Stichprobe berechnet werden kann wäre ein solch ungewöhnlicher Wert, da die Fläche rechts diesen T-Werts sehr gering ist:
+Die T-Verteilung ist also nichts anderes als die Verteilung von ganz vielen T-Werten, die wir aus einer Population ziehen. Diese T-Verteilung stellt eine Stichprobenkennwertverteilung dar. Aus dieser Häufigkeitsverteilung bilden wir eine Dichtefunktion, die wir später verwenden können, um Mittelwertsunterschiede zu bestimmen. Auf Grundlage der T-Verteilung werden wir später im Seminar bestimmen können, ob sich zwei Mittelwerte voneinander unterschieden. Beispielsweise können wir anhand dieser T-Verteilung bestimmen, ob ein Mittelwert einer Stichprobe im Vergleich zum Mittelwert der Population ungewöhnlich ist. Ein T-Wert von 2.4 zum Beispiel, der aus dem Mittelwert einer Stichprobe berechnet werden kann wäre ein solch ungewöhnlicher Wert, da die Fläche rechts diesen T-Werts sehr gering ist:
 
 ```{r}
 ggplot(NULL, aes(t_values)) +
@@ -220,7 +230,7 @@ ggplot(NULL, aes(t_values)) +
   ylab("Dichte")
 ```
 
-Die Fläche rechts von einem T-Wert von 2.4 ist in diesem Beispiel: `dt(2.4, 29)`. Einen solchen Wert zu erhalten, wenn man annimmt, dass die Stichprobe aus der Population ist sehr ungewöhnlich oder besser gesagt signifikant ;). 
+Die Fläche rechts von einem T-Wert von 2.4 ist in diesem Beispiel: `dt(2.4, 29)`. Einen solchen Wert zu erhalten, wenn man annimmt, dass die Stichprobe aus der Population ist sehr *ungewöhnlich* oder besser gesagt *signifikant*. 
 
 Es gibt aber nicht nur eine T-Verteilung. Die Funktion umfasst eine Variable df (Freiheitsgrade), welche das Aussehen der Verteilung verändert:
 

@@ -1,6 +1,6 @@
 ---
 title: "Statistik II - Nachbereitungsaufgabe"
-subtitle: "02 Wahrscheinlichkeitsverteilungen"
+subtitle: "03 Stichprobenverteilung und Parameterschätzung"
 author: ""
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output:
@@ -12,42 +12,37 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+# Revision deiner Erklärung zum Thema Stichprobenverteilung und Parameterschätzung
 
-# Fragen zur Wahrscheinlichkeitsverteilungen
+Als Vorbereitungsaufgaben hast du eine Erklärung zum Thema Stichprobenverteilung und Parameterschätzung geschrieben. Nun sollst du diese Erklärung revidieren. Revidieren bedeutet, dass du (1) deine Erklärung auf Richtigkeit und Korrektheit überprüfst, und (2) deine Erklärung nach den Kriterien der Richtigkeit und Korrektheit überarbeitest. Achte bei dieser Revision auf folgender Leitfragen:
 
-Was trifft zu?
+* Hast du in das übergeordnete Thema deiner Erklärung eingeführt? 
+* Hast du die relevanten Konzepte deiner Erklärung benannt und ausreichend erklärt? 
+* Hast du die relevanten Konzepte deiner Erklärung logisch und sinnvoll miteinander verbunden? 
+* Hast du die relevanten Konzepte deiner Erklärung durch gute Beispiele illustriert? 
 
-- [] Man trifft gewöhnlich Vorhersagen über die Population auf der Grundlage einer Stichprobe. 
-- [] Man trifft gewöhnlich Vorhersagen über die Stichprobe auf der Grundlage einer Population. 
-- [] Man trifft gewöhnlich Vorhersagen über die Population auf der Grundlage mehrerer Stichproben.
+Nimm dir für die Revision deiner Erklärung in etwa 45 Minuten Zeit und versuche auf die Erklärung hinsichtlich dieser Leitfragen zu überarbeiten. 
 
-Was trifft zu (mehrere Antworten möglich)?
+> TODO: Füge hier deine revidierte Erklärung ein.
 
-- [] Die Verteilung von Häufigkeiten von (theoretisch unendlich vielen) Stichproben ist ein Beispiel für eine Stichprobenkennwerteverteilung
-- [] Die Verteilung von Varianzen von (theoretisch unendlich vielen) Stichproben ist ein Beispiel für eine Stichprobenkennwerteverteilung. 
-- [] Die Verteilung von Mittelwerten von (theoretisch unendlich vielen) Stichproben ist ein Beispiel für eine Stichprobenkennwerteverteilung.
-- [] Die Verteilung von Einzelwerten von Untersuchungsobjekten von (theoretisch unendlich vielen) Stichproben ist ein Beispiel für eine Stichprobenkennwerteverteilung. 
 
-Zieht man aus einer Population größere Stichproben, dann... (mehrere Antworten möglich)
+## Fragen zur Revision
 
-- [] sind die Mittelwerte dieser Stichproben näher am Mittelwert der Population.  
-- [] beeinflussen Extremwerte in diesen Stichproben die Mittelwertsbildung stärker
-- [] sind die Mittelwerte dieser Stichproben weiter weg vom Mittelwert der Population. 
+Wie lange hast du an der Revision geschrieben? 
 
-Auf der Grundlage der deskriptiven Statistiken einer Stichprobe kann man eine Vorhersage darüber treffen, ...
+> TODO: Bitte in Minuten angeben
 
-- [] mit welcher Wahrscheinlichkeit ein konkreter Populationsmittelwert auftritt. 
-- [] in welchem Bereich der Mittelwert der Population mit einer gewissen Wahrscheinlichkeit liegt, aus der die Stichprobe gezogen wurde. 
-- [] aus welchen Populationen die Stichprobe stammt. 
-- [] warum eine Stichprobe nicht aus einer Population stammt.  
+Wie stark hast du dich gerade bei der Revisions der Erklärung angestrengt (1: Sehr stark angestrengt; 9: gar nicht angestrengt)?  
 
-Sie machen mit Hilfe eines Konfidenzintervalls eine Vorhersage über den Populationsmittelwert aufgrund einer Stichprobe. Nachdem Sie in einer Vollerhebung doch noch den tatsächlichen Populationsmittelwert ermittelt haben, stellen Sie fest, dass Ihre Vorhersage falsch war und der tatsächliche Mittelwert viel größer ist. Woran kann die fehlerhafte Vorhersage liegen? (Mehrere Antworten möglich)
+> TODO: Bitte Antwort hier eintragen
 
-- [] Die Streuung in der Population wurde unterschätzt. 
-- [] Die gezogene Stichprobe war nicht repräsentativ für die Population.  
-- [] Ihre Stichprobe war zu groß.  
-- [] Sie haben eine zu große Wahrscheinlichkeit für das Konfidenzintervall gewählt (z.B. 99% statt 95%). 
+Wie schwierig war es für dich die Erklärung zu revidieren (1: Sehr schwierig, 9 gar nicht schwierig)? 
 
+> TODO: Bitte Antwort hier eintragen
+
+Wie verständlich schätzt du deine revidierte Erklärung ein (1: Sehr verständlich; 5 gar nicht verständlich)? 
+
+> TODO: Bitte Antwort hier eintragen
 
 # R Anwendungsaufgaben
 
@@ -57,7 +52,7 @@ library(tidyverse)
 
 ### Der Titanicdatensatz
 
-Zunächst simulieren wir eine Population. Nehmen wir an, wir untersuchen die Passagiere der Titanic (= Population). Zunächst müssen wir den Datensatz als Tibble einlesen:
+In dieser Nachbereitungsaufgabe beschäftigen wir uns mit den Passagieren der Titanic. Zunächst müssen wir den Datensatz `titanic.csv` als Tibble einlesen:
 
 ```{r}
 # TODO: Lese den Datensatz mit read_csv ein
@@ -81,11 +76,14 @@ Aha, die Mehrzahl der Passagiere ist gestorben. Man sagt immer, dass Personen de
 
 ```{r}
 # TODO: Überlebende nach Klasse zählen
+#       Weiße den Output der Variable survived_per_class zu:
+
+# survived_per_class <- NULL
 ```
 
 Aus der Tabelle können wir nicht wirklich einfach unsere Frage beantworten. Machen wir einen Balkendiagram daraus. 
 
-Da die Variable pclass ein Integer ist, müssen wir diese zunächst in einen Faktor umwandeln und das Ergebnis nach den überlebenden [filtern](https://dplyr.tidyverse.org/reference/filter.html):
+Da wir diese Zahlen als Balkendiagram visualisieren möchten, müssen wir die Variable pclass zunächst von einem Integer in einen Faktor umwandeln (siehe glimpse) und das Ergebnis nach den überlebenden [filtern](https://dplyr.tidyverse.org/reference/filter.html):
 
 ```{r}
 died_per_class <- survived_per_class %>%
@@ -113,6 +111,7 @@ Wer war eigentlich der älteste Passagier auf der Titanic? Nutze [arrange](https
 ```{r}
 # TODO: Ältester Passagier
 ```
+
 
 ### Freiwillige Aufgabe: Zentrales Grenzwerttheorem 
 
@@ -189,7 +188,7 @@ ggplot(sample_means, aes(x = sample_mean)) +
   ylab("Häufigkeit")
 ```
 
-TODO: Was kannst du aus dieser Visualisierung bezüglich des zentralen Grenzwerttheorems erkennen? 
+> TODO: Was kannst du aus dieser Visualisierung bezüglich des zentralen Grenzwerttheorems erkennen? 
 
 Was passiert allerdings, wenn unsere ursprüngliche Verteilung nicht normalverteilt ist? 
 
@@ -209,4 +208,4 @@ ggplot(sample_means_non_normal, aes(x = sample_mean)) +
   ylab("Häufigkeit")
 ```
 
-TODO: Beschreibe in deinen eigenen Worten, was du nun über das zentrale Grenzwerttheorem für nicht-normalverteilte Populationen sagen kannst. Versuche deine Antwort auf die nicht-normalverteilte Verteilung der Population zu beantworten. 
+> TODO: Beschreibe in deinen eigenen Worten, was du nun über das zentrale Grenzwerttheorem für nicht-normalverteilte Populationen sagen kannst. Versuche deine Antwort auf die nicht-normalverteilte Verteilung der Population zu beantworten. 
