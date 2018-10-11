@@ -48,274 +48,220 @@ Wie verständlich schätzt du deine revidierte Erklärung ein (1: Sehr verständ
 
 # R Anwendungsaufgaben
 
-Der Zweck der Nachbereitungsaufgaben besteht darin, dich mit R vertraut zu machen und die Inhalte des Seminars in R anzuwenden. Du wirst in diesen Nachbereitungsaufgaben lernen, wie man Pakete einliest, Pakete installiert, Befehle ausführt, Befehle sucht, Daten explorativ untersucht, Daten konfirmatorisch untersucht und Daten visualisiert. Bei den Aufgaben geht es *nicht* darum, dass du Befehle auswendig lernst, sondern lernst, Daten mit R zu analysieren. Die Nachbereitungsaufgaben verfolgen die Idee des [Overlearning](https://en.wikipedia.org/wiki/Overlearning). Du wirst die gleichen Befehle immer wieder neu anwenden, bis du sie automatisch durchführen kannst. 
+Der Zweck der Nachbereitungsaufgaben besteht darin, dich mit R vertraut zu machen und die Inhalte des Seminars in R anzuwenden. Am Ende des Seminars solltest du:
+
+* Pakete installieren können
+* Pakete laden können
+* Datensätze aus CSV-Dateien einlesen können
+* Datensätze explorativ untersuchen können
+* Daten visualisieren können
+* Inferenzstatistische Verfahren berechnen können
+
+
+Damit du am Ende diese Ziele erreichts, verfolgt das Seminar die Idee des [Overlearning](https://en.wikipedia.org/wiki/Overlearning). Du wirst die gleichen Befehle immer wieder neu anwenden, bis du sie automatisch durchführen kannst. 
 
 In den ersten Wochen des Seminars wirst du vor allem Daten einlesen und explorativ analysieren. Später wirst du zudem statistische Verfahren des Seminars anwenden. Zudem gibt es vereinzelt noch freiwillige Vertiefungsaufgaben. Diese Aufgaben sind inhaltlich schwerer und sind *nicht verpflichtend*. 
 
-
-## Pakete installieren
-
-Stelle sicher, dass du [alle nötigen Softwares und Pakete installiert hast](https://github.com/ch-bu/statistik_II_ws_18-19), die wir für dieses Semester brauchen. Wir verwenden im Laufe des Seminars immer wieder ähnliche R-Pakete (z.B. tidyverse, afex, psych). Für diese Vorbereitungsaufgabe brauchen wir die Pakete tidyverse und lubridate. Jedes Paket muss zunächst installiert werden, bevor es geladen werden  kann. Mit folgendem Befehl kannst du diese beiden Pakete installieren (siehe auch [hier](https://www.r-bloggers.com/installing-r-packages/)):
+Stelle zunächst sicher, dass du [alle nötigen Softwares und Pakete installiert hast](https://github.com/ch-bu/statistik_II_ws_18-19), die wir für dieses Semester brauchen. Wir verwenden im Laufe des Seminars immer wieder ähnliche R-Pakete (z.B. tidyverse, afex, jmv). Für diese Vorbereitungsaufgabe brauchen wir das Paket tidyverse. Jedes Paket muss zunächst installiert werden, bevor es geladen werden  kann. Mit folgendem Befehl kannst du diese beiden Pakete installieren (siehe auch [hier](https://www.r-bloggers.com/installing-r-packages/)):
 
 ```{r}
 # Zum Ausführen bitte die letzten beiden Zeilen auskommentieren:
-# Mehr INformationen: https://intelligea.wordpress.com/2013/06/30/inline-and-block-comments-in-r/
+# Mehr Informationen: https://intelligea.wordpress.com/2013/06/30/inline-and-block-comments-in-r/
 # install.packages("tidyverse")
 # install.packages("lubridate")
 ```
 
-Damit wir die Befehle der Pakete ausführen können, müssen wir die Pakete erst laden:
+Nachdem du ein Paket installiert hast, ist es noch *nicht* geladen. Um die Pakete ausführen zu können, musst dies R explizit sagen. Führe die folgenden Befehl aus, um tidyverse zu laden. 
 
 ```{r,message=FALSE, warning=FALSE}
 library(tidyverse) # Installieren mit install.packages("tidyverse")
-library(lubridate) # Installieren mit install.packages("lubridate")
 ```
 
-Sollten es nicht möglich sein, die Pakete zu installieren, hole dir im [Slack Channel Hilfe](https://statistik-2.slack.com/messages/CCMG5NSN4/). 
+Solltest du Schwierigkeiten haben, die Pakete zu installieren, hole dir im [Slack Channel](https://statistik-2.slack.com/messages/CCMG5NSN4/) Hilfe.
 
 Tidyverse ist eine Gruppe an Paketen zur Datenanalyse mit einer einheitlichen Philosophie. Wir werden im Verlauf des Semesters starken Gebrauch des Pakets machen. Die einzelnen Funktionen wirst du im Verlauf des Seminars durch die Vor- und Nachbereitungsaufgaben kennen lernen. Um dich tiefer in tidyverse einzulesen, schaue dir das Buch [R for Data Science](http://r4ds.had.co.nz/) an. Das Buch ist in der Online-Version kostenlos. 
 
-## Geburtstagsdatensatz 
+Für die folgenden Aufgaben verwenden wir einen [Datensatz zum Thema Glück](https://www.kaggle.com/unsdsn/world-happiness/version/2). Der Datensatz umfasst einen Hapiness-Index für verschiedene Länder. Der Dateiname für den Datensatz lautet `hapiness.csv`. Lese diesen Datensatz als nächstes mit der Funktion `read_csv` ein. 
 
-Für die folgenden Aufgaben verwenden wir einen Datensatz berühmter Personen, die zwischen 2007 und 2016 gestorben sind. Zunächst müssen wir den Datensatz einlesen. In diesem Fall handelt es sich um eine CSV-Datei, deren Werte durch *Kommas* getrennt sind. Für einen solchen Datensatz verwenden wir in diesem Semester die Funktion [read_csv](https://readr.tidyverse.org/reference/read_delim.html) aus dem Paket readr, welches durch Tidyverse bereit gestellt wird. Die Funktion read_csv geht davon aus, dass die Daten durch ein **Komma** getrennt sind. Hier siehst du die ersten Zeilen des Datensatzes.
 
-```
-year,month,name,age,desc,cause_of_death,nationality,page_size,date_of_birth,date_of_death
-2013,9,Zvonko Bušić,9,"Croatian airplane hijacker (TWA Flight 355), suicide by gunshot",suicide by gunshot,Croatian,,,
-2013,9,Joaquim Justino Carreira,9,"Portuguese-born Brazilian Roman Catholic prelate, Bishop of Roman Catholic Diocese of Guarulhos (since 2011)",,Portuguese-born Brazilian Roman Catholic,,,
-2013,9,Pál Csernai,9,"Hungarian footballer and manager (FC Bayern Munich, North Korea national football team)",,Hungarian,,,
-2013,9,Ignacio Eizaguirre,9,"Spanish footballer (Valencia CF, Real Sociedad, Spain national football team)",,Spanish,,,
-2013,9,Ole Ernst,9,Danish actor,,Danish,,,
-```
-
-Währen die Daten durch ein **Semikolon** getrennt, müssten wir die [read_csv2]((https://readr.tidyverse.org/reference/read_delim.html) Funktion verwenden: 
-
-```
-year;month;name;age;desc;cause_of_death;nationality;page_size;date_of_birth;date_of_death
-2013;9;Zvonko Bušić;9;"Croatian airplane hijacker (TWA Flight 355); suicide by gunshot";suicide by gunshot;Croatian;;;
-2013;9;Joaquim Justino Carreira;9;"Portuguese-born Brazilian Roman Catholic prelate; Bishop of Roman Catholic Diocese of Guarulhos (since 2011)";;Portuguese-born Brazilian Roman Catholic;;;
-2013;9;Pál Csernai;9;"Hungarian footballer and manager (FC Bayern Munich; North Korea national football team)";;Hungarian;;;
-2013;9;Ignacio Eizaguirre;9;"Spanish footballer (Valencia CF; Real Sociedad; Spain national football team)";;Spanish;;;
-2013;9;Ole Ernst;9;Danish actor;;Danish;;;
-```
-
-```{r}
-# TODO: Lese den Datensatz mit read_csv ein und speicher den Datensatz
-#       in der Variable celebs. Der Datensatz lautet celeb_dataset.csv
+```{r Datensatz einlesen, message=FALSE}
+# TODO: Lese den Datensatz mit read_csv ein und speichere den Datensatz
+#       in der Variable happy. Der Datensatz lautet hapiness.csv
 # TIPP: Variblen deklarieren - https://www.statmethods.net/management/variables.html
+# TIPP: variablenname <- read_csv("pfad_der_datei.csv")
+happy <- read_csv("happiness.csv")
 ```
 
 Am Anfang der Analyse eines Datensatzes ist es immer ratsam, sich die Variablen des Datensatzes anzuschauen. [Glimpse](https://tibble.tidyverse.org/reference/glimpse.html) ist hierfür recht praktisch. 
 
 ```{r}
 # TODO: Nutze glimpse, um den Datensatz anzuschauen
+# TIPP: glimpse(name_des_dataframes)
 ```
 
-Wie viele Reihen hat der Datensatz?
+Wie viele Reihen hat der Datensatz? Verwende hierfür die Funktion `nrow()`
 
 ```{r}
 # TODO: Gebe dir die Anzahl der Reihen mit der Funktion nrow() aus
 #       https://www.rdocumentation.org/packages/base/versions/3.5.1/topics/nrow
+# TIPP: nrow(name_des_dataframes)
 ```
 
-Wir werden immer wieder den [Pipe-Operator](https://magrittr.tidyverse.org/reference/pipe.html) verwenden. Der Pipe Operator vereinfacht die Lesbarkeit deines Codes, indem wir Funktionen nicht mehr verschachteln müssen. Hier ein Beispiel:
+Wie lauten die Variablennamen des Datensatzes? Verwende hierfür die Funktion `colnames()`.
 
 ```{r}
-mean(c(1, 2, 3))
-c(1, 2, 3) %>% mean
-c(1, 2, 3) %>% mean(., na.rm = TRUE)
-c(1, 2, 3) %>% mean(.)
+# TODO: Gebe dir die Variablennamen mit der Funktion colnames () aus
+# TIPP: colnames(name_des_dataframes)
 ```
 
-Jeder dieser Befehle ist inhaltlich gleich. Der Unterschied besteht darin, dass wir die Funktionen aneinander reihen, statt sie zu verschachteln. Der Pipe Operator füttert den Output der linken Seite (hier: `c(1, 2, 3)`) in das erste Argument der rechten Funktion (hier: `mean(.)`). Der Punkte steht für den Output, welcher übergeben wird. 
+
+## Variablen eines Datensatzes auswählen
+
+Datensätze haben in der Regel die Form einer Tabelle. In den Spalten stehen die Variablen, in den Reihen die einzelnen Werte. Beispielsweise umfasst dieser Datensatz eine Variable `Country`, in der der Name des Landes gespeichert ist. In R können wir uns einzelne Variablen durch den $-Operator ansehen. Beachte, dass die **Groß- und Kleinschreibung** wichtig ist. Das `C` in der Variable `Country` ist groß geschrieben.
 
 ```{r}
-# TODO: Bereche mit Hilfe des Pipe-Operators den Mittelwert der Variable age im 
-#       Datensatz celebs
+happy$Country
 ```
 
-Im nächsten Schritt verwenden wir den Pipe-Operator für ein schwierigeres Beispiel. Was war die häufigste Todesursache unter den Prominenten? Um Werte zu zählen, können wir die [count](https://dplyr.tidyverse.org/reference/tally.html) Funktion verwenden. Um die Liste in eine Reihenfolge zu bringen, brauchen wir die Funktion [arrange](https://dplyr.tidyverse.org/reference/arrange.html). Vervollständige folgenden Befehl und führe ihn dann aus (NULL ersetzen):
-
-`
-celebs %>%
-  count(cause_of_death) %>%
-  arrange(desc(NULL))
-`
 
 ```{r}
-# TODO: Hier den Code einfügen
-# TIPP: Führe zunächst die count Funktion aus und schaue,
-#       welche Variablennamen ausgegeben werden
+# TODO: Zeigen dir die Variable Happiness.Score mit dem 
+#       $ Operator an
 ```
 
-Unser Count-Beispiel könnte daher auch folgendermaßen aussehen: 
+
+## Pipe Operator
+
+Manchmal ist man in R genötigt, mehrere Funktionen ineinander zu verschachteln. Führe einmal folgendes Beispiel aus: 
 
 ```{r}
-count(celebs, cause_of_death)
+sqrt(mean(c(1, 2, 3)))
 ```
 
-Stattdessen übergeben wir den Output des Dataframes (celebs) in die Funktion count:
+Drei Dinge passieren in diesem Beispiel:
+
+* Wir erstellen einen Vector `c(1, 2, 3)`
+* Wir berechnen den Mittelwert dieses Vektors: `mean(c(1, 2, 3))`
+* Wir ziehen die Wurzel aus diesem Mittelwert: `sqrt(mean(c(1, 2, 3)))`
+
+Stell dir vor, wir verschachteln noch mehr dieses Funktionen. Irgendwann wird der Befehl unleserlich. Um dieses Problem zu lösen gibt es den **Pipe-Operator**. Der Pipe Operator vereinfacht die Lesbarkeit deines Codes, indem wir Funktionen nicht mehr verschachteln, sondern *nacheinander* schalten:
 
 ```{r}
-celebs %>%
-  count(., cause_of_death)
+c(1, 2, 3) %>%
+  mean %>%
+  sqrt
+```
 
+Zunächst erstellen wir den Vektor `c(1, 2, 3)`. Mit dem `%>%` übergeben wir den Output dieses Vektors (hier die Zahlen 1, 2 und 3) in die Funktion `mean`. Den Output der Funktion `mean` (hier 2) übergeben wir anschließend die Funktion `sqrt`. 
+
+Ein anderes Beispiel:
+
+```{r}
+# Statt mean(happy$Happiness.Score)
+happy$Happiness.Score %>%
+  mean
+```
+
+Durch den $-Operator ziehen wir die Variable `Happiness.Score` aus dem Datensatz `happy`. Diese Variable übergeben wir anschließend der Funktion `mean`. 
+
+Erstelle als nächstes folgenden Vektor: `c(1:99)`. Der Vektor enthält alle Zahlen zwischen 1 und 99. Verwende anschließend den Pipe-Operator und berechne den Mittelwert dieses Vektors:
+
+```{r}
+# TODO: Berechne den Mittelwert des Vektors c(1:99)
+```
+
+Eine Besonderheit des Pipe-Operators ist, dass der von der vorherigen Funktion übergebene Wert mit einem Punkt (`.`) gekennzeichnet wird. Aus diesem Grund sind folgende Befehle äquivalent: 
+
+```{r}
+c(1, 2, 3) %>%
+  mean
 # ODER
-
-celebs %>%
-  count(cause_of_death)
+c(1, 2, 3) %>%
+  mean(.)
+# Oder
+c(1, 2, 3) %>%
+  mean(., na.rm = TRUE) # Mit na.rm ignorieren wir fehlende Werte 
 ```
 
-Als letztes möchten wir sehen, wie sich die Geburtstage der Prominenten verteilen. Die Variable `date_of_birth` liegt bereits als date-Variable vor (siehe glimpse), von daher können wir die Geburtstage in einem Histogram abtragen. Versuche folgenden Code zu vervollständigen (siehe [ggplot2](https://ggplot2.tidyverse.org/reference/geom_histogram.html):
-
-`
-ggplot(celebs, aes(x = NULL)) + 
-  NULL +
-  xlab("Geburtstag") +
-  ylab("Häufigkeit")
-`
+Der `.` steht für den Daten, die aus dem Vektor `c(1, 2, 3)` übergeben werden. Genausogut kann der Wert eine Variable oder eine einzelne Zahl sein:
 
 ```{r}
-# TODO: Histogram erstellen
-# TIPP: Schaue dir das erste Beispiel im Link zu ggplot2 an
-#       https://ggplot2.tidyverse.org/reference/geom_histogram.html
+5 %>% 
+  mean(.)
 ```
 
-Nun wollen wir sehen, ob die Geburtstage innerhalb eines Jahres uniform verteilt sind. Dazu müssen wir die Geburtstage unabhängig vom Jahr betrachten. Hierzu müssen wir eine neue Variable erstellen. Um neue Variablen zu erstellen, nutzen wir in diesem Seminar hautsächlich die Funktion [mutate](https://dplyr.tidyverse.org/reference/mutate.html). Orientiere dich an folgendem Code:
+```{r}
+happy$Freedom %>%
+  mean(.)
+```
 
-`
-celebs <- celebs %>%
+## Reihen filten
+
+Manchmal möchten wir bestimme Reihen aus einem Datensatz entfernen. Hierfür benutzen wir die `filter` Funktion. Hier ein Beispiel:
+
+```{r}
+happy %>%
+  filter(Happiness.Score > 7.4)
+```
+
+In diesem Beispiel filtern wir alle Ländern, deren Happiness-Index größer als 7.4 ist. Als nächstes möchten wir heraus finden, wie glücklich die Deutschen sind:
+
+```{r}
+happy %>%
+  filter(Country == "Germany")
+```
+
+Ganz ok. Deutschland hat einen Happiness-Index von 6.951 und liegt auf dem 16. Rang. Versuche als nächstes folgendes: Filter das Land mit einem Happiness.Rank von 22. 
+
+```{r}
+# TODO: Filter das Land mit einem Happiness.Rank von 22
+```
+
+## Variablen selektieren
+
+Manchmal möchten wir nicht nur Reihen filtern, sondern auch Spalten, sprich Variablen auswählen. Hierfür benutzen wir die `select` Funktion:
+
+```{r}
+happy %>%
+  select(Country, Happiness.Rank)
+```
+
+In diesem Beispiel wählen wir die Variablen Country, und Happiness.Rank aus. Versuche einmal selbst folgende Variablen zu selektieren: Country, Whisker.high und Family:
+
+```{r}
+# TODO: Selektiere aus happy die Variablen Country, Whisker.high und Family
+```
+
+Meistens möchten wir unsere Selektion auch speichern. Versuche also als nächstes deinen selektierten Datensatz in der Variable `happy_selected` zu speichern:
+
+```{r}
+# TODO: Selektiere aus happy die Variablen Country, Whisker.high und Family
+#       und speichere den Datensatz in der Variable happy_selected
+# TIPP: Eine Variable deklariert man folgendermaßen:
+#       variablenname <- WERT_DER_VARIABLE
+```
+
+
+## Glück visualisieren
+
+Zuletzt möchten wir sehen, wie glücklich die Länder eigentlich sind. Führe dazu folgende Funktion aus:
+
+```{r}
+happiness_sorted <- happy %>%
   mutate(
-    test = TODO
-  )
-`
+    Country = factor(Country)
+  ) %>%
+  arrange(desc(Happiness.Score))
 
-```{r}
-# TODO: Erstelle eine neue Variable mit dem Namen test.
-#       Die Variable sollte folgendermaßen berechnet werden:
-#       age**2 (Das Alter der Personen im Quadrat)
+ggplot(happiness_sorted, aes(x = reorder(Country, Happiness.Score), y = Happiness.Score)) +
+  geom_bar(stat = "identity", aes(fill = Happiness.Score)) +
+  coord_flip() +
+  guides(fill = FALSE) +
+  scale_fill_gradient() +
+  scale_x_discrete(breaks = c("Norway", "Germany", "Afghanistan", 
+                              "Spain", "Rwanda", "Hungary")) +
+  xlab("Land") +
+  ylab("Happiness-Index")
 ```
 
-Wir haben das Glück, dass die Variable date_of_birth gut strukturiert ist und die Struktur `2014-03-13` hat. Wir müssen daher nichts anderes tun als die ersten 5 Zeichen des Strings mit dem Jahr 2018 zu ersetzen und eine Datevariable daraus zu erstellen (siehe [ymd](https://lubridate.tidyverse.org/reference/ymd.html)).
-
-```{r}
-celebs <- celebs %>%
-  mutate(
-    birthday = date_of_birth %>% 
-      substring(6, length(.)) %>%
-      paste0("2018-", .) %>%
-      ymd(.)
-  )
-```
-
-Nun können wir schauen, wie sich die Geburtstage über das Jahr verteilen. Vervollständige dafür folgenden Code:
-
-`
-ggplot(celebs, aes(NULL)) +
-  NULL(fill = "steelblue", 
-       color = "black") +
-  scale_x_date(date_breaks = "4 week", 
-               date_labels = "%W")
-`
-
-```{r}
-# TODO: Histogram hier einfügen
-```
-
-
-## Freiwillige Aufgabe: Das Geburtstagsproblem 
-
-In der Wahrscheinlichkeitstheorie bezeichnet das Geburtstagsproblem die Wahrscheinlichkeit, dass zwei Personen in einem Raum mit N-Menschen den gleichen Geburtstag haben. Die meisten Menschen unterschätzen die Wahrscheinlichkeit für ein solches Ereignis. In dieser Aufgabe werden wir dieses Problem anhand von R lösen. Wie wahrscheinlich ist es, dass zwei Personen in einem Raum mit N-Menschen den gleichen Geburtstag haben? 
-
-Zunächst vereinfachen wir das Problem, indem wir davon ausgehen, dass der Raum 23 Personen enthält. Wir fragen uns daher: Wie wahrscheinlich ist es, dass es in einem Raum mit 23 Personen zwei Personen gibt, die den gleichen Geburtstag haben? 
-
-Erstelle zunächst eine Variable people und weiße der Variable den Wert 23 zu:
-
-```{r}
-# TODO: Hier die Variable people erstellen
-```
-
-Die Geburtstage der 23 Personen sind unser Ergebnisraum. Zunächst machen wir ein einfaches Zufallsexperiment und ziehen die erste Person. Wenn wir eine Person ziehen, liegt die Wahrscheinlichkeit keine zwei Personen mit dem gleichen Geburtstag zu ziehen bei `365/365`. Schließlich gibt es keine zweite Person, die wir vergleichen können. 
-
-Wie groß ist nun die Wahrscheinlichkeit, dass *keine* zwei Personen den gleichen Geburtstag haben, wenn wir eine weitere Person ziehen? Versuche dieses Ereignis in R zu berechnen. Ähnlich, wie wir es gerade getan haben (`365/365`). 
-
-```{r}
-# TODO: Hier die Wahrscheinlichkeit eintragen
-```
-
-Wir können dieses Problem auch auf unsere 23 Personen formalisieren, indem wir diese Berechnung wiederholen. Hierfür brauchen wir den [Pipe Operator](https://magrittr.tidyverse.org/reference/pipe.html) `%>%`. Hier ein kleines Beispiel
-
-```{r}
-c(1:7) %>% mean
-```
-
-Wir erstellen einen Vektor und füttern den Output des Vektors in die Funktion `mean`. Wir hätten auch sagen können: `c(1:7) %>% mean(.)`, oder, falls wir fehlende Werte haben: `c(1:7) %>% mean(., na.rm = TRUE)`. Der `.` gibt das Objekt an, welches von der linken Seite des Operators weiter gegeben wurde. 
-
-Zusätzlich brauchen wir die Funktion [map](https://purrr.tidyverse.org/reference/map.html). Mit Map können wir willkürliche Berechnungen für Elemente einer Liste oder eines Vektors durchführen: 
-
-```{r}
-c(1:23) %>% map_dbl(~ .**2)
-```
-
-In diesem Beispiel quadrieren wir die einzelnen Werte des Vektors `c(1:23)`. 
-
-Erstelle als nächstes eine Sequenz der Zahlen 365 bis 1. Vervollständige hierfür den Wert `NULL` in folgendem Befehl:
-
-`day_in_year_sequence <- seq(from = NULL, to = 1) %>% 
-  sort(., decreasing = NULL)
-`
-
-```{r}
-# TODO: Bitte hier den Befehl eintragen
-# TIPP: https://stat.ethz.ch/R-manual/R-devel/library/base/html/sort.html
-#       https://www.rdocumentation.org/packages/base/versions/3.5.1/topics/seq
-```
-
-Nun können wir die Wahrscheinlichkeit berechnen, dass 23 Personen, die wir Stück für Stück aus einem Raum ziehen *nicht* den gleichen Geburtstag haben. Tausche hierfür in folgendem Code die `NULL` durch die richtigen Elemente aus:
-
-`
-(probabilites_dependent <- day_in_year_sequence NULL
-  map_dbl(~ NULL/365))
-`
-
-Durch die umspannende Klammer können wir das Ergebnis direkt ausgeben lassen.
-
-```{r}
-# TODO: Bitte hier den Befehl eintragen
-```
-
-Da es sich um eine bedingte Wahrscheinlichkeit handelt, müssen wir nun die einzelnen Ereignisse miteinander multiplizieren.
-
-Zunächst berechnen wir die Wahrscheinlichkeit, dass bei 23 Leuten in einem Raum zwei Personen den gleichen Geburtstag haben. Tausche hierfür in folgendem Code die `NULL` durch die richtigen Elemente aus und führe den Befehl aus:
-
-`
-NULL - prod(probabilites_dependent[NULL])
-`
-
-```{r}
-# TODO: Bitte hier den Befehl eintragen
-```
-
-Als nächstes müssen wir das Problem allgemein für 1 bis 100 Personen in einem Raum lösen. Hierfür können wir erneut die Funktion `map` verwenden. Tausche hierfür in folgendem Code die `NULL` durch die richtigen Elemente aus und führe den Befehl aus:
-
-`
-birthday_problem_probabilities <- c(1:100) %>% 
-  NULL(~ 1 - prod(probabilites_dependent[c(1:NULL)]))
-`
-
-```{r}
-# TODO: Bitte hier den Befehl eintragen
-```
-
-Zuletzt können wir das Geburtstagsproblem visualisieren:
-
-```{r}
-# ggplot(NULL, aes(c(1:100), birthday_problem_probabilities)) +
-#   geom_point() +
-#   theme_minimal() +
-#   xlab("N Personen im Raum") +
-#   ylab("Wahrscheinlichkeit gleicher Geburtstag 2 Personen")
-```
-
-Aus der Visualisierung kannst du erkennen, wie groß die Wahrscheinlichkeit bei N-Personen in einem Raum ist, dass zwei Personen den gleichen Geburtstag haben. 
 
