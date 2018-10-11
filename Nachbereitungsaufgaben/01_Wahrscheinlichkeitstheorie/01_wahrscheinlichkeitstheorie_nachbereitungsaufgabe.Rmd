@@ -1,11 +1,12 @@
 ---
 title: "Statistik II - Nachbereitungsaufgabe"
 subtitle: "01 Wahrscheinlichkeitstheorie"
-author: ""
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output:
+  word_document: default
   pdf_document: default
   html_document: default
+
 ---
 
 ```{r setup, include=FALSE}
@@ -58,7 +59,7 @@ Der Zweck der Nachbereitungsaufgaben besteht darin, dich mit R vertraut zu mache
 * Inferenzstatistische Verfahren berechnen können
 
 
-Damit du am Ende diese Ziele erreichts, verfolgt das Seminar die Idee des [Overlearning](https://en.wikipedia.org/wiki/Overlearning). Du wirst die gleichen Befehle immer wieder neu anwenden, bis du sie automatisch durchführen kannst. 
+Damit du am Ende diese Ziele erreichst, verfolgt das Seminar die Idee des [Overlearning](https://en.wikipedia.org/wiki/Overlearning). Du wirst die gleichen Befehle immer wieder neu anwenden, bis du sie automatisch durchführen kannst. 
 
 In den ersten Wochen des Seminars wirst du vor allem Daten einlesen und explorativ analysieren. Später wirst du zudem statistische Verfahren des Seminars anwenden. Zudem gibt es vereinzelt noch freiwillige Vertiefungsaufgaben. Diese Aufgaben sind inhaltlich schwerer und sind *nicht verpflichtend*. 
 
