@@ -90,7 +90,6 @@ Für die folgenden Aufgaben verwenden wir einen [Datensatz zum Thema Glück](htt
 #       in der Variable happy. Der Datensatz lautet hapiness.csv
 # TIPP: Variblen deklarieren - https://www.statmethods.net/management/variables.html
 # TIPP: variablenname <- read_csv("pfad_der_datei.csv")
-happy <- read_csv("happiness.csv")
 ```
 
 Am Anfang der Analyse eines Datensatzes ist es immer ratsam, sich die Variablen des Datensatzes anzuschauen. [Glimpse](https://tibble.tidyverse.org/reference/glimpse.html) ist hierfür recht praktisch. 
