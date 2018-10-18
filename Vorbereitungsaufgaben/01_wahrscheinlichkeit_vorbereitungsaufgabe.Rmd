@@ -24,7 +24,7 @@ Für diese Vorbereitungsaufgabe schreibst du ein Lerntagebuch zum Thema *Wahrsch
 * Vereinigung
 * Durchschnittsbildung
 
-# Erklärung zum Thema Wahrscheinlichkeitstheorie
+# Lerntagebuch zum Thema Wahrscheinlichkeitstheorie
 
 > TODO: Füge hier dein ~ 800 Wörter langes Lerntagebuch ein.
 
