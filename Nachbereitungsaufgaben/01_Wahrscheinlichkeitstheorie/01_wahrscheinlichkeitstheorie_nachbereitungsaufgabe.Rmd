@@ -14,18 +14,17 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 
-# Revision deiner Erklärung zum Thema Wahrscheinlichkeitstheorie
+# Revision deines Lerntagebuchs zum Thema Wahrscheinlichkeitstheorie
 
-Als Vorbereitungsaufgaben hast du eine Erklärung zum Thema Wahrscheinlichkeitstheorie geschrieben. Nun sollst du diese Erklärung revidieren. Revidieren bedeutet, dass du (1) deine Erklärung auf Richtigkeit und Korrektheit überprüfst, und (2) deine Erklärung nach den Kriterien der Richtigkeit und Korrektheit überarbeitest. Achte bei dieser Revision auf folgender Leitfragen:
+Als Vorbereitungsaufgaben hast du einen Lerntagebuch zum Thema Wahrscheinlichkeitstheorie geschrieben. Nun sollst du dein Lerntagebuch revidieren. Revidieren bedeutet, dass du (1) dein Lerntagebuch auf Richtigkeit und Korrektheit überprüfst, und (2) dein Lerntagebuch nach den Kriterien der Richtigkeit und Korrektheit überarbeitest. Achte bei dieser Revision auf folgender Leitfragen:
 
-* Hast du in das übergeordnete Thema deiner Erklärung eingeführt? 
-* Hast du die relevanten Konzepte deiner Erklärung benannt und ausreichend erklärt? 
-* Hast du die relevanten Konzepte deiner Erklärung logisch und sinnvoll miteinander verbunden? 
-* Hast du die relevanten Konzepte deiner Erklärung durch gute Beispiele illustriert? 
+* Hast du die relevanten Konzepte des Lerntagebuchs benannt und ausreichend erklärt? 
+* Hast du die relevanten Konzepte des Lerntagebuchs logisch und sinnvoll miteinander verbunden? 
+* Hast du die relevanten Konzepte des Lerntagebuchs durch gute Beispiele illustriert? 
 
-Nimm dir für die Revision deiner Erklärung in etwa 45 Minuten Zeit und versuche auf die Erklärung hinsichtlich dieser Leitfragen zu überarbeiten. 
+Nimm dir für die Revision deines Lerntagebuchs in etwa 45 Minuten Zeit und versuche auf dein Lerntagebuch hinsichtlich dieser Leitfragen zu überarbeiten. 
 
-> TODO: Füge hier deine revidierte Erklärung ein.
+> TODO: Füge hier deine revidierte Version des Lerntagebuchs hier ein.
 
 
 ## Fragen zur Revision
@@ -34,15 +33,15 @@ Wie lange hast du an der Revision geschrieben?
 
 > TODO: Bitte in Minuten angeben
 
-Wie stark hast du dich gerade bei der Revisions der Erklärung angestrengt (1: Sehr stark angestrengt; 9: gar nicht angestrengt)?  
+Wie stark hast du dich gerade bei der Revisions des Lerntagebuchs angestrengt (1: Sehr stark angestrengt; 9: gar nicht angestrengt)?  
 
 > TODO: Bitte Antwort hier eintragen
 
-Wie schwierig war es für dich die Erklärung zu revidieren (1: Sehr schwierig, 9 gar nicht schwierig)? 
+Wie schwierig war es für dich das Lerntagebuch zu revidieren (1: Sehr schwierig, 9 gar nicht schwierig)? 
 
 > TODO: Bitte Antwort hier eintragen
 
-Wie verständlich schätzt du deine revidierte Erklärung ein (1: Sehr verständlich; 5 gar nicht verständlich)? 
+Wie verständlich schätzt du dein Lerntagebuch ein (1: Sehr verständlich; 5 gar nicht verständlich)? 
 
 > TODO: Bitte Antwort hier eintragen
 
