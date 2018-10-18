@@ -14,7 +14,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Beschreibung der Aufgabe
 
-Für diese Vorbereitungsaufgabe schreibst du eine Erklärung zum Thema *Wahrscheinlichkeitstheorie*. Unter einer Erklärung versteht man einen Text, der in Lehr-Lern-Kontexten eingesetzt wird, um das Wissen oder das Verständnis des Lerngegenstands der Lernenden zu erweitern. Deine Erklärung sollte in etwa 800 Wörter umfassen und für eine\*n Erstsemester\*in welche\*r kein Vorwissen über Wahrscheinlichkeitstheorie hat, geschrieben sein. Auf folgende Begriffe solltest du in deiner Erklärung eingehen:
+Für diese Vorbereitungsaufgabe schreibst du ein Lerntagebuch zum Thema *Wahrscheinlichkeitstheorie*. Schreibe das Lerntagebuch für dich selbst, um die Inhalte der Seminarstunde für dich zu organisieren. Dein Lerntagebuch sollte in etwa 800 Wörter umfassen und für eine\*n Erstsemester\*in welche\*r kein Vorwissen über Wahrscheinlichkeitstheorie verständlich sein. Schreibe einen Fließtext (keine Aufzählungen). Auf folgende Begriffe solltest du in deinem Lerntagebuch eingehen:
 
 * Zufallsexperiment
 * Elementarereignis
@@ -24,30 +24,24 @@ Für diese Vorbereitungsaufgabe schreibst du eine Erklärung zum Thema *Wahrsche
 * Vereinigung
 * Durchschnittsbildung
 
-Schreibe einen Fließtext (keine Aufzählungen). Achte bei der Anfertigung der Erklärung darauf, dass deine Zielgruppe in der Lage ist, den Text ohne Zuhilfenahme anderer Materialien zu verstehen.
-
-
 # Erklärung zum Thema Wahrscheinlichkeitstheorie
 
-> TODO: Füge hier deine ~ 800 Wörter lange Erklärung ein.
+> TODO: Füge hier dein ~ 800 Wörter langes Lerntagebuch ein.
 
-## Fragen zum Verfassen der Erklärung
+## Fragen zum Verfassen des Lerntagebuchs
 
-
-## Fragen zur Revision
-
-Wie lange hast du an der Erklärung geschrieben? 
+Wie lange hast du an deinem Lerntagebuch geschrieben? 
 
 > TODO: Bitte in Minuten angeben
 
-Wie stark hast du dich gerade beim Verfassen der Erklärung angestrengt (1: Sehr stark angestrengt; 9: gar nicht angestrengt)?  
+Wie stark hast du dich gerade beim Verfassen deines Lerntagebuchs angestrengt (1: Sehr stark angestrengt; 9: gar nicht angestrengt)?  
 
 > TODO: Bitte Antwort hier eintragen
 
-Wie schwierig war es für dich die Erklärung zu verfassen (1: Sehr schwierig, 9 gar nicht schwierig)? 
+Wie schwierig war es für dich das Lerntagebuch zu verfassen (1: Sehr schwierig, 9 gar nicht schwierig)? 
 
 > TODO: Bitte Antwort hier eintragen
 
-Wie verständlich schätzt du deine Erklärung ein (1: Sehr verständlich; 5 gar nicht verständlich)? 
+Wie verständlich schätzt du dein Lerntagebuch ein (1: Sehr verständlich; 5 gar nicht verständlich)? 
 
 > TODO: Bitte Antwort hier eintragen
