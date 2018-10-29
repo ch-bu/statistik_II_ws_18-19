@@ -1,7 +1,6 @@
 ---
 title: "Statistik II - Nachbereitungsaufgabe"
 subtitle: "02 Wahrscheinlichkeitsverteilungen"
-author: ""
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output:
   pdf_document: default
@@ -12,18 +11,17 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# Revision deiner Erklärung zum Thema Wahrscheinlichkeitsverteilungen
+# Revision deines Lerntagebuchs zum Thema Wahrscheinlichkeitsverteilungen
 
-Als Vorbereitungsaufgaben hast du eine Erklärung zum Thema Wahrscheinlichkeitsverteilungen geschrieben. Nun sollst du diese Erklärung revidieren. Revidieren bedeutet, dass du (1) deine Erklärung auf Richtigkeit und Korrektheit überprüfst, und (2) deine Erklärung nach den Kriterien der Richtigkeit und Korrektheit überarbeitest. Achte bei dieser Revision auf folgender Leitfragen:
+Als Vorbereitungsaufgaben hast du einen Lerntagebuch zum Thema Wahrscheinlichkeitsverteilungen geschrieben. Nun sollst du dein Lerntagebuch revidieren. Revidieren bedeutet, dass du (1) dein Lerntagebuch auf Richtigkeit und Korrektheit überprüfst, und (2) dein Lerntagebuch nach den Kriterien der Richtigkeit und Korrektheit überarbeitest. Achte bei dieser Revision auf folgender Leitfragen:
 
-* Hast du in das übergeordnete Thema deiner Erklärung eingeführt? 
-* Hast du die relevanten Konzepte deiner Erklärung benannt und ausreichend erklärt? 
-* Hast du die relevanten Konzepte deiner Erklärung logisch und sinnvoll miteinander verbunden? 
-* Hast du die relevanten Konzepte deiner Erklärung durch gute Beispiele illustriert? 
+* Hast du die relevanten Konzepte des Lerntagebuchs benannt und ausreichend erklärt? 
+* Hast du die relevanten Konzepte des Lerntagebuchs logisch und sinnvoll miteinander verbunden? 
+* Hast du die relevanten Konzepte des Lerntagebuchs durch gute Beispiele illustriert? 
 
-Nimm dir für die Revision deiner Erklärung in etwa 45 Minuten Zeit und versuche auf die Erklärung hinsichtlich dieser Leitfragen zu überarbeiten. 
+Nimm dir für die Revision deines Lerntagebuchs in etwa 45 Minuten Zeit und versuche auf dein Lerntagebuch hinsichtlich dieser Leitfragen zu überarbeiten. 
 
-> TODO: Füge hier deine revidierte Erklärung ein.
+> TODO: Füge hier deine revidierte Version des Lerntagebuchs hier ein.
 
 
 ## Fragen zur Revision
@@ -32,20 +30,22 @@ Wie lange hast du an der Revision geschrieben?
 
 > TODO: Bitte in Minuten angeben
 
-Wie stark hast du dich gerade bei der Revisions der Erklärung angestrengt (1: Sehr stark angestrengt; 9: gar nicht angestrengt)?  
+Wie stark hast du dich gerade bei der Revisions des Lerntagebuchs angestrengt (1: Sehr stark angestrengt; 9: gar nicht angestrengt)?  
 
 > TODO: Bitte Antwort hier eintragen
 
-Wie schwierig war es für dich die Erklärung zu revidieren (1: Sehr schwierig, 9 gar nicht schwierig)? 
+Wie schwierig war es für dich das Lerntagebuch zu revidieren (1: Sehr schwierig, 9 gar nicht schwierig)? 
 
 > TODO: Bitte Antwort hier eintragen
 
-Wie verständlich schätzt du deine revidierte Erklärung ein (1: Sehr verständlich; 5 gar nicht verständlich)? 
+Wie verständlich schätzt du dein Lerntagebuch ein (1: Sehr verständlich; 5 gar nicht verständlich)? 
 
 > TODO: Bitte Antwort hier eintragen
 
 
 # R Anwendungsaufgaben
+
+In dieser Nachbereitungsaufgabe wirst du einen Filmdatensatz explorativ analysieren. Der Datensatz umfasst 1000 Filme aus den letzten Jahren. Wie immer müssen wir zunächst unsere Pakete laden, die wir für unsere Analyse benötigen. 
 
 Lade zunächst das Paket tidyverse:
 
@@ -54,93 +54,113 @@ Lade zunächst das Paket tidyverse:
 # TIPP: https://www.dummies.com/programming/r/how-to-install-load-and-unload-packages-in-r/
 ```
 
-In dieser Anwendungsaufgabe üben wir die Arbeit mit Dataframes am Beispiel eines Filmdatensatzes. Zunächst müssen wir die Daten einlesen, mit Hilfe derer wir diese Frage beantworten. Nutze hierfür die `read_csv` Funktion und vervollständige folgenden Befehl:
+Wie du bereits weißt, umfasst Tidyverse eine Vielzahl an Paketen. Eines dieser Pakete heißt 'readr'. Das readr Paket kommt mit einer Reihe an Funktionen, um Datensätze einzulesen. Da es sich bei unserem Datensatz um eine csv-Datei handelt, die durch Kommas getrennt ist, benötigen wir die `read_csv` Funktion.
 
-`
-movies <- NULL("movies.csv")
-`
+Lade als nächstes den Datensatz `movies.csv` mit der Funktion `read_csv` und speichere diesen Datensatz in der Variable `movies`: 
 
-```{r}
+```{r, message=FALSE, warning=FALSE}
 # TODO: Hier den Dataframe movies einfügen
+# TIPP: movies <- NULL("movies.csv")
+movies <- read_csv("movies.csv")
 ```
 
-Als nächstes schauen wir uns die Variablennamen des Datensatzes mit [colnames](https://stat.ethz.ch/R-manual/R-devel/library/base/html/colnames.html) an:
+Bevor wir beginnen, den Datensatz zu analysieren, ist es hilfreich, sich zunächst die Variablen des Datensatzes anzusehen. Verwende hierfür `glimpse`: 
 
-```{r}
-# TODO: Variablennamen mit Colnames anschauen
-```
-
-Schaue dir die Variablen noch genauer mit der Funktion `glimpse` an:
 
 ```{r}
 # TODO: Hier Glimpse eingeben
 # TIPP: https://tibble.tidyverse.org/reference/glimpse.html
 ```
 
-Die Variable `Runtime (Minutes)` ist etwas kompliziert geschrieben. Wir benennen daher die Variable um. Hierfür verwenden wir die [rename Funktion](https://dplyr.tidyverse.org/reference/select.html):
+Um lediglich die Variablennamen zu erhalten, kannst du die Funktion [colnames](https://stat.ethz.ch/R-manual/R-devel/library/base/html/colnames.html) verwenden:
 
-`
-movies <- TODO %>%
-  rename(TODO = `Runtime (Minutes)`)
-`
+Schaue dir die Variablen noch genauer mit der Funktion `glimpse` an:
 
 ```{r}
-# TODO: Ändere den Namen der Variable Runtime (Minutes) zu minutes
+# TODO: Variablennamen mit colnames ausgeben lassen
 ```
 
-Zunächst schauen wir uns die Variable mit Hilfe eines Histograms an. Vervollständige hierfür bitte folgenden Befehl:
+## Rename
 
-`
-ggplot(NULL, aes(NULL)) +
-  geom_histogram(fill = "blue", color = "black")
-`
+Manchmal möchten wir in einem Datensatz Variablen umbenennen. In diesem Datensatz gibt es zwei Variablen, die etwas umständlich geschrieben sind: `Runtime (Minutes)` und `Revenue (Millions)`. Wir möchten die beiden Variablen `minutes`und `revenue` benennen. Mit Hilfe der  [rename Funktion](https://dplyr.tidyverse.org/reference/select.html) können wir die Variablen umbenennen. Hier ein Beispiel für die erste Variable `Runtime (Minutes)`: 
 
 ```{r}
-# TODO: Hier Histogram eingeben
-# TIPP: https://ggplot2.tidyverse.org/reference/geom_histogram.html
+movies <- movies %>%
+  rename(minutes = `Runtime (Minutes)`)
 ```
 
-Wir können aus dem Histogram erkennen, dass die populären Filme durchschnittlich zwischen 90 und 130 Minuten dauern. Deskriptiv können wir den Mittelwert und die Standardverteilung dieser Verteilung bestimmen:
+Zunächst füttern wir den Output des Dataframes `movies` mit Hilfe des Pipe-Operators in die Funktion rename. Mit Hilfe von rename können wir nun eine oder mehrere Variablen umbenennen. Der erste Teil der Funktion ist der Name der **neuen Variable** (hier `minutes`). Danach folgt ein `=` und der Name der **bisherigen Variable**. Wir könnten nach dem bisherigen Namen der Variable auch ein Komma einfügen und weitere Variablen umbennenen. Rename gibt uns anschließend den **ganzen Datensatz** mit den neuen Variablennamen zurück. Diesen speichern wir erneut im Datensatz `movies`. 
+
+Versuche nun die Variable `Revenue (Millions)` in den Variablennamen `revenue` umzubennenen. Speichere den Output der Funktion im Datensatz `movies`. Schaue dir das Ergebnis anschließend mit colnames an:
 
 ```{r}
-# TODO: Bitte Mittelwert und Standardabweichungen der Variable ausgeben lassen
-# TIPP: ?mean UND ?sd in der Konsole eingeben
+# TODO: Ändere den Namen der Revenue (Millions) zu revenue
 ```
-
-
-Finde den längsten Film im Datensatz. Verwende hierfür die Funktion [arrange](https://dplyr.tidyverse.org/reference/arrange.html), head und den Pipe-Operator:
 
 ```{r}
-# TODO: Längsten Film finden
-# TIPP: https://www.rdocumentation.org/packages/utils/versions/3.5.1/topics/head
-#       https://dplyr.tidyverse.org/reference/arrange.html
+# TODO: Variablennamen mit colnames ausgeben lassen
+```
+
+## Arrange
+
+Welcher der 1000 Filme ist eigentlich am beliebtesten. Um diese Frage zu beantworten können wir den Datensatz mit der Funktion `arrange` ordnen. Ein Beispiel: Wir ordnen die Filme nach ihrer Länge und zeigen nur die ersten 5 Filme an (mit der `head` Funktion):
+
+```{r}
+movies %>% 
+  arrange(desc(minutes)) %>%
+  head(n = 5)
+```
+
+Versuche als nächstes, den beliebtesten Film anhand der Variable `Rating` zu finden: 
+
+```{r}
+# TODO: Finde den beliebesten Film anhand der Variable Rating
+#       Zeige dir die 10 am besten bewertesten Filme mit Hilfe der 
+#       head Funktion an
+```
+
+Das ganze ist noch etwas unübersichtlich. Versuche als nächstes die gleichen Befehle auszuführen, aber selektiere den Datensatz auf die Variablen `Title`, `Director`, `Year` und `Rating`. Nutze hierfür die `select` Funktion aus der letzten Vorbereitungsaufgabe. 
+
+```{r}
+# TODO: Finde die 10 beliebtesten Filme und selektiere den
+#       Output anhand der Variablen Title, Director, Year, und Rating
 ```
 
 
-Wie viele Filme haben mehr als 400 Millionen Dollar eingespielt? Verwende hierfür die [Filter Funktion](https://dplyr.tidyverse.org/reference/filter.html), den Pipe-Operator und die Funktion count:
+## Count
 
-`
+Häufig möchten wir bei der Analyse eines Datensatzes die Häufigkeit der Ausprägung diskreter Variablen zählen. Zum Beispiel möchten wir zählen, wie viele Filme pro Jahr in unserem Datensatz gedreht wurden. Hierfür können wir `count` verwenden:
+
+```{r}
 movies %>%
-  TODO: Filme filtern %>%
-  count()
-`
-
-```{r}
-# TODO: Filme filtern
+  count(Year)
 ```
 
+Wir übergeben den Datensatz `movies` in die Funktion `count`. Innerhalb von count können wir beliebig viele disrekte Variablen eingeben, deren Ausprägungen gezählt werden:
 
-Welcher Direktor hat die meisten Filme gemacht? Um diese Frage zu beantworten, können wir erneut die Count Funktion verwenden. Mit [arrange](https://dplyr.tidyverse.org/reference/arrange.html) können wir die Variablen absteigend ordnen. Vervollständige dazu folgenden Code:
-
-`
+```{r}
 movies %>%
-  count(NULL) %>%
-  arrange(NULL)
-`
+  count(Year, Genre) %>%
+  arrange(desc(n))
+```
+
+Finde als nächstes die Directors, die die meisten Filme in den Top-1000 haben Speichere den Output in der Variable `directors_frequency`:
 
 ```{r}
-# TODO: Häufigkeit der Filme pro Jahr ausgeben
+# TODO: Finde den Director mit den meisten Filmen und speichere den Output
+#       in der Variable directors_frequency
+# TIPP: Nutze count, arrange(desc(n))
 ```
+
+Wir können diese Verteilung auch als Balkendiagram visualisieren:
+
+```{r}
+ggplot(directors_frequency[1:20, ], aes(x = reorder(Director, n), y = n)) +
+  geom_bar(stat = "identity") +
+  coord_flip()
+```
+
+Der Übersicht halber, habe ich nur die häufigsten 20 Direktoren angezeigt. 
 
 
 ## Freiwillige Zusatzsaufgabe: T-Verteilung
@@ -195,7 +215,7 @@ ggplot(NULL, aes(t_values)) +
 # TODO: Erstelle ein Histogram der T-Werte 
 ```
 
-Was wir nun sehen ist eine *Häufigkeitsverteilung* der T-Werte. Wir müssen diese Werte noch zu einer Dichtefunktion umwandeln und visualisieren, da die jede Wahrscheinlichkeitsverteilung stetiger Variablen eine [Dichtefunktion](https://de.wikipedia.org/wiki/Wahrscheinlichkeitsdichtefunktion) darstellt:
+Was wir nun sehen ist eine *Häufigkeitsverteilung* der T-Werte. Wir müssen diese Werte noch zu einer Dichtefunktion umwandeln und visualisieren, da jede Wahrscheinlichkeitsverteilung stetiger Variablen eine [Dichtefunktion](https://de.wikipedia.org/wiki/Wahrscheinlichkeitsdichtefunktion) darstellt:
 
 ```{r}
 ggplot(NULL, aes(t_values)) +
