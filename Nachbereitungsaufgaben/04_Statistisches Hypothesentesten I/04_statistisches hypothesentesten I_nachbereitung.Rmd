@@ -204,6 +204,8 @@ z_score <- (NULL(diet$weight_diff) - NULL) /
   (NULL(diet$weight_diff) / NULL(NULL(diet)))
 ```
 
+> Zu schwierig!
+
 Nun können wir diesen Z-Wert in unserer Stichprobenkennwertverteilung abtragen:
 
 ```{r}

@@ -54,6 +54,8 @@ Wie gut konntest du auf Grundlage des visuellen Feedbacks Revisionen ableiten (1
 
 # R-Anwendungsaufgaben
 
+> Vorher bereinigen und den Wraning Part schmeißen
+
 ```{r}
 # TODO: Lade Tidyverse
 ```
