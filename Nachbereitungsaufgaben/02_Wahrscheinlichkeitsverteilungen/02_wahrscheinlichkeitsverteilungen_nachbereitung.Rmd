@@ -103,7 +103,7 @@ Versuche nun die Variable `Revenue (Millions)` in den Variablennamen `revenue` u
 
 ## Arrange
 
-Welcher der 1000 Filme ist eigentlich am beliebtesten. Um diese Frage zu beantworten können wir den Datensatz mit der Funktion `arrange` ordnen. Ein Beispiel: Wir ordnen die Filme nach ihrer Länge und zeigen nur die ersten 5 Filme an (mit der `head` Funktion):
+Welcher der 1000 Filme ist eigentlich am längsten? Um diese Frage zu beantworten können wir den Datensatz mit der Funktion `arrange` ordnen. Ein Beispiel: Wir ordnen die Filme nach ihrer Länge und zeigen nur die ersten 5 Filme an (mit der `head` Funktion):
 
 ```{r}
 movies %>% 
