@@ -8,3 +8,6 @@
 * [%>% (Pipe Operator)](http://r4ds.had.co.nz/pipes.html): Den Output einer Funktion in eine weitere Funktion füttern.
 * [filter](https://dplyr.tidyverse.org/reference/filter.html): Reihen in einem Datensatz filtern
 * [select](https://dplyr.tidyverse.org/reference/select.html): Variablen in einem Datensatz auswählen
+* [count](https://dplyr.tidyverse.org/reference/tally.html). Anzahl diskreter Variablen zählen. 
+* [arrange](https://dplyr.tidyverse.org/reference/arrange.html). Datensatz nach Variablen sortieren
+* [rename](https://dplyr.tidyverse.org/reference/select.html). Variablen umbenennen.
