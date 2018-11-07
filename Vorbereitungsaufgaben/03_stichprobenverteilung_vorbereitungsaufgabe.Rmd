@@ -126,7 +126,7 @@ Für diese Vorbereitungsaufgabe schreiben Sie ein Lerntagebuch zum Thema *Stichp
 * Konfidenzintervall
 
 
-# Lerntagebuch zum Thema Wahrscheinlichkeitsverteilungen
+# Lerntagebuch zum Thema Stichprobenverteilungen und Parameterschätzung
 
 > TODO: Füge hier dein ~ 800 Wörter langes Lerntagebuch ein.
 
