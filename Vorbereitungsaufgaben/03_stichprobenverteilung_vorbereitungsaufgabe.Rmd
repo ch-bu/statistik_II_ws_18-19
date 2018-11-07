@@ -1,0 +1,145 @@
+---
+title: "Statistik II - Vorbereitungsaufgabe"
+subtitle: "03 Stichprobenverteilungen und Parameterschätzung"
+author: ""
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Leitfaden zum Verfassen des Lerntagebuchs
+
+## Ziele
+
+1.  Das Schreiben von Lerntagebüchern soll zu einem *vertieften
+    Verständnis* des behandelten Stoffes führen, indem es zu
+    *regelmäßiger Nachbearbeitung und Reflexion* zwingt.
+
+2.  Die Lerntagebücher sollen außerdem das *Bewusstsein für den eigenen
+    Lernprozess* fördern. Sie dienen also erstens der Überwachung des
+    eigenen Verstehens (welche Zusammenhänge habe ich verstanden, welche
+    sind mir nicht klar geworden?) und wirken damit der Entstehung von
+    Verständnisillusionen entgegen. Zweitens führt eine kontinuierliche
+    Dokumentation und Reflektion der Lernerfahrungen zu einem besseren
+    Verständnis des eigenen Arbeitsverhaltens und auf diese Weise zur
+    Entwicklung individueller Lern- und Arbeitsstrategien.
+
+3.  Die „Verschriftlichung“ der eigenen Gedanken kann insbesondere
+    helfen, eigene Ideen zu generieren und zu entwickeln. Die Erstellung
+    von Lerntagebüchern ist daher auch als das Einüben einer „Technik“
+    des aktiven, selbstgesteuerten Lernens zu sehen.
+
+
+## Warum heißt das Lerntagebuch Lerntagebuch?
+
+Die Analogie mit einem üblichen Tagebuch ist nicht grundlos gewählt. Sie
+soll vor allem zwei Aspekte hervorheben:
+
+1.  Erstens die Regelmäßigkeit der Aufzeichnungen, die es - in der
+    Rückschau - ermöglichen soll, die eigene "Lerngeschichte" schnell zu
+    rekonstruieren. Das Lerntagebuch hat also, ähnlich wie ein normales
+    Tagebuch, eine Art "Bilanzfunktion".
+
+2.  Zweitens soll die Analogie darauf verweisen, dass es zur Führung des
+    Lerntagebuchs notwendig ist, einen persönlichen "Stil" der
+    Aufzeichnung zu finden. Es soll sich beim Lerntagebuch wie bei einem
+    normalen Tagebuch um ein fortgesetztes Zwiegespräch des Autors/der
+    Autorin mit sich selbst handeln. Es gibt daher keine
+    allgemeinverbindliche Form, wie man es "richtig" macht.
+
+## Was bringt das Lerntagebuch?
+
+Wissenschaftlich ist gut belegt, dass das regelmäßige Schreiben eines
+Lerntagebuchs zur Nachbereitung von Seminar- und Vorlesungsstunden zu
+einem höheren Lernerfolg führt, als wenn keine vergleichbare
+Schreibaufgabe gegeben wird bzw. keine Nachbereitung stattfindet (vgl.
+Nückles, Dümer, Hübner & Renkl, 2010). Aber auch Studien, die das
+Schreiben von Lerntagebüchern mit anderen Schreibaufgaben verglichen
+haben (siehe Wäschle, Gebhardt, Oberbusch & Nückles, 2015), kommen zu
+positiven Ergebnissen. So konnten zum Beispiel die Lernforscher
+Cantrell, Fusaro und Dougherty (2000) zeigen, dass das Führen eines
+Lerntagebuchs zur Nachbereitung von Seminarstunden dem Anfertigen einer
+herkömmlichen Zusammenfassung überlegen ist. McCrindle und Christensen
+(1995) stellten in ihrer Untersuchung fest, dass das Schreiben von
+Lerntagebüchern im naturwissenschaftlichen Unterricht effektiver ist als
+das Verfassen eines Forschungsberichts. Diejenigen Studierenden, die
+regelmäßig ein Lerntagebuch führten, erwarben ein besseres und
+komplexeres Verständnis und erzielten schließlich im Examen eine bessere
+Note als Studierende, die einen konventionellen Forschungsbericht
+angefertigt hatten.
+
+## Formalia für das Verfassen von Lerntagbüchern**
+
+1.  ***Umfang:*** Für jede Seminarsitzung (mit Ausnahme der ersten) ist
+    ein Lerntagebucheintrag anzufertigen. Die Länge der einzelnen
+    Einträge sollte im Durchschnitt 800 Wörter betragen (siehe: https://wordcounter.net/)
+
+2.  ***Abgabetermin:*** Der wöchentliche Lerntagebucheintrag ist spätestens bis zum darauf folgenden
+    **Mittwochabend** **23:55 Uhr** in den dafür vorgesehenen Ordner
+    „Vorbereitungsaufgaben“ auf der Lernplattform ILIAS abzulegen.
+
+## Leitfragen für das Verfassen von Lerntagebucheinträgen
+
+Es ist ausgesprochen hilfreich, sich beim Schreiben eines Lerntagebuchs
+an den nachfolgenden Leitfragen zu orientieren.
+
+Die nachfolgend aufgeführten Aspekte sollten dabei auf jeden Fall
+berücksichtigt werden. Diese sollen Sie dabei unterstützen, **(1)** dass
+Sie das Gelernte ausarbeiten und strukturieren. Dabei ist es **(2)**
+wichtig, das eigene Verständnis zu überwachen und **(3)** gegebenenfalls
+Maßnahmen zur Beseitigung von Verständnisschwierigkeiten zu ergreifen.
+
+### Das Gelernte ausarbeiten und strukturieren
+
+-   Wie können Sie die aus Ihrer Sicht zentralen Punkte und ihre
+    Zusammenhänge mit eigenen Worten wiedergeben?
+
+-   Wie können Sie den Lernstoff sinnvoll ordnen?
+
+-   Welche Beispiele fallen Ihnen ein, die das Gelernte illustrieren,
+    bestätigen oder ihm widersprechen?
+
+-   Welche Aussagen finden Sie überzeugend? Welchen Aussagen möchten Sie
+    widersprechen? Bitte begründen Sie!
+
+### Überwachen des eigenen Verständnisses
+
+-   Welche wichtigen Inhalte haben Sie richtig gut verstanden?
+
+-   Welche zentralen Inhalte haben Sie noch nicht verstanden?
+
+
+# Verfassen des Lerntagebuchs
+
+Für diese Vorbereitungsaufgabe schreiben Sie ein Lerntagebuch zum Thema *Stichprobenverteilungen und Parameterschätzung.*. Lesen Sie vorab Eid, Gollwitzer und Schmit (2017, S. 230 - 253). Schreiben Sie das Lerntagebuch für sich selbst, um die Inhalte der Seminarstunde für Sie zu organisieren. Ihr Lerntagebuch sollte in etwa 800 Wörter umfassen und als Fließtext verfasst sein (keine Aufzählungen). Auf folgende Begriffe sollten Sie in Ihrem Lerntagebuch eingehen:
+
+* Population
+* Stichprobe
+* Stichprobenkennwertverteilung
+* Standardfehler
+* Zentrales Grenzwerttheorem
+* Konfidenzintervall
+
+
+# Lerntagebuch zum Thema Wahrscheinlichkeitsverteilungen
+
+> TODO: Füge hier dein ~ 800 Wörter langes Lerntagebuch ein.
+
+## Fragen zum Verfassen des Lerntagebuchs
+
+Wie lange hast du an deinem Lerntagebuch geschrieben? 
+
+> TODO: Bitte in Minuten angeben
+
+Wie stark hast du dich gerade beim Verfassen deines Lerntagebuchs angestrengt (1: Sehr stark angestrengt; 9: gar nicht angestrengt)?  
+
+> TODO: Bitte Antwort hier eintragen
+
+Wie schwierig war es für dich das Lerntagebuch zu verfassen (1: Sehr schwierig, 9 gar nicht schwierig)? 
+
+> TODO: Bitte Antwort hier eintragen
