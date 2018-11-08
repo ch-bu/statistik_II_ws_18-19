@@ -116,7 +116,7 @@ Maßnahmen zur Beseitigung von Verständnisschwierigkeiten zu ergreifen.
 
 # Verfassen des Lerntagebuchs
 
-Für diese Vorbereitungsaufgabe schreiben Sie ein Lerntagebuch zum Thema *Stichprobenverteilungen und Parameterschätzung.*. Lesen Sie vorab Eid, Gollwitzer und Schmit (2017, S. 230 - 253). Schreiben Sie das Lerntagebuch für sich selbst, um die Inhalte der Seminarstunde für Sie zu organisieren. Ihr Lerntagebuch sollte in etwa 800 Wörter umfassen und als Fließtext verfasst sein (keine Aufzählungen). Auf folgende Begriffe sollten Sie in Ihrem Lerntagebuch eingehen:
+Für diese Vorbereitungsaufgabe schreiben Sie ein Lerntagebuch zum Thema *Stichprobenverteilungen und Parameterschätzung.*. Lesen Sie vorab Eid, Gollwitzer und Schmit (2017, S. 230 - 253). Schreiben Sie das Lerntagebuch für sich selbst, um die Inhalte der Seminarstunde für Sie zu organisieren. Ihr Lerntagebuch sollte in etwa 600 Wörter umfassen und als Fließtext verfasst sein (keine Aufzählungen). Auf folgende Begriffe sollten Sie in Ihrem Lerntagebuch eingehen:
 
 * Population
 * Stichprobe
@@ -128,7 +128,7 @@ Für diese Vorbereitungsaufgabe schreiben Sie ein Lerntagebuch zum Thema *Stichp
 
 # Lerntagebuch zum Thema Stichprobenverteilungen und Parameterschätzung
 
-> TODO: Füge hier dein ~ 800 Wörter langes Lerntagebuch ein.
+> TODO: Füge hier dein ~ 600 Wörter langes Lerntagebuch ein.
 
 ## Fragen zum Verfassen des Lerntagebuchs
 
