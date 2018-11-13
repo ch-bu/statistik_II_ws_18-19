@@ -1,0 +1,206 @@
+---
+title: "Statistik II - Nachbereitungsaufgabe"
+subtitle: "03 Stichprobenverteilung und Parameterschätzung"
+author: ""
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Revision deiner Erklärung zum Thema Stichprobenverteilung und Parameterschätzung
+
+Als Vorbereitungsaufgaben hast du eine Erklärung zum Thema Stichprobenverteilung und Parameterschätzung geschrieben. Nun sollst du diese Erklärung revidieren. Revidieren bedeutet, dass du (1) deine Erklärung auf Richtigkeit und Korrektheit überprüfst, und (2) deine Erklärung nach den Kriterien der Richtigkeit und Korrektheit überarbeitest. Achte bei dieser Revision auf folgender Leitfragen:
+
+* Hast du in das übergeordnete Thema deiner Erklärung eingeführt? 
+* Hast du die relevanten Konzepte deiner Erklärung benannt und ausreichend erklärt? 
+* Hast du die relevanten Konzepte deiner Erklärung logisch und sinnvoll miteinander verbunden? 
+* Hast du die relevanten Konzepte deiner Erklärung durch gute Beispiele illustriert? 
+
+Nimm dir für die Revision deiner Erklärung in etwa 45 Minuten Zeit und versuche auf die Erklärung hinsichtlich dieser Leitfragen zu überarbeiten. 
+
+> TODO: Füge hier deine revidierte Erklärung ein.
+
+
+## Fragen zur Revision
+
+Wie lange hast du an der Revision geschrieben? 
+
+> TODO: Bitte in Minuten angeben
+
+Wie stark hast du dich gerade bei der Revisions der Erklärung angestrengt (1: Sehr stark angestrengt; 9: gar nicht angestrengt)?  
+
+> TODO: Bitte Antwort hier eintragen
+
+Wie schwierig war es für dich die Erklärung zu revidieren (1: Sehr schwierig, 9 gar nicht schwierig)? 
+
+> TODO: Bitte Antwort hier eintragen
+
+Wie verständlich schätzt du deine revidierte Erklärung ein (1: Sehr verständlich; 5 gar nicht verständlich)? 
+
+> TODO: Bitte Antwort hier eintragen
+
+# R Anwendungsaufgaben
+
+```{r message=FALSE,warning=FALSE}
+library(tidyverse)
+```
+
+
+## Human Resources Dataset
+
+Stellen Sie sich vor, Sie sind in einer Firma als Personalentwickler angestellt. In Ihrer Abteilung führen Sie jährlich eine umfassende Mitarbeiterumfragen aus, deren Ergebnisse frisch erhoben wurden. Die Ergebnisse dieser Umfrage sollen Sie nun analysieren und für den Vorstand aufbereiten. Folgende Variablen haben Sie in Ihrer Umfrage erhoben:
+
+* *satisfaction_level*: Die Zufriedenheit Ihrer Mitarbeiter auf einer Skala von 0 bis 1
+* *last_evaluation*: Ein standardisierter Wert der letzten Evaluation des Mitarbeiters: 0 = sehr lange her, 1 = kürzlich
+* *number_project*: Die Anzahl der Projekte, die die Mitarbeiterin / der Mitarbeiter im letzten Jahr betreut hat. 
+* *average_montly_hours*: Die Anzahl der Stunden, die  die Mitarbeiterin / der Mitarbeiter pro Monat arbeitet
+* *time_spend_company*: Die Jahre, in denen die Mitarbeiterin / der Mitarbeiter bei der Firma gearbeitet hat
+* *Work_accident*: 1: Die Person hatte einen Arbeitsunfall, 0: Die Person hatte keinen Arbeitsunfall
+* *left*: Hat die Person das Unternehmen im letzten Jahr verlassen?
+* *promotion_last_5years*: Erhielt die Person in den letzten 5 Jahren eine Beförderung?
+* *sales*: In welchem Bereich arbeitet die Person?
+* *salary*: Erhält die Person ein geringes, mittleres oder hohes Gehalt?
+
+
+Ihre Aufgabe besteht nun darin, diesen Bericht für die Firma zu schreiben. Zunächst müssen Sie den Datensatz laden (`read_csv`):
+
+```{r, echo=FALSE, message=FALSE}
+# TODO: Lese den Datensatz mit read_csv ein
+#       human_resources.csv und weise dem Datensatz die Variable
+#       human_resources zu
+```
+
+Schaue dir den Datensatz mit `glimpse` an: 
+
+
+```{r}
+# TODO: Mit glimpse den Datensatz anschauen
+```
+
+Wie viele Mitarbeiter sind im Datensatz? Verwende hierfür `nrow`:
+
+```{r}
+# TODO: Mit nrow die Anzahl der Mitarbeiter anzeigen lassen
+```
+
+Wie viele Stunden arbeiten die Mitarbeiter pro Monat? Führe die folgenden Befehle aus: 
+
+```{r}
+ggplot(human_resources, aes(x = average_montly_hours)) +
+  geom_histogram(fill = "tomato", color = "black") +
+  xlab("Arbeitsstunden pro Monat") +
+  ylab("Anzahl")
+```
+
+Wie zufrieden sind die Mitarbeiter mit ihrer Arbeit? Entwerfe hierfür ein weiteres Histogram. Orientiere dich an dem obigen Histogram und überlege dir, welche Variablen du ändern musst. 
+
+```{r}
+# TODO: Gebe dir ein Histogram der Zufriedenheit aus
+# TIPP: https://ggplot2.tidyverse.org/reference/geom_histogram.html
+```
+
+Sind eigentlich Mitarbeiter, die mehr verdienen zufriedener? Schauen wir uns die Verteilungen anhand mehrerer Boxplots an:
+
+```{r}
+ggplot(human_resources, aes(salary, satisfaction_level)) +
+  geom_boxplot(aes(fill = salary))
+```
+
+
+Wie verteilen sich eigentlich die verschiedenen Gehaltsstufen? Gibt es mehr Mitarbeiter, die niedrig verdienen als Mitarbeiter, die mittelmäßig verdienen? Verwende den `count` Befehl, um die Anzahl des Auftretens dieser diskreten Variablen zu berechnen.
+
+```{r}
+# TODO: Zähle die Anzahl der unterschiedlichen Gehaltsstufen mit count
+# TIPP: Verwende den Pipe-Operator und übergebe den Datensatz in die Funtion count
+```
+
+Ok, das ist schon einmal interessant. Aber wie verteilen sich diese Werte prozentuell? Hierfür können wir die Funktion `mutate` verwenden. Mit mutate können wir neue Variablen berechnen. Hier ein Beispiel:
+
+```{r}
+human_resources %>%
+  mutate(
+    sum_satisfaction_number_project = satisfaction_level + number_project
+  ) %>% 
+  glimpse
+```
+
+Wir nehmen unseren Datensatz und berechnen danach eine neue Variable (über den Pipe-Operator). Die neue Variable soll `sum_satisfaction_number_project` heißen und aus der Summe der Variablen `satisfaction_level` und `number_project` berechnet werden. Wir könnten genausogut mehrere neue Variablen berechnen, indem wir die neuen Variablen durch ein Komma trennen: 
+
+```{r}
+human_resources %>%
+  mutate(
+    sum_satisfaction_number_project = satisfaction_level + number_project,
+    hours_squared = average_montly_hours * average_montly_hours
+  ) %>% 
+  glimpse
+```
+
+
+Die gleiche Logik können wir nun anwenden, um den Prozentwert zu berechnen. Vervollständige deinen `count` Befehl von oben und berechne folgende neue Variable: `percent`. Berechne percent folgendermaßen: teile die Anzahl der Menschen der jeweiligen Gehaltsstufen (hier durch die Variable `n` gekennzeichnet -> die Variable wird automatisch durch den Befehl count erstellt) durch die Anzahl der Reihen im Datensatz (`nrow`).
+
+
+```{r}
+# TODO: Berechne den prozentualen Anteil der Gehaltsunterschiede im Datensatz
+```
+
+Es wäre auch interessant, zu wissen, ob Mitarbeiter, die mehr arbeiten, in der Tendenz unzufriedener sind? 
+
+```{r}
+ggplot(human_resources, aes(x = average_montly_hours, y = satisfaction_level)) +
+  geom_point()
+```
+
+Bestimmt arbeiten Mitarbeiter, die mehr verdienen länger, oder? 
+
+```{r, warning=FALSE}
+ggplot(human_resources, aes(x = average_montly_hours)) +
+  geom_histogram(color = "black", aes(fill = salary, show.legend = FALSE)) +
+  facet_wrap(~ salary)
+```
+
+Versuche dir ebenfalls mehrere solche Diagramme für folgende Fragen zu erstellen: Arbeiten Mitarbeiter länger, die mehr Projekte am Hut haben? Du kannst hierfür den Code von oben kopieren, musst aber die richtige Variable ersetzen. Zudem müssen wir zunächst die Variable number_project in einen Faktor umwandeln, da diese momentan eine Zahl ist.Faktoren in R kannst du dir wie diskrete Variablen vorstellen, die keine Zwischenwerte haben. Wenn wir dies nicht tun, erhalten wir keine unterschiedlichen Farben bei den Histogrammen. 
+
+```{r, warning=FALSE}
+human_resources <- human_resources %>%
+  mutate(
+    number_project = factor(number_project)
+  )
+
+
+# TODO: Erstelle mehrere Histogramme der Anzahl der
+#       Arbeitsstunden für Mitarbeiter mit einer unterschiedlichen
+#       Anzahl an Projekten.
+```
+
+Versuche zuletzt zwei kleine Analysen des Datensatzes selbstständig zu verfassen. Versuche aus dem bisherigen Vokabular, dass du gelernt hast, eigene Erkentnisse aus den Daten zu gewinnen:
+
+* [glimpse](https://tibble.tidyverse.org/reference/glimpse.html): Die Variablen eines Datensatzes ansehen.
+* [read_csv](https://readr.tidyverse.org/reference/read_delim.html): Eine CSV-Datei einlesen
+* [nrow](https://www.rdocumentation.org/packages/base/versions/3.5.1/topics/nrow): Die Anzahl der Reihen eines Dataframes anzeigen
+* [colnames](https://stat.ethz.ch/R-manual/R-devel/library/base/html/colnames.html): Die Variablen eines Dataframes anzeigen lassen
+* `$`: Eine Variable aus einem Dataframe auswählen (z.B.: `happy$HappinessScore`)
+* [%>% (Pipe Operator)](http://r4ds.had.co.nz/pipes.html): Den Output einer Funktion in eine weitere Funktion füttern.
+* [filter](https://dplyr.tidyverse.org/reference/filter.html): Reihen in einem Datensatz filtern
+* [select](https://dplyr.tidyverse.org/reference/select.html): Variablen in einem Datensatz auswählen
+* [count](https://dplyr.tidyverse.org/reference/tally.html). Anzahl diskreter Variablen zählen. 
+* [arrange](https://dplyr.tidyverse.org/reference/arrange.html). Datensatz nach Variablen sortieren
+* [rename](https://dplyr.tidyverse.org/reference/select.html). Variablen umbenennen.
+* [mutate](https://dplyr.tidyverse.org/reference/mutate.html)
+
+```{r}
+# TODO: Eigene Analyse 1
+```
+
+
+```{r}
+# TODO: Eigene Analyse 2
+```
+
+
+
+

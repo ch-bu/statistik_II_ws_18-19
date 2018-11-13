@@ -11,3 +11,4 @@
 * [count](https://dplyr.tidyverse.org/reference/tally.html). Anzahl diskreter Variablen zählen. 
 * [arrange](https://dplyr.tidyverse.org/reference/arrange.html). Datensatz nach Variablen sortieren
 * [rename](https://dplyr.tidyverse.org/reference/select.html). Variablen umbenennen.
+* [mutate](https://dplyr.tidyverse.org/reference/mutate.html). Neue Variablen erstellen
