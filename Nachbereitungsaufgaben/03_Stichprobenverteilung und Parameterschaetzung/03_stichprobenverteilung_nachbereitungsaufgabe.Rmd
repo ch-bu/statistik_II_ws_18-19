@@ -14,16 +14,15 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Revision deiner Erklärung zum Thema Stichprobenverteilung und Parameterschätzung
 
-Als Vorbereitungsaufgaben hast du eine Erklärung zum Thema Stichprobenverteilung und Parameterschätzung geschrieben. Nun sollst du diese Erklärung revidieren. Revidieren bedeutet, dass du (1) deine Erklärung auf Richtigkeit und Korrektheit überprüfst, und (2) deine Erklärung nach den Kriterien der Richtigkeit und Korrektheit überarbeitest. Achte bei dieser Revision auf folgender Leitfragen:
+Als Vorbereitungsaufgaben hast du ein Lerntagebuch zum Thema Stichprobenverteilung und Parameterschätzung geschrieben. Nun sollst du dieses Lerntagebuch revidieren. Revidieren bedeutet, dass du (1) deine Erklärung auf Richtigkeit und Korrektheit überprüfst, und (2) deine Erklärung nach den Kriterien der Richtigkeit und Korrektheit überarbeitest. Achte bei dieser Revision auf folgender Leitfragen:
 
-* Hast du in das übergeordnete Thema deiner Erklärung eingeführt? 
-* Hast du die relevanten Konzepte deiner Erklärung benannt und ausreichend erklärt? 
-* Hast du die relevanten Konzepte deiner Erklärung logisch und sinnvoll miteinander verbunden? 
-* Hast du die relevanten Konzepte deiner Erklärung durch gute Beispiele illustriert? 
+* Hast du die relevanten Konzepte des Lerntagebuchs benannt und ausreichend erklärt? 
+* Hast du die relevanten Konzepte des Lerntagebuchs logisch und sinnvoll miteinander verbunden? 
+* Hast du die relevanten Konzepte des Lerntagebuchs durch gute Beispiele illustriert? 
 
-Nimm dir für die Revision deiner Erklärung in etwa 45 Minuten Zeit und versuche auf die Erklärung hinsichtlich dieser Leitfragen zu überarbeiten. 
+Nimm dir für die Revision deines Lerntagebuchs in etwa 45 Minuten Zeit und versuche auf dein Lerntagebuch hinsichtlich dieser Leitfragen zu überarbeiten. 
 
-> TODO: Füge hier deine revidierte Erklärung ein.
+> TODO: Füge hier deine revidierte Version des Lerntagebuchs hier ein.
 
 
 ## Fragen zur Revision
