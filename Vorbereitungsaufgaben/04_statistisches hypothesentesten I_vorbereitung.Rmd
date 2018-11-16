@@ -77,7 +77,7 @@ angefertigt hatten.
 
 1.  ***Umfang:*** Für jede Seminarsitzung (mit Ausnahme der ersten) ist
     ein Lerntagebucheintrag anzufertigen. Die Länge der einzelnen
-    Einträge sollte im Durchschnitt 800 Wörter betragen (siehe: https://wordcounter.net/)
+    Einträge sollte im Durchschnitt 600 Wörter betragen (siehe: https://wordcounter.net/)
 
 2.  ***Abgabetermin:*** Der wöchentliche Lerntagebucheintrag ist spätestens bis zum darauf folgenden
     **Mittwochabend** **23:55 Uhr** in den dafür vorgesehenen Ordner
