@@ -1,0 +1,318 @@
+---
+title: "Statistik II - Nachbereitungsaufgabe"
+author: ''
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output:
+  word_document: default
+  pdf_document: default
+  html_document: default
+subtitle: 04 Statistisches Hypothesentesten I
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+# Revision deines Lerntagebuchs zum Thema Statistisches Hypothesentesten I
+
+Als Vorbereitungsaufgaben hast du ein Lerntagebuch zum Thema Statistisches Hypothesentesten I geschrieben. Nun sollst du dieses Lerntagebuch revidieren. Revidieren bedeutet, dass du (1) deine Erklärung auf Richtigkeit und Korrektheit überprüfst, und (2) deine Erklärung nach den Kriterien der Richtigkeit und Korrektheit überarbeitest. Achte bei dieser Revision auf folgender Leitfragen:
+
+* Hast du die relevanten Konzepte des Lerntagebuchs benannt und ausreichend erklärt? 
+* Hast du die relevanten Konzepte des Lerntagebuchs logisch und sinnvoll miteinander verbunden? 
+* Hast du die relevanten Konzepte des Lerntagebuchs durch gute Beispiele illustriert? 
+
+Nimm dir für die Revision deines Lerntagebuchs in etwa 45 Minuten Zeit und versuche auf dein Lerntagebuch hinsichtlich dieser Leitfragen zu überarbeiten. 
+
+> TODO: Füge hier deine revidierte Version des Lerntagebuchs hier ein.
+
+
+## Fragen zur Revision
+
+Wie lange hast du an der Revision geschrieben? 
+
+> TODO: Bitte in Minuten angeben
+
+Wie stark hast du dich gerade bei der Revisions der Erklärung angestrengt (1: Sehr stark angestrengt; 9: gar nicht angestrengt)?  
+
+> TODO: Bitte Antwort hier eintragen
+
+Wie schwierig war es für dich die Erklärung zu revidieren (1: Sehr schwierig, 9 gar nicht schwierig)? 
+
+> TODO: Bitte Antwort hier eintragen
+
+Wie verständlich schätzt du deine revidierte Erklärung ein (1: Sehr verständlich; 5 gar nicht verständlich)? 
+
+> TODO: Bitte Antwort hier eintragen
+
+
+# R-Anwendungsaufgaben
+
+Stelle dir vor, du bist beim deutschen Konsortium der PISA-Studien eingestellt und hast einen Datensatz einer Schule erhalten. In dem Datensatz befindet sich eine Stichprobe von 20 Schülern der Schule. Du hast erfahren, dass diese Schule ein neues vielversprechendes Lehrkonzept umsetzt. Daher erwatest du, dass diese Schüler besser unterrichtet werden als im Mittel an deutschen Schulen. Nun möchtest du prüfen, ob die SuS in dieser Schule bessere Noten als im Durchschnitt in Deutschland erhalten. Die Noten sind in diesem Datensatz zwischen 0 und 15 Punkten skaliert (15 = sehr gut, 0 = ungenügend). Der Datensatz heißt `students.csv`.
+
+Du hast bereits die `read_csv` Funktion kennen gelernt, allerdings funktioniert diese nur mit csv-Dateien, die mit einem Komma (`,`) getrennt sind. Ein Blick auf die Daten verrät dir, dass du für diesen Datensatz die Funktion `read_csv2` verwenden musst, da diese csv-Datei (students.csv) Semikolons (`;`) verwendet. 
+
+Zunächst laden wir das Paket tidyverse und den Datensatz `students.csv`. Achte dabei, dass du die `read_csv2` Funktion verwendest. 
+
+```{r message=FALSE, warning=FALSE}
+# TODO: tidyverse laden
+# TODO: students.csv einlesen und als diet speichern
+# TIPP: read_csv2 verwenden
+library(tidyverse)
+students <- read_csv2("students.csv")
+```
+
+## Explorative Analyse
+
+Betrachte den Datensatz mit `glimpse`:
+
+```{r}
+# TODO: Datensatz mit glimpse betrachten
+glimpse(students)
+```
+
+Der Datensatz hat eine Menge Variablen. Dich interessieren allerdings nur folgende Variablen:
+
+* school: Kürzel der Schule
+* age: Alter
+* sex: student's sex (binary: "F" - female or "M" - male)
+* G3: Abschlussnote im Zeugnis
+* studytime - weekly study time (numeric: 1 - <2 hours, 2 - 2 to 5 hours, 3 - 5 to 10 hours, or 4 - >10 hours)
+
+Verwende daher die Funktion `select` um den Datensatz auf diese Variablen zu verkleinern und speichere den Output im Datensatz students_cleaned. 
+
+```{r}
+# TODO: Selektiere den Datensatz nach den Variablen
+#       und speichere die Daten in students_cleaned
+students_cleaned <- students %>%
+  select(school, sex, age, G3, studytime)
+```
+
+Wie viele Personen sind eigentlich im Datensatz? Zähle die Anzahl der Personen mit `nrow`:
+
+```{r}
+# TODO: Anzahl der Personen zählen
+nrow(students)
+```
+
+Schauen wir uns einmal an, wie sich die Noten in der Schule verteilen
+
+```{r}
+ggplot(students_cleaned, aes(x = G3)) +
+  geom_bar(fill = "steelblue", color = "black")
+```
+
+Wie alt sind die Schüler eigentlich im Durchschnitt? Erstelle ein ähnliches Balkendiagram mit Hilfe der ggplot Funktion. 
+
+```{r}
+# TODO: Erstelle ein Balkendiagram der Variable age
+ggplot(students_cleaned, aes(x = age)) +
+  geom_bar()
+```
+
+Unterscheiden sich eigentlich Mädchen und Jungen in den Noten? 
+
+```{r}
+ggplot(students_cleaned, aes(x = G3)) +
+  geom_bar(fill = "steelblue", color = "black") +
+  facet_wrap(~ sex)
+```
+
+Wie lauten die Mittelwerte der beiden Gruppen hinsichtlich der Variable G3? Um diese Fragen zu beantworten, müssen wir ein paar neue Funktionen lernen. Die erste ist `group_by`, die andere ist `summarise`. 
+
+Wir können mit Hilfe von Tidyverse einen Dataframe in verschiedene Gruppen teilen. Beispielsweise möchten wir manchmal die Standardabweichung verschiedener Gruppen miteinander vergleichen, oder eben die Mittelwerte von Gruppen. 
+
+Gruppieren wir einmal den Dataframe für die Variable sex:
+
+```{r}
+students_cleaned %>%
+  group_by(sex)
+```
+
+Der Output sieht genau gleich aus, wie wenn wir lediglich `students_cleaned` eingegeben hätten. Allerdings teilt tidyverse im Hintergrund den Dataframe anhand der Gruppen auf. 
+
+Mit Hilfe der Funktion `summarise` können wir nun verschiedene Operationen auf diesen gruppierten Dataframe anwenden:
+
+```{r}
+students_cleaned %>%
+  group_by(sex) %>%
+  summarise(
+    mean_note = mean(G3)
+  )
+```
+
+Aha, nun erhalten wir den Mittelwert für beide Gruppen. Wir können uns ebenso die Standardabweichung ausgeben lassen:
+
+```{r}
+students_cleaned %>%
+  group_by(sex) %>%
+  summarise(
+    mean_note = mean(G3),
+    sd_note   = sd(G3)
+  )
+```
+
+Versuche es einmal selbst. Berechnen Sie die Mittelwerte der Variable G3 für die Gruppe studytime. 
+
+```{r}
+# TODO: Mittelwerte der Gruppe studytime für die 
+#       Variable G3 berechnen. 
+students_cleaned %>%
+  group_by(studytime) %>%
+  summarise(
+    mean_note = mean(G3)
+  )
+```
+
+Warum tidyverse so mächtig ist, kannst du an folgenden Beispiel sehen. Wir berechnen die Mittelwerte der Gruppe sex für die Variable G3 und geben uns direkt mit Hilfe des Pipe-Operators ein Balkendiagram aus:
+
+```{r}
+students_cleaned %>%
+  group_by(sex) %>%
+  summarise(
+    mean_note = mean(G3)
+  ) %>%
+  ggplot(aes(x = sex, y = mean_note)) +
+  geom_bar(stat = "identity")
+```
+
+## Überprüfen der Hypothese
+
+Mit Hilfe des im Seminar gelernten Schemas **Passend** können wir nun deine Fragestellung beantworten:
+
+> Erhalten die Schüler der Schule GP (Gundrämmiger Paukenverein) bessere Noten als der deutsche Durchschnitt nach Pisa? 
+
+Der Mittelwert der Population liegt bei 9 mit einer Standardabweichung von 3. Unsere Stichprobe hat ein N von 20.  
+
+## 1. Aufstellen eines statistischen Hypothesenpaars (PAssend)
+
+Zunächst müssen wir ein statistisches Hypothesenpaar aufstellen. Formuliere bitte in deinen eigenen Worten die beiden Hypothesen. Erinnere dich, dass wir untersuchen möchten, die Schüler der Schule GP bessere Noten haben als der Durschnit nach Pisa. 
+
+* Nullhypothese ($H_0$): TODO
+* Alternativhypothese ($H_1$): TODO
+
+## 2. Bestimmung der statistischen Kennwerte (paSsend)
+
+Um unsere Hypothese zu prüfen, benötigen wir die Populationskennwerte und die Stichprobenkennwerte. Für die Population gelten folgende Werte. Trage die fehlenden Werte durch eine kurze R-Funktion ein (hier: NULL). 
+
+* Populationsmittelwert: $\mu$ = 9
+* Populationsstandardabweichung: $\sigma$ = 3
+* Stichprobenmittelwert: $M$ = `r NULL`
+* Stichprobengröße: $N$ = `r NULL`
+
+## 3. Bestimmung der Stichprobenkennwertverteilung für Nullhypothese (pasSend)
+
+Wir benötigen eine Stichprobenkennwertverteilung, um die Nullhypothese zu prüfen. Erinnere dich, dass wir bisher die Normalverteilung und die Standardnormalverteilung (z-Verteilung) als Stichprobenkennwertverteilung kennen gelernt haben. Auf der X-Achse dieser Verteilungen ist die Ausprägung der untersuchten Variablen (z.B. Gewichtsveränderung) abgetragen, die Y-Achse visualisiert die Dichte. Wir verwenden für die Y-Achse die Dichte, da es sich bei der Variable Gewichtsreduzierung um eine stetige Variable und keine diskrete Variable handelt. 
+
+Die Stichprobenkennwertverteilung können wir einmal visualisieren. Erinnere dich daran, dass die Parameter für die Stichprobenkennwertverteilung folgende sind:
+
+* Mittelwert der Stichprobenkennwertverteilung: Populationsmittelwert (hier 9)
+* Standardverteilung der Stichprobenkennwertverteilung: Standardfehler (hier (3 / sqrt(20)))
+
+```{r}
+ggplot(tibble(x = c(-5, 13)), aes(x)) +  
+  stat_function(fun = dnorm,
+                args = list(mean = 9, sd = (3 / sqrt(20))),
+                geom = "area",
+                fill = "#998ec3") +
+  ylab("Dichte P(x)") +
+  xlim(6, 12)
+```
+
+Diese Stichprobenkennwertverteilung erhalten wir, wenn wir aus einer Population mit dem Mittelwert 9 und einer Standardabweichung 3 tausende viele Mittelwerte bei einer Stichprobengröße von 20 berechnen und diese als Dichtefunktion darstellen. Wir müssen lediglich die Häufigkeiten auf der Y-Achse als Dichtefunktion darstellen und erhalten diese Stichprobenkennwertverteilung.
+
+Wir müssen diese Verteilung allerdings vorher noch z-standardisieren, damit wir die Wahrscheinlichkeit für das Auftreten unser Ereignis (der Mittelwert der Stichprobe) berechnen können:
+
+```{r}
+ggplot(tibble(x = c(-3, 3)), aes(x)) +  
+  stat_function(fun = dnorm,
+                args = list(mean = 0, sd = 1),
+                geom = "area",
+                fill = "#998ec3") +
+  ylab("Dichte P(x)") +
+  xlim(-3, 3) +
+  xlab("z-score")
+```
+
+Wunderbar, wir haben unsere standardisierte Stichprobenkennwertverteilung. 
+
+## 4. Bestimmung der Wahrcheinlichkeit $p(E|H_0)$ für Auftreten von Stichprobenergebnis $E$ unter $H_0$ (passENd)
+
+Wann gehen wir nun davon aus, dass diese Schule bessere Noten erhält als der Durschnitt der deutschen Schüler? Wenn wir nun einen Mittelwert aus unserer Stichprobe berechnen, müsste dieser Wert in Anbetracht unserer Stichprobenkennwertverteilung *sehr ungewöhnlich*, das heißt *statistisch signifikant* sein. Herkömmlicherweiße sprechen wir von sehr ungewöhnlich, wenn das Auftreten für einen solchen Mittelwert unter einer Wahrscheinlichkeit von 5% liegt. Bevor wir dies visualisieren, beantworte folgende Frage:
+
+Handelt es sich bei unserer Hypothese um eine gerichtete oder ungerichtete Hypothese? 
+
+> TODO: Antwort einfügen
+
+Visualisieren wir nun den Bereich, der uns dazu bringen würde, die H0 abzulehnen und die H1 anzunehmen.
+
+```{r}
+ggplot(tibble(x = c(-3, 3)), aes(x)) +  
+  stat_function(fun = dnorm,
+                args = list(mean = 0, sd = 1),
+                geom = "area",
+                fill = "#998ec3") +
+  stat_function(fun = dnorm,
+                args = list(mean = 0, sd = 1),
+                xlim = c(qnorm(0.95, 0, 1), 
+                         qnorm(0.99999, 0, 1)),
+                geom = "area",
+                fill = "red") +
+  ylab("Dichte P(x)") +
+  xlim(-3, 3)
+```
+
+Fällt unser Mittelwert in den roten Bereich, dann ..
+
+> TODO: Trage ein, was wir dann bezüglich unserer Hypothese annehmen.
+
+> TODO: Beschreibe, was der rote Bereich darstellt.
+
+> TODO: Wie steht der rote Bereich mit der Wahrscheinlichkeit p(E|H0) in Verbindung?
+
+Prüfen wir nun, welchen z-Wert unsere Stichprobe erhält. Danach können wir unsere Hypothese prüfen. 
+
+```{r}
+z_score <- (mean(students_cleaned$G3 - 9)) / (3 / sqrt(20))
+```
+
+Visualisieren wir diesen z-Wert. 
+
+```{r}
+ggplot(tibble(x = c(-3, 3)), aes(x)) +  
+  stat_function(fun = dnorm,
+                args = list(mean = 0, sd = 1),
+                geom = "area",
+                fill = "#998ec3") +
+  stat_function(fun = dnorm,
+                args = list(mean = 0, sd = 1),
+                xlim = c(qnorm(0.95, 0, 1), 
+                         qnorm(0.99999, 0, 1)),
+                geom = "area",
+                fill = "red") +
+  geom_vline(xintercept = z_score) +
+  stat_function(fun = dnorm,
+                args = list(mean = 0, sd = 1),
+                xlim = c(z_score, 
+                         qnorm(0.99999, 0, 1)),
+                geom = "area",
+                fill = "green") +
+  ylab("Dichte P(x)") +
+  xlim(-3, 3)
+```
+
+> TODO: Wie steht der grüne Bereich mit der Wahrscheinlichkeit p(E|H0) in Verbindung?
+> TODO: Was ist der Unterschied zwischen dem grünen und dem roten Bereich? 
+
+Berechnen wir zum Schluss das Auftreten für dieses Ereignis:
+
+```{r}
+dnorm(z_score, 0, 1)
+```
+
+
+## 5. Deutung der Wahrscheinlichkeit (passenD)
+
+Wie ist dieses Ergebnis nun zu deuten? 
+
+> TODO: Deute das Ergebnis hinsichtlich deiner Hypothese in eigenen Worten. 
