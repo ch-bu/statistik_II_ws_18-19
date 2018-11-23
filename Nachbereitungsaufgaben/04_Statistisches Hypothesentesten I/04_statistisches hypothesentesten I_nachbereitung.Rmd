@@ -48,7 +48,7 @@ Wie verständlich schätzt du deine revidierte Erklärung ein (1: Sehr verständ
 
 # R-Anwendungsaufgaben
 
-Stelle dir vor, du bist beim deutschen Konsortium der PISA-Studien eingestellt und hast einen Datensatz einer Schule erhalten. In dem Datensatz befindet sich eine Stichprobe von 20 Schülern der Schule. Du hast erfahren, dass diese Schule ein neues vielversprechendes Lehrkonzept umsetzt. Daher erwatest du, dass diese Schüler besser unterrichtet werden als im Mittel an deutschen Schulen. Nun möchtest du prüfen, ob die SuS in dieser Schule bessere Noten als im Durchschnitt in Deutschland erhalten. Die Noten sind in diesem Datensatz zwischen 0 und 15 Punkten skaliert (15 = sehr gut, 0 = ungenügend). Der Datensatz heißt `students.csv`.
+Stelle dir vor, du bist beim deutschen Konsortium der PISA-Studien eingestellt und hast einen Datensatz einer Schule erhalten. In dem Datensatz befindet sich eine Stichprobe von 20 Schülern der Schule. Du hast erfahren, dass diese Schule ein neues vielversprechendes Lehrkonzept umsetzt. Daher erwartest du, dass diese Schüler besser unterrichtet werden als im Mittel an deutschen Schulen. Nun möchtest du prüfen, ob die SuS in dieser Schule bessere Noten als im Durchschnitt in Deutschland erhalten. Die Noten sind in diesem Datensatz zwischen 0 und 15 Punkten skaliert (15 = sehr gut, 0 = ungenügend). Der Datensatz heißt `students.csv`.
 
 Du hast bereits die `read_csv` Funktion kennen gelernt, allerdings funktioniert diese nur mit csv-Dateien, die mit einem Komma (`,`) getrennt sind. Ein Blick auf die Daten verrät dir, dass du für diesen Datensatz die Funktion `read_csv2` verwenden musst, da diese csv-Datei (students.csv) Semikolons (`;`) verwendet. 
 
@@ -83,7 +83,7 @@ Verwende daher die Funktion `select` um den Datensatz auf diese Variablen zu ver
 #       und speichere die Daten in students_cleaned
 ```
 
-Wie viele Personen sind eigentlich im Datensatz? Zähle die Anzahl der Personen mit `nrow`:
+Wie viele Personen sind eigentlich im Datensatz students_cleaned? Zähle die Anzahl der Personen mit `nrow`:
 
 ```{r}
 # TODO: Anzahl der Personen zählen
