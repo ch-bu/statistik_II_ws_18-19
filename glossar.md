@@ -12,3 +12,5 @@
 * [arrange](https://dplyr.tidyverse.org/reference/arrange.html). Datensatz nach Variablen sortieren
 * [rename](https://dplyr.tidyverse.org/reference/select.html). Variablen umbenennen.
 * [mutate](https://dplyr.tidyverse.org/reference/mutate.html). Neue Variablen erstellen
+* [group_by](https://dplyr.tidyverse.org/reference/group_by.html). Einen Datenframe nach einer diskreten Variable gruppieren. In der Regel in Verbindung mit summarise
+* [summarise](https://dplyr.tidyverse.org/reference/summarise.html). Aus einem gruppierten Dataframe (siehe group_by) Kennwerte berechnen (z.B. Mittelwert). 
