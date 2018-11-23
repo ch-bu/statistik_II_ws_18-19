@@ -260,7 +260,7 @@ Fällt unser Mittelwert in den roten Bereich, dann ..
 Prüfen wir nun, welchen z-Wert unsere Stichprobe erhält. Danach können wir unsere Hypothese prüfen. 
 
 ```{r}
-z_score <- (mean(students_cleaned$G3 - 9)) / 20
+z_score <- (mean(students_cleaned$G3 - 9)) / (3 / sqrt(20))
 ```
 
 Visualisieren wir diesen z-Wert. 
