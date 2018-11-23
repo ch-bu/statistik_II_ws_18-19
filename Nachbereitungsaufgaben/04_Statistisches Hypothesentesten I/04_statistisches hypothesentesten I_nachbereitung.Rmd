@@ -249,7 +249,7 @@ ggplot(tibble(x = c(-3, 3)), aes(x)) +
   xlim(-3, 3)
 ```
 
-Fällt unser Mittelwert in den roten Bereich, dann ..
+Fällt unser z-standardisiserter Mittelwert in den roten Bereich, dann ..
 
 > TODO: Trage ein, was wir dann bezüglich unserer Hypothese annehmen.
 
