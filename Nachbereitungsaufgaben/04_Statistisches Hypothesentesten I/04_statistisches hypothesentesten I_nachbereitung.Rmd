@@ -289,8 +289,11 @@ ggplot(tibble(x = c(-3, 3)), aes(x)) +
   xlim(-3, 3)
 ```
 
-> TODO: Wie steht der grüne Bereich mit der Wahrscheinlichkeit p(E|H0) in Verbindung?
-> TODO: Was ist der Unterschied zwischen dem grünen und dem roten Bereich? 
+> TODO: Trage ein, was wir dann bezüglich unserer Hypothese annehmen.
+
+> TODO: Beschreibe, was der rote Bereich darstellt.
+
+> TODO: Wie steht der rote Bereich mit der Wahrscheinlichkeit p(E|H0) in Verbindung?
 
 Berechnen wir zum Schluss das Auftreten für dieses Ereignis:
 
