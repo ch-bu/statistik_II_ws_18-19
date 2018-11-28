@@ -1,0 +1,300 @@
+---
+title: "Statistik II - Nachbereitungsaufgabe"
+subtitle: "04 Statistisches Hypothesentesten II"
+author: ""
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+# Revision deines Lerntagebuchs zum Thema Statistisches Hypothesentesten II
+
+Als Vorbereitungsaufgaben hast du ein Lerntagebuch zum Thema Statistisches Hypothesentesten II geschrieben. Nun sollst du dieses Lerntagebuch revidieren. Revidieren bedeutet, dass du (1) deine Erklärung auf Richtigkeit und Korrektheit überprüfst, und (2) deine Erklärung nach den Kriterien der Richtigkeit und Korrektheit überarbeitest. Achte bei dieser Revision auf folgender Leitfragen:
+
+* Hast du die relevanten Konzepte des Lerntagebuchs benannt und ausreichend erklärt? 
+* Hast du die relevanten Konzepte des Lerntagebuchs logisch und sinnvoll miteinander verbunden? 
+* Hast du die relevanten Konzepte des Lerntagebuchs durch gute Beispiele illustriert? 
+
+Verwende für die Revision das **visuelle Feedback**, welches dir über Slack zur Verfügung gestellt wird. Versuche aus dem visuellen Feedback folgende Leitfragen zu beantworten und in deiner Revision einzupflegen:
+
+Nimm dir für die Revision deines Lerntagebuchs in etwa 45 Minuten Zeit und versuche auf dein Lerntagebuch hinsichtlich dieser Leitfragen und auf Grundlage des Feedbacks zu überarbeiten. 
+
+> TODO: Füge hier deine revidierte Version des Lerntagebuchs hier ein.
+
+## Fragen zur Revision
+
+Wie intensiv hast du das visuelle Feedback verwendet, um dein Lerntagebuch zu revidieren? (1: sehr intensiv; 9: gar nicht intensiv)?  
+
+> TODO: Bitte Antwort hier eintragen
+
+Wie verständlich fandest du das visuelle Feedback? (1: Sehr verständlich; 5 gar nicht verständlich)? 
+
+> TODO: Bitte Antwort hier eintragen
+
+Wie schwierig war es für dich anhand des visuellen Feedback, deine Revision zu revidieren? (1: Sehr schwierig; 5 gar nicht schwierig)? 
+
+> TODO: Bitte Antwort hier eintragen
+
+Wie lange hast du an der Revision geschrieben? 
+
+> TODO: Bitte in Minuten angeben
+
+Wie stark hast du dich gerade bei der Revisions des Lerntagebuchs angestrengt (1: Sehr stark angestrengt; 9: gar nicht angestrengt)?  
+
+> TODO: Bitte Antwort hier eintragen
+
+Wie schwierig war es für dich das Lerntagebuch zu revidieren (1: Sehr schwierig, 9 gar nicht schwierig)? 
+
+> TODO: Bitte Antwort hier eintragen
+
+Wie verständlich schätzt du dein revidiertes Lerntagebuch ein (1: Sehr verständlich; 5 gar nicht verständlich)? 
+
+> TODO: Bitte Antwort hier eintragen
+
+
+# R-Anwendungsaufgaben
+
+Befunde aus dem Bereich der [Embodied cognition](https://link.springer.com/article/10.3758/BF03196322) zeigen immer wieder, dass die menschliche Kognition an den Körper gebunden sind. Beispielsweise konnten [Longcamp, Zerbao-Poudou und Velay (2004)](https://www.sciencedirect.com/science/article/pii/S0001691804001167) zeigen, dass Kinder, welche Buchstaben per Hand schreiben, langfristig eine bessere Fähigkeit haben, Buchstaben zu erkennen als Kinder, die Buchstaben mit dem Computer schreiben.
+
+In dieser Lernaufgabe schauen wir uns einen *fiktiven* Datensatz dieser Studie an, stellen eine Hypothese auf, testen diese und interpretieren diese am Schluss.
+
+Lade zunächst tidyverse und die Datei *longcamp.csv* und speichere letztere in der Variable longcamp: 
+
+```{r}
+# TODO: Tidyverse laden 
+# TODO: longcamp.csv laden und in longcamp speichern
+```
+
+
+## Explorative Analyse
+
+Lernen wir zu Beginn der Datensatz kennen:
+
+Wie viele Reihen sind in dem Datensatz, bzw. wie viele Probanden wurden in der Studie erhoben? 
+
+```{r}
+# TODO: Gebe dir die Anzahl der Reihen des Datensatzes aus
+```
+
+Welche Variablen und welche Art von Variablen sind in dem Datensatz? Verwende hierfür `glimpse`:
+
+```{r}
+# TODO: Wende glimpse auf den Datensatz an
+```
+
+Wie verteilen sich Jungs und Mädchen im Datensatz? Verwende hierfür die `count`-Funktion:
+
+```{r}
+# TODO: Zeige dir die Anzahl der Jungen und Mädchen im Datensatz an
+```
+
+Interessant wäre es auch zu sehen, wie sich das Alter der Probanden verteilt? Erstelle hierzu ein Balkendiagram mit der Variable `age`. Verwende hierfür die Funktion `ggplot` und das geom `geom_bar`: https://ggplot2.tidyverse.org/reference/geom_bar.html
+
+```{r}
+# TODO: Balkendiagram der Variable age erstellen.
+```
+
+Der Datensatz umfasst nur Werte von Kindern, die ihre Buchstaben handschriftlich geschrieben haben. Da wir den Populationsmittelwert und die Populationsstandardabweichung kennen, werden wir nachher diese Stichprobe anhand dieser Kennwerte testen. Schauen wir uns vorher aber nochmal an, wie sich die Variable `recognition_performance` verteilt. 
+
+Berechne nun zunächst den Mittelwert der Variable `recognition_performance`:
+
+```{r}
+# TODO: Mittelwert der Variable recognition_performance berechnen. 
+```
+
+Wir wollen sichergehen, dass sich der Mittelwert nicht abhängig vom Alter der Probanden unterscheidet. Schaue dir daher den Mittelwert abhängig der Variable `age` an. Verwende hierfür die Befehle `group_by` und `summarise` (siehe Aufgabe letzte Woche):
+
+```{r}
+# TODO: Mittelwerte für verschiedene Altersklassen berechnen. 
+```
+
+Schauen wir uns zuletzt noch die Verteilung der abhängigen Variable `recognition_performance` anhand eines Histograms an. Erstelle hierzu anhand der Funktion `ggplot` und dem geom `geom_histogram` ein Histogram der abhängigen Variable:
+
+```{r}
+# TODO: Histogram der Variable recognition_performance erstellen. 
+```
+
+
+## Statistisches Hypothesentesten
+
+Du möchtest nun eine Replikation der Studie von Longcamp machen. Aus vielen bisherigen Studien wissen wir bereits den Populationsmittelwert für den recognition test für Kinder, die mit dem Computer Buchstaben schreiben: mu = 62. Die Standardabweichung ist sigma = 15. Wir möchten nun heraus finden, ob wir das Ergebnis von Longcamp replizieren können. In anderen Worten: Wir möchten nun herausfinden, ob Kinder, die Buchstaben per Hand schreiben wirklich nach mehreren Wochen Buchstaben besser erkennen als Kinder, die Buchstaben per Computer schreiben. 
+
+
+### Aufstellen eines statistischen Hypothesenpaares
+
+Um unsere Forschungsfrage zu beantworten, müssen wir zunächst ein Hypothesenpaar bilden. Schreibe beide Hypothesen auf: 
+
+* Nullhypothese (H_0): TODO
+* Alternativhypothese (H_1): TODO
+
+
+### Bestimmung der statistischen Kennwerte 
+
+Als nächstes müssen wir unsere Kennwerte bestimmen. Wir kennen bereits den Populationsmittelwert und den Stichprobenkennwert. Vervollständige bitte die restlichen Kennwerte:
+
+* Populationsmittelwert: $\mu$ = 62
+* Populationsstandardabweichung: $\sigma$ = 15
+* Stichprobenmittelwert: $M$ = `r NULL`
+* Stichprobengröße: $N$ = `r NULL`
+
+### Bestimmung der Stichprobenkennwertverteilung für Nullhypothese
+
+Erinnere dich, dass die Stichprobenkennwertverteilung eine besondere Standardabweichung hat: Den Standardfehler. Der Standardfehler ist bei einer bekannten Populationsstandardabweichung sigma / sqrt(N). Die Stichprobenkennwertverteilung benutzen wir, um unseren Hypothese zu testen. Mit Hilfe dieser Verteilung können wir bestimmen, wie Wahrscheinlicht unser Ereignis (hier unser ermittelter Mittelwert) ist. Visualisieren wir uns zunächst unsere angenommen Stichprobenkennwertverteilung unter der Nullhypothese:
+
+```{r}
+ggplot(NULL, aes(x = c(50, 80))) +
+  stat_function(fun = dnorm,
+                geom = "area",
+                fill = "steelblue",
+                xlim = c(50, 80),
+                args = list(
+                  # Hier geben wir den Mittelwert an
+                  mean = 62,
+                  # Hier geben wir den Standardfehler an
+                  sd = 15 / sqrt(nrow(longcamp))
+                )) +
+  xlab("x") +
+  ylab("Dichte p(x)")
+```
+
+Werte die links oder rechts der Stichprobenkennwertverteilung erscheinen sind sehr unwahrscheinlich. Wir testen unser Ereignis E allerdings nicht an dieser Stichprobenkennwertverteilung, sondern an der Standardnormalverteilung. Warum? Weil wir für die Standardnormalverteilung wissen, welche z-Werte, welche Wahrscheinlichkeiten haben. Um später unser Ergebnis in einen z-Wert zu überführen, müssen wir diesen z-Transformieren, indem wir den Stichprobenmittelwert vom Populationsmittelwert abziehen und durch den Standardfehler teilen. 
+
+Schauen wir uns noch schnell die Standardnormalverteilung an:
+
+```{r}
+ggplot(NULL, aes(x = c(-4, 4))) +
+  stat_function(fun = dnorm,
+                geom = "area",
+                fill = "steelblue",
+                xlim = c(-4, 4),
+                args = list(
+                  # Hier geben wir den Mittelwert an
+                  mean = 0,
+                  # Hier geben wir den Standardfehler an
+                  sd = 1
+                )) +
+  xlab("z") +
+  ylab("Dichte p(z)")
+```
+
+Wunderbar, wir haben unsere Stichprobenkennwertverteilung anhand derer wir unsere Hypothese testen. 
+
+### Bestimmung der Wahrscheinlichkeit $p(E|H_0)$ für Auftreten von Stichprobenergebnis $E$ unter $H_0$ 
+
+Um $p(E|H_0)$ zu berechnen, müssen wir nun unser Ereignis z-Transformieren:
+
+```{r}
+z_score <- (mean(longcamp$recognition_performance) - 62) / (15 / sqrt(nrow(longcamp)))
+```
+
+> TODO: Versuche in eigenen Worten zu erklären, weshalb wir den z-Wert berechnen und weshalb wir den Mittelwertsunterschied durch den Standardfehler teilen? 
+
+Visualisieren wir nun unser Stichprobenereignis und den kritischen z-Wert für ein Alpha von 5%:
+
+```{r}
+ggplot(NULL, aes(x = c(-4, 4))) +
+  stat_function(fun = dnorm,
+                geom = "area",
+                fill = "steelblue",
+                xlim = c(-4, 4),
+                args = list(
+                  # Hier geben wir den Mittelwert an
+                  mean = 0,
+                  # Hier geben wir den Standardfehler an
+                  sd = 1
+                )) +
+    # Kritischer z-Wert
+    stat_function(fun = dnorm,
+                geom = "area",
+                fill = "red",
+                xlim = c(qnorm(0.95, mean = 0, sd = 1), 4),
+                args = list(
+                  # Hier geben wir den Mittelwert an
+                  mean = 0,
+                  # Hier geben wir den Standardfehler an
+                  sd = 1
+                )) +
+    # Emprischer z-Wert
+    geom_vline(xintercept = z_score) +
+  xlab("z") +
+  ylab("Dichte p(z)")
+```
+
+Unser empirischer z-Wert fällt in den kritischen Bereich. Die Wahrscheinlichkeit für dieses Ereignis ist:
+
+```{r}
+round(1 - pnorm(z_score, mean = 0, sd = 1), 3)
+```
+
+### Deutung der Wahrscheinlichkeit
+
+Wie ist dieses Ergebnis nun zu deuten? 
+
+> TODO: Deute das Ergebnis hinsichtlich deiner Hypothese in eigenen Worten. 
+
+
+## Alpha-Fehler und Beta-Fehler
+
+Im Seminar haben wir den Alpha-Fehler und den Beta-Fehler besprochen. 
+
+In der nächsten Grafik siehst du die wahre Stichprobenkennwertverteilung der Kinder, die handschriftlich schreiben (rötlich): 
+
+```{r}
+ggplot(NULL, aes(x = c(-4, 7))) +
+  stat_function(fun = dnorm,
+                geom = "area",
+                fill = "steelblue",
+                xlim = c(-4, 7),
+                args = list(
+                  # Hier geben wir den Mittelwert an
+                  mean = 0,
+                  # Hier geben wir den Standardfehler an
+                  sd = 1
+                )) +
+  # Kritischer z-Wert
+  stat_function(fun = dnorm,
+              geom = "area",
+              fill = "red",
+              xlim = c(qnorm(0.95, mean = 0, sd = 1), 4),
+              args = list(
+                # Hier geben wir den Mittelwert an
+                mean = 0,
+                # Hier geben wir den Standardfehler an
+                sd = 1
+              )) +
+  # Emprischer z-Wert
+  geom_vline(xintercept = z_score) +
+  # Wahre Stichhprobenkennwertverteilung der H1
+  stat_function(fun = dnorm,
+                geom = "area",
+                fill = "#b44682",
+                alpha = .5,
+                args = list(
+                  mean = 3.4,
+                  sd = 1
+                )) +
+  xlab("z") +
+  ylab("Dichte p(z)")
+```
+
+In Anbetracht dessen, dass wir nun wissen, was die wahre Stichprobenkennwertverteilung ist, beantworte folgende Fragen:
+
+> TODO: Haben wir einen Alpha-Fehler oder einen Beta-Fehler begangen, warum? 
+
+> TODO: Wir haben unser Manuskript zu unserer Studie noch nicht geschrieben und könnten (was aus wissenschaftlicher Sicht nicht in Ordnung wäre), einfach etwas an der Studie ändern, um doch signifikante Ergebnisse zu bekommen. Was müssten wir tun und weshalb würd dies funktionieren? 
+
+
+## Effektstärke
+
+Die Signifikanz genügt meistens nicht, um das Ergebnis einer Studie zu interpretieren. Wir sollten immer auch die Effektstärke mit angeben. Berechne zuletzt die Effektstärke unseres Ergebnisses:
+
+```{r}
+# TODO: Effektstärke berechnen
+```
+
