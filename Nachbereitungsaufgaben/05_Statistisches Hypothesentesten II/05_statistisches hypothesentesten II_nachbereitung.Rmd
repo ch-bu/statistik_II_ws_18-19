@@ -15,13 +15,13 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Revision deines Lerntagebuchs zum Thema Statistisches Hypothesentesten II
 
-Als Vorbereitungsaufgaben hast du ein Lerntagebuch zum Thema Statistisches Hypothesentesten II geschrieben. Nun sollst du dieses Lerntagebuch revidieren. Revidieren bedeutet, dass du (1) deine Erklärung auf Richtigkeit und Korrektheit überprüfst, und (2) deine Erklärung nach den Kriterien der Richtigkeit und Korrektheit überarbeitest. Achte bei dieser Revision auf folgender Leitfragen:
+Als Vorbereitungsaufgaben hast du ein Lerntagebuch zum Thema Statistisches Hypothesentesten II geschrieben. Nun sollst du dieses Lerntagebuch revidieren. Revidieren bedeutet, dass du (1) deine Erklärung auf Richtigkeit und Korrektheit überprüfst, und (2) deine Erklärung nach den Kriterien der Richtigkeit und Korrektheit überarbeitest.
+
+> Verwende für die Revision das **visuelle Feedback**, welches dir über Slack zur Verfügung gestellt wird. Versuche aus dem visuellen Feedback folgende Leitfragen zu beantworten und in deiner Revision einzupflegen:
 
 * Hast du die relevanten Konzepte des Lerntagebuchs benannt und ausreichend erklärt? 
 * Hast du die relevanten Konzepte des Lerntagebuchs logisch und sinnvoll miteinander verbunden? 
 * Hast du die relevanten Konzepte des Lerntagebuchs durch gute Beispiele illustriert? 
-
-Verwende für die Revision das **visuelle Feedback**, welches dir über Slack zur Verfügung gestellt wird. Versuche aus dem visuellen Feedback folgende Leitfragen zu beantworten und in deiner Revision einzupflegen:
 
 Nimm dir für die Revision deines Lerntagebuchs in etwa 45 Minuten Zeit und versuche auf dein Lerntagebuch hinsichtlich dieser Leitfragen und auf Grundlage des Feedbacks zu überarbeiten. 
 
