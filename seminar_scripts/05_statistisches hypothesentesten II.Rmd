@@ -1,0 +1,446 @@
+---
+title: "Untitled"
+author: "Christian Burkhart"
+date: "27 November 2018"
+output: html_document
+---
+
+
+```{r}
+library(tidyverse)
+theme_set(theme_minimal())
+```
+
+
+```{r}
+N <- 10000
+
+set.seed(765)
+data <- tibble(
+  population = c(rep("assumed", N), rep("real", N)),
+  values = c(rnorm(N, mean = 100, sd = 15),
+             rnorm(N, mean = 110, sd = 15))
+)
+
+real <- data %>% 
+  filter(population == "real")
+
+assumed <- data %>%
+  filter(population == "assumed")
+```
+
+```{r}
+ggplot(data, aes(x = values, fill = population)) +
+  geom_density(aes(alpha = .3))
+```
+
+Build confidence intervals from population:
+
+```{r}
+se <- sd(assumed$values) / sqrt(20)
+
+cis <- c(1:50) %>%
+  map_dbl(~ sample(real$values, 20) %>% mean) %>%
+  map_dfr(~ tibble(lower = . - 1.96 * se, 
+                   upper = . + 1.96 * se,
+                   mean = .)) %>%
+  rownames_to_column() 
+```
+
+Plot confidence intervals under H0:
+
+```{r}
+ggplot(cis, aes(x = rowname, y = mean)) +
+  geom_hline(yintercept = mean(assumed$values), color = "red") +
+  coord_flip() +
+  geom_errorbar(aes(ymin = lower, 
+                   ymax = upper)) +
+  geom_hline(yintercept = mean(real$values)) +
+  theme(axis.text.y  = element_blank(),
+        axis.ticks.y = element_blank()) +
+  theme_minimal()
+```
+
+Wenn das Konfidenzintervall den unter der H0 angenommenen Mittelwerts nicht schneidet, ist das Ergebnis signifikant. 
+
+
+## Alpha Fehler und Beta Fehler
+
+
+* Nullhypothese (H0): SuS mit neuem Lehrbuch lernen nicht besser als SuS mit altem Lehrbuch. μneu ≤ μalt oder μneu – μalt ≤ 0
+* Alternativhypothese(H1): SuS mit neuem Lehrbuch lernen besser als SuS mit altem Lehrbuch. μneu > μalt oder μneu – μalt > 0
+
+
+Visualisieurng der Nullhypothese:
+
+```{r}
+ggplot(NULL, aes(x = c(20, 80))) +
+  stat_function(fun = dnorm,
+                geom = "area",
+                fill = "steelblue",
+                alpha = .2,
+                xlim = c(20, 80),
+                args = list(
+                  mean = 50,
+                  sd = 20 / sqrt(16)
+                )) +
+  xlim(30, 80) +
+  xlab("z-values") +
+  ylab("Dichte p(z)")
+```
+
+Visualisierung der Alternativhypothese:
+
+```{r}
+ggplot(NULL, aes(x = c(20, 80))) +
+  stat_function(fun = dnorm,
+                geom = "area",
+                fill = "steelblue",
+                alpha = .2,
+                xlim = c(20, 80),
+                args = list(
+                  mean = 50,
+                  sd = 20 / sqrt(16)
+                )) +
+  stat_function(fun = dnorm,
+                geom = "area",
+                fill = "tomato",
+                alpha = .2,
+                xlim = c(20, 80),
+                args = list(
+                  mean = 61,
+                  sd = 20 / sqrt(16)
+                )) +
+  xlim(30, 80) +
+  xlab("z-values") +
+  ylab("Dichte p(z)")
+```
+
+
+p(E|H0)
+
+
+```{r}
+ggplot(NULL, aes(x = c(20, 80))) +
+  stat_function(fun = dnorm,
+                geom = "line",
+                linetype = 2,
+                xlim = c(20, 80),
+                args = list(
+                  mean = 61,
+                  sd = 20 / sqrt(16)
+                )) +
+  stat_function(fun = dnorm,
+                geom = "area",
+                fill = "steelblue",
+                alpha = .2,
+                xlim = c(20, 80),
+                args = list(
+                  mean = 50,
+                  sd = 20 / sqrt(16)
+                )) +
+  stat_function(fun = dnorm,
+                geom = "area",
+                fill = "steelblue",
+                xlim = c(qnorm(0.99, mean = 50, sd = 20 / sqrt(16)),
+                         80),
+                args = list(
+                  mean = 50, 
+                  sd = 20 / sqrt(16)
+                )) +
+  # geom_vline(xintercept = qnorm(0.95, mean = 50, sd = 20 / sqrt(16))) +
+  xlim(30, 80) +
+  xlab("z-values") +
+  ylab("Dichte p(z)")
+```
+
+
+```{r}
+ggplot(NULL, aes(x = c(20, 80))) +
+  stat_function(fun = dnorm,
+                geom = "area",
+                fill = "tomato",
+                alpha = .2,
+                linetype = 2,
+                xlim = c(20, 80),
+                args = list(
+                  mean = 61,
+                  sd = 20 / sqrt(16)
+                )) +
+  stat_function(fun = dnorm,
+                geom = "line",
+                linetype = 2,
+                alpha = .2,
+                xlim = c(20, 80),
+                args = list(
+                  mean = 50,
+                  sd = 20 / sqrt(16)
+                )) +
+  stat_function(fun = dnorm,
+                geom = "area",
+                fill = "tomato",
+                xlim = c(40,
+                         qnorm(0.99, mean = 50, sd = 20 / sqrt(16))),
+                args = list(
+                  mean = 61, 
+                  sd = 20 / sqrt(16)
+                )) +
+  # stat_function(fun = dnorm,
+  #               geom = "area",
+  #               fill = "steelblue",
+  #               xlim = c(qnorm(0.99, mean = 50, sd = 20 / sqrt(16)),
+  #                        80),
+  #               args = list(
+  #                 mean = 50, 
+  #                 sd = 20 / sqrt(16)
+  #               )) +
+  # geom_vline(xintercept = qnorm(0.95, mean = 50, sd = 20 / sqrt(16))) +
+  xlim(30, 80) +
+  xlab("z-values") +
+  ylab("Dichte p(z)")
+```
+
+
+
+```{r}
+ggplot(NULL, aes(x = c(20, 80))) +
+  stat_function(fun = dnorm,
+                geom = "area",
+                fill = "tomato",
+                alpha = .2,
+                linetype = 2,
+                xlim = c(20, 80),
+                args = list(
+                  mean = 61,
+                  sd = 20 / sqrt(16)
+                )) +
+  stat_function(fun = dnorm,
+                geom = "area",
+                fill = "steelblue",
+                alpha = .2,
+                xlim = c(20, 80),
+                args = list(
+                  mean = 50,
+                  sd = 20 / sqrt(16)
+                )) +
+  stat_function(fun = dnorm,
+                geom = "area",
+                fill = "tomato",
+                xlim = c(40,
+                         qnorm(0.99, mean = 50, sd = 20 / sqrt(16))),
+                args = list(
+                  mean = 61, 
+                  sd = 20 / sqrt(16)
+                )) +
+  stat_function(fun = dnorm,
+                geom = "area",
+                fill = "steelblue",
+                xlim = c(qnorm(0.99, mean = 50, sd = 20 / sqrt(16)),
+                         80),
+                args = list(
+                  mean = 50,
+                  sd = 20 / sqrt(16)
+                )) +
+  xlim(30, 80) +
+  xlab("z-values") +
+  ylab("Dichte p(z)")
+```
+
+```{r}
+ggplot(NULL, aes(x = c(20, 80))) +
+  stat_function(fun = dnorm,
+                geom = "area",
+                fill = "tomato",
+                alpha = .2,
+                linetype = 2,
+                xlim = c(20, 80),
+                args = list(
+                  mean = 61,
+                  sd = 20 / sqrt(16)
+                )) +
+  stat_function(fun = dnorm,
+                geom = "area",
+                fill = "steelblue",
+                alpha = .2,
+                xlim = c(20, 80),
+                args = list(
+                  mean = 50,
+                  sd = 20 / sqrt(16)
+                )) +
+  stat_function(fun = dnorm,
+                geom = "area",
+                fill = "tomato",
+                xlim = c(40,
+                         qnorm(0.95, mean = 50, sd = 20 / sqrt(16))),
+                args = list(
+                  mean = 61, 
+                  sd = 20 / sqrt(16)
+                )) +
+  stat_function(fun = dnorm,
+                geom = "area",
+                fill = "steelblue",
+                xlim = c(qnorm(0.95, mean = 50, sd = 20 / sqrt(16)),
+                         80),
+                args = list(
+                  mean = 50,
+                  sd = 20 / sqrt(16)
+                )) +
+  xlim(30, 80) +
+  xlab("z-values") +
+  ylab("Dichte p(z)")
+```
+
+
+## Teststärke
+
+```{r}
+ggplot(NULL, aes(x = c(20, 80))) +
+  # stat_function(fun = dnorm,
+  #               geom = "line",
+  #               linetype = 1,
+  #               linetype = 2,
+  #               xlim = c(20, 80),
+  #               args = list(
+  #                 mean = 61,
+  #                 sd = 20 / sqrt(16)
+  #               )) +
+  stat_function(fun = dnorm,
+                geom = "line",
+                linetype = 2,
+                alpha = .2,
+                xlim = c(20, 80),
+                args = list(
+                  mean = 50,
+                  sd = 20 / sqrt(16)
+                )) +
+  stat_function(fun = dnorm,
+                geom = "area",
+                fill = "tomato",
+                alpha = .1,
+                xlim = c(40,
+                         qnorm(0.95, mean = 50, sd = 20 / sqrt(16))),
+                args = list(
+                  mean = 61, 
+                  sd = 20 / sqrt(16)
+                )) +
+  stat_function(fun = dnorm,
+                geom = "area",
+                fill = "tomato",
+                xlim = c(qnorm(0.95, mean = 50, sd = 20 / sqrt(16)),
+                         80),
+                args = list(
+                  mean = 61, 
+                  sd = 20 / sqrt(16)
+                )) +
+  # stat_function(fun = dnorm,
+  #               geom = "area",
+  #               fill = "steelblue",
+  #               xlim = c(qnorm(0.95, mean = 50, sd = 20 / sqrt(16)),
+  #                        80),
+  #               args = list(
+  #                 mean = 50,
+  #                 sd = 20 / sqrt(16)
+                # )) +
+  xlim(30, 80) +
+  xlab("z-values") +
+  ylab("Dichte p(z)")
+```
+
+
+```{r}
+ggplot(NULL, aes(x = c(20, 80))) +
+  # stat_function(fun = dnorm,
+  #               geom = "line",
+  #               linetype = 1,
+  #               linetype = 2,
+  #               xlim = c(20, 80),
+  #               args = list(
+  #                 mean = 61,
+  #                 sd = 20 / sqrt(16)
+  #               )) +
+  stat_function(fun = dnorm,
+                geom = "line",
+                linetype = 2,
+                alpha = .2,
+                xlim = c(20, 80),
+                args = list(
+                  mean = 50,
+                  sd = 20 / sqrt(16)
+                )) +
+  stat_function(fun = dnorm,
+                geom = "area",
+                fill = "tomato",
+                alpha = .1,
+                xlim = c(40,
+                         qnorm(0.95, mean = 50, sd = 20 / sqrt(16))),
+                args = list(
+                  mean = 70, 
+                  sd = 20 / sqrt(16)
+                )) +
+  stat_function(fun = dnorm,
+                geom = "area",
+                fill = "tomato",
+                xlim = c(qnorm(0.95, mean = 50, sd = 20 / sqrt(16)),
+                         90),
+                args = list(
+                  mean = 70, 
+                  sd = 20 / sqrt(16)
+                )) +
+  # stat_function(fun = dnorm,
+  #               geom = "area",
+  #               fill = "steelblue",
+  #               xlim = c(qnorm(0.95, mean = 50, sd = 20 / sqrt(16)),
+  #                        80),
+  #               args = list(
+  #                 mean = 50,
+  #                 sd = 20 / sqrt(16)
+                # )) +
+  xlim(30, 90) +
+  xlab("z-values") +
+  ylab("Dichte p(z)")
+```
+
+
+# Einfluss Teststärke
+
+```{r}
+power_with_n <- function(n) {
+  ggplot(NULL, aes(x = c(20, 80))) +
+  stat_function(fun = dnorm,
+                geom = "line",
+                linetype = 2,
+                alpha = .2,
+                xlim = c(20, 80),
+                args = list(
+                  mean = 50,
+                  sd = 20 / sqrt(n)
+                )) +
+  stat_function(fun = dnorm,
+                geom = "area",
+                fill = "tomato",
+                alpha = .1,
+                xlim = c(40,
+                         qnorm(0.95, mean = 50, sd = 20 / sqrt(n))),
+                args = list(
+                  mean = 61, 
+                  sd = 20 / sqrt(n)
+                )) +
+  stat_function(fun = dnorm,
+                geom = "area",
+                fill = "tomato",
+                xlim = c(qnorm(0.95, mean = 50, sd = 20 / sqrt(n)),
+                         80),
+                args = list(
+                  mean = 61, 
+                  sd = 20 / sqrt(n)
+                )) +
+  xlim(30, 80) +
+  xlab("z-values") +
+  ylab("Dichte p(z)")
+}
+```
+
+```{r}
+power_with_n(30)
+```
+
