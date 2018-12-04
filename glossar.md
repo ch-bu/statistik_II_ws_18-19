@@ -14,3 +14,8 @@
 * [mutate](https://dplyr.tidyverse.org/reference/mutate.html). Neue Variablen erstellen
 * [group_by](https://dplyr.tidyverse.org/reference/group_by.html). Einen Datenframe nach einer diskreten Variable gruppieren. In der Regel in Verbindung mit summarise
 * [summarise](https://dplyr.tidyverse.org/reference/summarise.html). Aus einem gruppierten Dataframe (siehe group_by) Kennwerte berechnen (z.B. Mittelwert). 
+
+## Statistische Verfahren
+
+* [t-Test für eine Stichprobe](https://www.jamovi.org/jmv/ttestones.html)
+* [t-Test für unabhängige Stichproben](https://www.jamovi.org/jmv/ttestis.html)
