@@ -1,6 +1,6 @@
 ---
 title: "Statistik II - Vorbereitungsaufgabe"
-subtitle: "06 - t-Test"
+subtitle: "07 - Einfaktorielle Varianzanalyse"
 author: ""
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output:
@@ -116,19 +116,19 @@ Maßnahmen zur Beseitigung von Verständnisschwierigkeiten zu ergreifen.
 
 # Verfassen des Lerntagebuchs
 
-Für diese Vorbereitungsaufgabe schreiben Sie ein Lerntagebuch zum Thema *t-test für unabhängige Stichproben*. Lesen Sie Rasch, Friese, Hofmann, und Naumann (2014, S. 33-46 und S. 54 - 59). Schreiben Sie das Lerntagebuch für sich selbst, um die Inhalte der Seminarstunde für Sie zu organisieren. Ihr Lerntagebuch sollte in etwa 600 Wörter umfassen und als Fließtext verfasst sein (keine Aufzählungen). Auf folgende Begriffe sollten Sie in Ihrem Lerntagebuch eingehen:
+Für diese Vorbereitungsaufgabe schreiben Sie ein Lerntagebuch zum Thema *Einfaktorielle Varianzanalyse*. Lesen Sie Rasch, Friese, Hofmann, und Naumann (2014, S. 1-14). Schreiben Sie das Lerntagebuch für sich selbst, um die Inhalte der Seminarstunde für Sie zu organisieren. Ihr Lerntagebuch sollte in etwa 600 Wörter umfassen und als Fließtext verfasst sein (keine Aufzählungen). Auf folgende Begriffe sollten Sie in Ihrem Lerntagebuch eingehen:
 
-* t-Test
-* t-Verteilung
-* Standardnormalverteilung
-* Freiheitsgrade
-* t-Wert
-* Vorraussetzungen
+* Varianzanalyse
+* Alpha-Fehler-Kumulierung
+* Quadratsumme
+* Gesamtvarianz
+* Systematische Einflüsse
+* Unsystematische Einflüsse
 
 
 Schreibe einen Fließtext (keine Aufzählungen). Achte bei der Anfertigung des Lerntagebuchs darauf, dass deine Zielgruppe in der Lage ist, den Text ohne Zuhilfenahme anderer Materialien zu verstehen.
 
-# Erklärung zum Thema t-test für unabhängige Stichproben
+# Lerntagebuch zum Thema Einfaktorielle Varianzanalyse
 
 > TODO: Füge hier deine ~ 600 Wörter lange Erklärung ein. 
 
