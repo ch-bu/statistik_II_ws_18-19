@@ -1,0 +1,362 @@
+---
+title: "Statistik II - Nachbereitungsaufgabe"
+subtitle: "06 - T-test für unabhängige Stichproben"
+author: ""
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+# Revision deines Lerntagebuchs zum Thema t-test für unabhängige Stichproben
+
+Als Vorbereitungsaufgaben hast du ein Lerntagebuch zum Thema t-test für unabhängige Stichprobengeschrieben. Nun sollst du dieses Lerntagebuch revidieren. Revidieren bedeutet, dass du (1) deine Erklärung auf Richtigkeit und Korrektheit überprüfst, und (2) deine Erklärung nach den Kriterien der Richtigkeit und Korrektheit überarbeitest.
+
+> Verwende für die Revision das **visuelle Feedback**, welches dir über Slack zur Verfügung gestellt wird. Versuche aus dem visuellen Feedback folgende Leitfragen zu beantworten und in deiner Revision einzupflegen:
+
+* Hast du die relevanten Konzepte des Lerntagebuchs benannt und ausreichend erklärt? 
+* Hast du die relevanten Konzepte des Lerntagebuchs logisch und sinnvoll miteinander verbunden? 
+* Hast du die relevanten Konzepte des Lerntagebuchs durch gute Beispiele illustriert? 
+
+Nimm dir für die Revision deines Lerntagebuchs in etwa 45 Minuten Zeit und versuche auf dein Lerntagebuch hinsichtlich dieser Leitfragen und auf Grundlage des Feedbacks zu überarbeiten. 
+
+> TODO: Füge hier deine revidierte Version des Lerntagebuchs hier ein.
+
+## Fragen zur Revision
+
+Hast du das Lerntagebuch **der letzten Woche (statistisches Hypothesentesten II)** mit Hilfe des visuellen Feedbacks revidiert? (0: nein, 1: ja). Nur diese Frage bezieht sich auf das letzte Lerntagebuch. Der letzten Nachbereitungsaufgabe fehlte diese Frage. Alle weiteren Fragen beziehen sich auf die Revision des  aktuellen Lerntagebuchs. 
+
+> TODO: Bitte Antwort hier eintragen
+
+Hast du das Lerntagebuch mit Hilfe des visuellen Feedbacks revidiert? (0: nein, 1: ja)
+
+> TODO: Bitte Antwort hier eintragen
+
+Wie intensiv hast du das visuelle Feedback verwendet, um dein Lerntagebuch zu revidieren? (1: sehr intensiv; 9: gar nicht intensiv)?  
+
+> TODO: Bitte Antwort hier eintragen
+
+Wie verständlich fandest du das visuelle Feedback? (1: Sehr verständlich; 5 gar nicht verständlich)? 
+
+> TODO: Bitte Antwort hier eintragen
+
+Wie schwierig war es für dich anhand des visuellen Feedback, deine Revision zu revidieren? (1: Sehr schwierig; 5 gar nicht schwierig)? 
+
+> TODO: Bitte Antwort hier eintragen
+
+Wie lange hast du an der Revision geschrieben? 
+
+> TODO: Bitte in Minuten angeben
+
+Wie stark hast du dich gerade bei der Revisions des Lerntagebuchs angestrengt (1: Sehr stark angestrengt; 9: gar nicht angestrengt)?  
+
+> TODO: Bitte Antwort hier eintragen
+
+Wie schwierig war es für dich das Lerntagebuch zu revidieren (1: Sehr schwierig, 9 gar nicht schwierig)? 
+
+> TODO: Bitte Antwort hier eintragen
+
+Wie verständlich schätzt du dein revidiertes Lerntagebuch ein (1: Sehr verständlich; 5 gar nicht verständlich)? 
+
+> TODO: Bitte Antwort hier eintragen
+
+
+# R-Anwendungsaufgaben
+
+Bildungsträger sind daran interessiert, zu wissen, ob Bildungsinitiativen erfolgreich sind und ob Lernende, den Eindruck haben, eine gute Ausbildung zu genießen. Stell dir vor, die Kultusministerienkonferenz hat eine deutschlandweite Umfrage durchgeführt, in der befragt wurde, ob Schüler\*innen in Deutschland das Gefühl haben, eine gute Ausbildung zu erhalten. Befragt wurden Schüler\*innen im Alter von 15 Jahren in allen deutschen Bundesländern. Die Daten der Studie findest du in dem Datensatz `education_poll.csv`. Folgende Variablen enthält der Datensatz:
+
+* state: Das befragte Bundesland
+* new_states: 0 = altes Bundesland, 1 = neues Bundesland (Länder der ehemaligen DDR)
+* yes: Anzahl der Schüler\*innen, die gesagt haben, sie erhalten eine gute Ausbildung
+* no: Anzahl der Schüler\*innen, die gesagt haben, sie erhalten keine gute Ausbildung
+* total: Anzahl der Schüler\*innen, die an der Befragung pro Bundesland teilgenommen haben
+* percent_yes: Prozentuale Anteil der Schüler\*innen, die gesagt haben, sie erhalten eine gute Ausbildung. 
+
+
+Du möchtest nun prüfen, ob Schüler\*innen in Deutschland zufriedener sind als man zufällig erwarten wurde (50%). Zudem interessiert dich, ob die Schüler\*innen die alten Bundesländer zufriedener mit der Ausbildung sind als die Schüler\*innen der neuen Bundesländer. Lade zunächst das Paket tidyverse und speichere den Datensatz in der variable `poll`. Achte darauf, dass die Daten mit einem Semikolon getrennt sind. Du benötigst daher, die Funktion `read_csv2`. 
+
+```{r}
+# TODO: Tidyverse laden 
+# TODO: education_poll.csv laden und in poll speichern
+library(tidyverse)
+```
+
+
+## Explorative Analyse
+
+Schaue dir den Datensatz zunächst mit `glimpse` an:
+
+```{r}
+# TODO: poll mit glimpse anschauen
+```
+
+Mmmh, die Variable percent_yes ist als `chr` (character) gespeichert, allerdings handelt es sich um eine Nummer mit Zeichen hinter dem Komma. Verwende die Funktion `mutate`, um die Variable in einen numerischen Wert umzuwandeln. Um eine Variable in einen numerischen Wert umzuwandeln, benötigst du die Funktion `as.numeric`. Überschreibe den Dataframe poll:
+
+```{r}
+# TODO: percent_yes in numeric umwandeln
+```
+
+Wie viele Schüler\*innen haben insgesamt an der Studie teilgenommen? Um diese Fragen zu beantworten, kannst du die Funktion `sum` verwenden. 
+
+```{r}
+# TODO: Anzahl der Schüler*innen berechnen
+```
+
+Zu Beginn einer Datenanalyse ist es immer ganz ratsam, sich die Mittelwerte und die Standardabweichungen der Stichprobe anzeigen zu lassen. Berechne zunächst die Mittelwert und die Standardabweichung der Variable percent_yes über alle Bundesländer:
+
+```{r}
+# TODO: Mittelwert und Standardabweichung der Variable percent_yes berechnen
+```
+
+Berechne als nächstes den Mittelwert und die Standardabweichung der Veriable percent_yes sowohl für die alten als auch für die neuen Bundesländer. Verwende hierfür die Funktion `group_by` und `summarise`:
+
+```{r}
+# TODO: Mittelwert und Standardabweichung der Variable percent_yes
+#       für alte und neue Bundesländer berechnen
+```
+
+Interessant wäre es auch heraus zu finden, welche Schüler\*innen welches Bundeslands am zufriedensten mit ihrer Ausbildung sind. Führe als nächstes folgenden Code aus, um diese Fragen zu beantworten:
+
+```{r}
+ggplot(poll, aes(x = reorder(state, percent_yes), y = percent_yes)) +
+  geom_col(aes(fill = percent_yes)) +
+  scale_fill_gradient(low = "#d3f2a3", high = "#074050") +
+  coord_flip() +
+  xlab("Bundesland") +
+  ylab("Percent yes") +
+  ggtitle("Zufriedenheit der Schüler*innen mit ihrer Ausbildung abhängig vom Bundesland") +
+  labs(fill = "Percent yes")
+```
+
+Erstelle eine ähnliche Visualisierung, nur diesmal visualisere die Anzahl der Schüler\*innen, welche an der Umfrage teilgenommen haben. Korrigiere zudem die Legende, die Achsen und den Titel der Grafik.
+
+```{r}
+# TODO: Erstelle ein ähnliches Balkendiagram für die Variable total
+ggplot(poll, aes(x = reorder(state, total), y = total)) +
+  geom_col(aes(fill = total)) +
+  scale_fill_gradient(low = "#d3f2a3", high = "#074050") +
+  coord_flip() +
+  xlab("Bundesland") +
+  ylab("Teilnahmen") +
+  ggtitle("Anzahl der Schüler*innen die an der Umfrage teilgenommen haben pro Bundesland") +
+  labs(fill = "Teilnahmen")
+```
+
+
+
+## t-Test für eine Stichprobe
+
+Als nächstes möchtest du testen, ob die Schülerinnen zufriedener mit ihrer Ausbildung sind, als man durchschnittlich erwarten würde. In anderen Worten: Sind die Schülerinnen im Schnitt zufriedener mit ihrer Ausbildung als 50%? Hierfür können wir einen t-Test für eine Stichprobe berechnen. Erneut berechnen wir die gleichen Schritte, wie bisher. 
+
+### Aufstellen eines statistischen Hypothesenpaares
+
+Stelle zunächst dein statistisches Hypothesenpaar auf. 
+
+* Nullhypothese (H_0): TODO
+* Alternativhypothese (H_1): TODO
+
+
+### Bestimmung der statistischen Kennwerte 
+
+Als nächstes müssen wir unsere Kennwerte bestimmen. Wir kennen bereits den Populationsmittelwert und den Stichprobenkennwert. Vervollständige bitte die restlichen Kennwerte:
+
+* Populationsmittelwert: $\mu$ = 0.5
+* Stichprobenmittelwert: $M$ = 
+* Stichprobengröße: $N$ = 
+
+
+### Bestimmung der Stichprobenkennwertverteilung für Nullhypothese
+
+Als nächstes müssten wir die Stichprobenkennwertverteilung für unsere Nullhypothese berechnen. Die letzten Wochen hatten wir die z-Verteilung bzw. die Standardnormalverteilung angenommen. Da wir allerdings keine Populationsstandardabweichung vorliegen haben, müssen wir nun eine t-Verteilung mit N - 1 Freheitsgraden berechnen. Trage zunächst die Anzahl der Freiheitsgrade für diesen Test ein und speichere die Antwort in der Variable df_sample:
+
+```{r}
+# TODO: Freheitsgrad der Stichprobe bestimmen und in df_sample speichern
+```
+
+Anhand diesen Freiheitsgrades können wir nun unsere Stichprobenkennwertverteilung anzeigen:
+
+```{r}
+ggplot(NULL, aes(x = c(-4, 4))) +
+  stat_function(fun = dt,
+                geom = "area",
+                fill = "steelblue",
+                xlim = c(-4, 4),
+                args = list(
+                  df  = df_sample
+                )) +
+  xlab("t") +
+  ylab("Dichte p(t)")
+```
+
+Als Vergleich schau dir kurz die Stichprobenkennwertverteilung mit einem Freiheitsgrad von 2 (hier rot) an:
+
+```{r}
+ggplot(NULL, aes(x = c(-4, 4))) +
+  stat_function(fun = dt,
+                geom = "area",
+                fill = "steelblue",
+                xlim = c(-4, 4),
+                args = list(
+                  df  = df_sample
+                )) +
+  stat_function(fun = dt,
+                geom = "area",
+                fill = "red",
+                alpha = .2,
+                xlim = c(-4, 4),
+                args = list(
+                  df  = 2
+                )) +
+  xlab("t") +
+  ylab("Dichte p(t)")
+```
+
+> TODO: Welchen Einfluss hätte ein zu kleiner Freiheitsgrad auf p(E|H0)? Warum? 
+
+
+### Bestimmung der Wahrscheinlichkeit $p(E|H_0)$ für Auftreten von Stichprobenergebnis $E$ unter $H_0$ 
+
+Um $p(E|H_0)$ zu berechnen, müssen wir nun den t-Wert berechnen. Versuche es einmal selber und speichere das Ergebnis in der Variable `t_score_empiric`:
+
+```{r}
+# TODO: T-wert berechnen und in t_score_empiric speichern
+```
+
+
+Visualisieren wir nun unser Stichprobenereignis und den kritischen t-Wert für ein Alpha von 5% bei einer gerichteten Stichprobe:
+
+```{r}
+ggplot(NULL, aes(x = c(-10, 10))) +
+  stat_function(fun = dt,
+                geom = "area",
+                fill = "steelblue",
+                xlim = c(-4, 4),
+                args = list(
+                  df  = df_sample
+                )) +
+    # Signifikanter Bereich
+    stat_function(fun = dt,
+                geom = "area",
+                fill = "red",
+                xlim = c(qt(0.95, df = df_sample), 4),
+                args = list(
+                  df  = df_sample
+                )) +
+    # Emprischer z-Wert
+    geom_vline(xintercept = t_score_empiric) +
+  xlab("z") +
+  ylab("Dichte p(z)")
+```
+
+
+Unser empirischer z-Wert fällt in den kritischen Bereich. Die Wahrscheinlichkeit für dieses Ereignis ist:
+
+```{r}
+round(1 - pt(t_score_empiric, df = df_sample, 3))
+```
+
+
+### Deutung der Wahrscheinlichkeit
+
+Wie ist dieses Ergebnis nun zu deuten? 
+
+> TODO: Deute das Ergebnis hinsichtlich deiner Hypothese in eigenen Worten. 
+
+
+## Jamovi
+
+Wir werden zukünftig nicht jeden Test händisch mit R berechnen, sondern verwenden ein Paket namens **jmv** hierfür. Installiere zunächst das Paket einmalig in der Konsole mit folgendem Befehl. Achte darauf, diesen Befehl in der Konsole und nicht im Skript auszuführen!
+
+```
+install.packages("jmv")
+```
+
+Lade anschließend das Paket:
+
+```{r}
+library(jmv)
+```
+
+
+Jmv enthält eine Reihe an [Funktionen](https://www.jamovi.org/jmv/index.html), um statistische Tests zu berechnen. Beispielsweise können wir anhand von jmv die deskriptiven Werte eines Datensatzes anzeigen lassen (siehe https://www.jamovi.org/jmv/descriptives.html):
+
+```{r, warning=FALSE, message=FALSE}
+descriptives(poll, freq = TRUE)
+```
+
+Für einen t-Test mit einer Stichprobe gibt es die Funktion [ttestOneS](https://www.jamovi.org/jmv/ttestones.html). Die Funktion enthält mehrere Argumente:
+
+* data: Unser Datensatz
+* vars: abhängige Variablen
+* hypothesis: *gt* = greater than, *lt* = lower than, *dt* = größer oder kleiner. Im Vergleich zum testValue
+* testValue: Die Kenngröße, gegen die wir testen. Hier 0.5
+* effectSize: Ausgabe von Cohen's d effect size
+* norm: Testet auf Varianzhomogenität der Stichproben
+* ci: Zeige Konfidenzintervalle an
+
+Führen wir die Funktion anhand unserer Daten einmal aus:
+
+```{r}
+ttestOneS(poll, 
+          vars = c("percent_yes"), 
+          testValue = 0.5, 
+          hypothesis = "gt",
+          effectSize = TRUE,
+          ci = TRUE,
+          norm = TRUE)
+```
+
+Vergleichen wir die Werte mit unseren Ergebnissen:
+
+```{r}
+df_sample
+t_score_empiric
+```
+
+Es sind genau die gleichen Werte.
+
+
+## t-test für unabhängige Stichproben
+
+Berechnen wir nun unsere zweite Hypothese. Wir fragen uns, ob sich die alten und die neuen Bundesländer in der Zufriedenheit mit ihrer Ausbildung unterscheiden. 
+
+### Aufstellen eines statistischen Hypothesenpaares
+
+Stelle zunächst dein statistisches Hypothesenpaar auf. 
+
+* Nullhypothese (H_0): TODO
+* Alternativhypothese (H_1): TODO
+
+
+### Bestimmung der statistischen Kennwerte 
+
+Als nächstes müssen wir unsere Kennwerte bestimmen. Wir kennen bereits den Populationsmittelwert und den Stichprobenkennwert. Vervollständige bitte die restlichen Kennwerte:
+
+* Mittelwert_alteBundesländer: M =
+* Standardabweichung_alteBundesländer s: 
+* Mittelwert_neueBundesländer: M =
+* Standardabweichung_neueBundesländer s: 
+
+
+### Bestimmung der Wahrscheinlichkeit $p(E|H_0)$ für Auftreten von Stichprobenergebnis $E$ unter $H_0$ 
+
+Um einen t-Test mit einer unabhängigen Stichprobe zu berechnen, haben wir die Funktion ttestIS. Berechnen wir unsere Hypothese:
+
+```{r}
+ttestIS(data = poll,
+        vars = "percent_yes",
+        group = "new_states",
+        effectSize = TRUE)
+```
+
+
+### Deutung der Wahrscheinlichkeit
+
+Wie ist dieses Ergebnis nun zu deuten? 
+
+> TODO: Deute das Ergebnis hinsichtlich deiner Hypothese in eigenen Worten. 
