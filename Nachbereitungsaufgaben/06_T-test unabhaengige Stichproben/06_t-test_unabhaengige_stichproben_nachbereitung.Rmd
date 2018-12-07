@@ -113,7 +113,7 @@ Zu Beginn einer Datenanalyse ist es immer ganz ratsam, sich die Mittelwerte und 
 # TODO: Mittelwert und Standardabweichung der Variable percent_yes berechnen
 ```
 
-Berechne als nächstes den Mittelwert und die Standardabweichung der Veriable percent_yes sowohl für die alten als auch für die neuen Bundesländer. Verwende hierfür die Funktion `group_by` und `summarise`:
+Berechne als nächstes den Mittelwert und die Standardabweichung der Variable percent_yes sowohl für die alten als auch für die neuen Bundesländer. Verwende hierfür die Funktion `group_by` und `summarise`:
 
 ```{r}
 # TODO: Mittelwert und Standardabweichung der Variable percent_yes
