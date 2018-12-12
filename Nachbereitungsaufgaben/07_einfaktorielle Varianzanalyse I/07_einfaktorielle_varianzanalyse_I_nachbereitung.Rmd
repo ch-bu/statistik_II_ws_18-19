@@ -1,0 +1,285 @@
+---
+title: "Statistik II - Nachbereitungsaufgabe"
+subtitle: "07 - einfaktorielle Varianzanalyse I"
+author: ""
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+# Revision deines Lerntagebuchs zum Thema einfaktorielle Varianzanalyse I
+
+Als Vorbereitungsaufgaben hast du ein Lerntagebuch zum Thema einfaktorielle Varianzanalyse I. Nun sollst du dieses Lerntagebuch revidieren. Revidieren bedeutet, dass du (1) deine Erklärung auf Richtigkeit und Korrektheit überprüfst, und (2) deine Erklärung nach den Kriterien der Richtigkeit und Korrektheit überarbeitest.
+
+> Verwende für die Revision das **visuelle Feedback**, welches dir über Slack zur Verfügung gestellt wird. Versuche aus dem visuellen Feedback folgende Leitfragen zu beantworten und in deiner Revision einzupflegen:
+
+* Hast du die relevanten Konzepte des Lerntagebuchs benannt und ausreichend erklärt? 
+* Hast du die relevanten Konzepte des Lerntagebuchs logisch und sinnvoll miteinander verbunden? 
+* Hast du die relevanten Konzepte des Lerntagebuchs durch gute Beispiele illustriert? 
+
+Nimm dir für die Revision deines Lerntagebuchs in etwa 45 Minuten Zeit und versuche auf dein Lerntagebuch hinsichtlich dieser Leitfragen und auf Grundlage des Feedbacks zu überarbeiten. 
+
+> TODO: Füge hier deine revidierte Version des Lerntagebuchs hier ein.
+
+## Fragen zur Revision
+
+Hast du das Lerntagebuch mit Hilfe des visuellen Feedbacks revidiert? (0: nein, 1: ja)
+
+> TODO: Bitte Antwort hier eintragen
+
+Wie intensiv hast du das visuelle Feedback verwendet, um dein Lerntagebuch zu revidieren? (1: sehr intensiv; 9: gar nicht intensiv)?  
+
+> TODO: Bitte Antwort hier eintragen
+
+Wie verständlich fandest du das visuelle Feedback? (1: Sehr verständlich; 5 gar nicht verständlich)? 
+
+> TODO: Bitte Antwort hier eintragen
+
+Wie schwierig war es für dich anhand des visuellen Feedback, deine Revision zu revidieren? (1: Sehr schwierig; 5 gar nicht schwierig)? 
+
+> TODO: Bitte Antwort hier eintragen
+
+Wie lange hast du an der Revision geschrieben? 
+
+> TODO: Bitte in Minuten angeben
+
+Wie stark hast du dich gerade bei der Revisions des Lerntagebuchs angestrengt (1: Sehr stark angestrengt; 9: gar nicht angestrengt)?  
+
+> TODO: Bitte Antwort hier eintragen
+
+Wie schwierig war es für dich das Lerntagebuch zu revidieren (1: Sehr schwierig, 9 gar nicht schwierig)? 
+
+> TODO: Bitte Antwort hier eintragen
+
+Wie verständlich schätzt du dein revidiertes Lerntagebuch ein (1: Sehr verständlich; 5 gar nicht verständlich)? 
+
+> TODO: Bitte Antwort hier eintragen
+
+
+# R-Anwendungsaufgaben
+
+Der Spacing-Effekt ist eines der robustesten Effekte in der Lehr- und Lernforschung ([Cepada, Pashler, & Rohrer, (2006)](Distributed practice in verbal recall tasks: A review and quantitative synthesis)). Der Effekt beschreibt, dass verteiltes Lernen für die langfristige Behaltensleistung größer ist, als wenn Lernende am Stück lernen. In dieser Nachbereitungsaufgabe wirst du eine Studie zum Spacing Effekt genauer beleuchten und analysieren. Die Studie wurde von Sau-Chin Chen durchgeführt und der Datensatz unter der [Open Science Foundation](https://osf.io/nma6w/) bereitgestellt. Folgende Variablen umfasst der Datensatz:
+
+* subject_id = unique identifier
+* age = age in years
+* gender = 0 female; 1 male
+* mom_edu = motherÕs education in years
+* language = degree of bilingualism; 0 = monolingual; 100 = bilingual
+* music_training = 1 for piano training; 2 for another instrument
+* sheet_music = 1 if can read sheet music; 2 if cannot
+* h_c_pre = happiness and comfort pre-test
+* h_c_post = happiness and comfort post-test
+* anxiety = performance anxiety
+* lag_task1 = lag in min for task 1
+* pc_baseline_task1 = percent correct at baseline, task 1
+* pc_post1_task1 = percent correct post practice session 1, task 1
+* pc_pre2_task1 = percent correct pre practice session 2, task 1
+* pc_post2_task1 = percent correct post practice session 2, task 1
+* pc_final_task1 = percent correct at final test, task 1
+* sdl_baseline_task1 = standard deviation of latency at baseline, task 1
+* sdl_post1_task1 = standard deviation of latency post practice session 1, task 1
+* sdl_pre2_task1 = standard deviation of latency pre practice session 2, task 1
+* sdl_post2_task1 = standard deviation of latency post practice session 2, task 1
+* sdl_final_task1 = standard deviation of latency at final test, task 1
+* sda_baseline_task1 = standard deviation of amplitude at baseline, task 1
+* sda_post1_task1 = standard deviation of amplitude post practice session 1, task 1
+* sda_pre2_task1 = standard deviation of amplitude pre practice session 2, task 1
+* sda_post2_task1 = standard deviation of amplitude post practice session 2, task 1
+* sda_final_task1 = standard deviation of amplitude at final test, task 1
+* lag_task2 = lag in min for task 2
+* pc_baseline_task2 = percent correct at baseline, task 2
+* pc_post1_task2 = percent correct post practice session 1, task 2
+* pc_pre2_task2 = percent correct pre practice session 2, task 2
+* pc_post2_task2 = percent correct post practice session 2, task 2
+* pc_final_task2 = percent correct at final test, task 2
+
+
+In der Studie übten Klavierspieler ein Musikstück unter unterschiedlichen Bedingungen (siehe `lag_task1`). Die Probanden übten ein Stück zwei mal. Entweder machten sie nach der ersten Übung keine Minute, 1 Minute, 5 Minuten, 10 Minuten oder 15 Minuten. Einen Tag später wurde geprüft, wie gut die Probanden das Stück spielen konnten (siehe `pc_final_task1`). 
+
+Bisher haben wir uns mit dem z-Test und dem t-Test beschäftigt. Erkläre zunächst in eigenen Worten, weshalb wir für dieses Experiment keinen T-Test rechnen können? 
+
+> TODO: Warum können wir für dieses Experiment keinen t-Test rechnen?
+
+Lade als nächstes tidyverse, jmv und den Datensatz. Speichere den Datensatz unter der Variable `piano_data`: 
+
+```{r}
+# TODO: tidyverse laden
+# TODO: jmv laden
+# TODO: Datensatz laden: spacing_piano_data.csv
+```
+
+
+## Explorative Datenanalyse
+
+Zu Beginn müssen wir wie immer ein Überblick über die Daten bekommen. Schaue dir zunächst an, wie viele Reihen der Datensatz hat? 
+
+```{r}
+# TODO: Wie viele Reihen hat der Datensatz? 
+```
+
+Schaue dir als nächstes die Variablen mit Hilfe von glimpse an: 
+
+```{r}
+# TODO: Die Variablen des Datensatzes mit glimpse anschauen
+```
+
+Wir werden später nicht mit allen Variablen arbeiten, daher ist es sinnvoll, nur diejenigen Variablen auszuwählen, die wir auch wirklich brauchen. Selektiere daher den Datensatz und wähle nur folgende Variablen aus:
+
+* subject_id
+* age
+* gender
+* mom_edu
+* language
+* music_training
+* anxiety
+* lag_task1
+* pc_final_task1
+
+Zudem ist die Variable lag_task1 als `dbl` (eine Zahl mit Stellen hinter dem Komma) gespeichert. Diese Variable muss ein Faktor sein. Verwende daher nachdem du die Variablen selektiert hast die Funktion mutate, um die Variable `lag_task1` in einen Faktor umzuwandeln (`as.factor`): Speichere den neuen Datensatz in der Variable `piano_data_processed`:
+
+```{r}
+# TODO: Selektiere den Datensatz nach den obigen Variablen und
+#       speichere den Datensatz in piano_data_processed
+# TODO: Wandle die Variable lag_task1 in einen Faktor um
+```
+
+Wir werden später eine einfaktorielle Varianzanalyse rechnen. Bevor wir das tun, müssen wir wissen, was unsere abhängige und unabhängige Variable ist. 
+
+> TODO: Was ist in unserem Experiment die abhängige Variable? Warum? 
+
+> TODO: Was ist in unserem Experiment die unabhängige Variable? Warum? 
+
+Zählen wir als nächstes, wie viele Zeitabstände in dem Experiment untersucht wurden. Die Zeitabstände des Übens sind in der Variable `lag_task1` eingetragen:
+
+```{r}
+# TODO: Verwende count, um die Zeitabstände anzusehen und zu zählen, wie viele
+#       Personen in jeder Gruppe sind
+```
+
+Wir möchten später sehen, ob sich die Ausprägungen des Faktores (bzw. unsere Gruppen) in dem Leistungstest (pc_final_task1) unterscheiden. Wenn wir Gruppen miteinander vergleichen möchten, ist es immer ratsam, zuvor einen Boxplot zu erstellen:
+
+```{r}
+# TODO: Erstelle einen Boxplot der Variablen lag_task1 und pc_final_task1
+```
+
+Wir sehen bereits deskriptiv, dass sich die Gruppen voneinander unterscheiden. 
+
+Schauen wir uns als nächstes an, wie sich die Werte der Variable `pc_final_task1` voneinander unterscheiden? Erstelle hierzu ein Histogram der Variable `pc_final_task1`:
+
+```{r}
+# TODO: Histogram erstellen
+```
+
+Analysiere zunächst den Datensatz anhand zweier eigenen kleiner Datenanalysen Beschreibe, zusätzlich die Ergebnisse deiner Datenanalyse. 
+
+```{r}
+# TODO: Eigene Analyse der Daten 1
+```
+
+
+```{r}
+# TODO: Eigene Analyse der Daten 2
+```
+
+
+## Quadratsummenzerlegung
+
+Nächste Woche werden wir die einfaktorielle Varianzanalyse genauer kennen lernen. Dennoch werden wir bereits jetzt das Verfahren mit Hilfe von jamovi ausführen. Führe dazu zunächst den folgenden CodeBlock aus:
+
+```{r}
+jmv::anova(
+    data = piano_data_processed,
+    dep = "pc_final_task1",
+    factors = "lag_task1",
+    effectSize = c("eta"))
+```
+
+Uns interessieren uns zunächst lediglich die **Sum of Squares**. Im Seminar hatten wir beschrieben, dass totale Quadratsumme in einzelne Quadratsummen unterteilt werden kann.
+
+> TODO: Beschreibe, welche Quadratsummen in dem Output dargestellt werden. 
+
+> TODO: Was ist die totale Quadratsumme der Variable pc_final_task1? 
+
+
+### Totale Quadratsumme
+
+Wir können uns die totale Quadratsumme visualisieren
+
+```{r}
+ggplot(piano_data_processed, aes(subject_id, pc_final_task1)) +
+  geom_point() +
+  geom_hline(yintercept = mean(piano_data_processed$pc_final_task1)) +
+  geom_rect(aes(xmin = subject_id,
+                xmax = subject_id + (abs(pc_final_task1 - mean(pc_final_task1))),
+                ymin = pc_final_task1,
+                ymax = mean(pc_final_task1),
+                fill = as.factor(lag_task1),
+                alpha = .05),
+            data = piano_data_processed) +
+  guides(fill = FALSE, alpha = FALSE) +
+  theme_bw() +
+  coord_fixed() 
+```
+
+Was du hier siehst ist die totale Quadratsumme der Variable `pc_final_task1`. Die farblichen Hervorhebungen sind die einzelnen Gruppen des Faktors `lag_task1`. Die totalle Quadratsumme ist die Summe der Fläche aller dieser Quadrate. 
+
+Berechnen wir diese Quadratsumme einmal händisch: 
+
+```{r}
+(ss_total <- sum((piano_data_processed$pc_final_task1 - 
+                  mean(piano_data_processed$pc_final_task1))**2))
+```
+
+Vergleiche diese Berechnung mit deinem Resultat? Sind es die gleichen Zahlen? 
+
+### Quadratsumme dazwischen
+
+Wir wissen, dass die totale Quadratsumme die Summe aus der Quadratsumme zwischen den Gruppen und der Quadratsumme innerhalb der Gruppen ist. 
+
+> TODO: Beschreibe in eigenen Worten, wie sich die Quadratsumme zwischen den Gruppen berechnet. 
+
+Berechnen wir als nächstes die Quadratsumme zwischen den Gruppen:
+
+```{r}
+group_means <- piano_data_processed %>%
+  group_by(lag_task1) %>%
+  summarise(group_mean = mean(pc_final_task1))
+  
+piano_data_processed <- piano_data_processed %>%
+  left_join(group_means, by = "lag_task1")
+
+(ss_between <- sum((piano_data_processed$group_mean - mean(piano_data_processed$pc_final_task1))**2))
+```
+
+Vergleiche diese Quadratsumme erneut mit dem Output unserer Funktion jmv::anova. Es müssten die gleichen Werte sein.
+
+### Quadratsumme innerhalb
+
+Zuletzt müssen wir noch die Quadratsumme innerhalb der Gruppen berechnen. Versuche es einmal selbst:
+
+```{r}
+# TODO: Quadratsumme innerhalb der Gruppen berechnen
+```
+
+### Fragen zu den Quadratsummen
+
+Nehmen wir an, die Quadratsumme einer Variable innerhalb der Gruppen ist gleich 0.
+
+> TODO: Wie erklärt sich dadurch das zu Stande kommen der totalen Quadratsumme? 
+
+Eta-Squared ist eine Effektgröße. Wir haben bereits Cohen's D kennen gelernt. Unser Output zeigt an, dass das Eta-Squared 0.086 ist. Berechne das Eta-Squared in R nach:
+
+```{r}
+# TODO: Eta-Squared berechnen
+```
+
+
+
+
+
