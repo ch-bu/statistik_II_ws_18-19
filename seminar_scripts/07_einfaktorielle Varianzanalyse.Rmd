@@ -1,0 +1,113 @@
+---
+title: "Untitled"
+author: "Christian Burkhart"
+date: "11 Dezember 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+
+diet <- read_csv("diet.csv") %>%
+  mutate(
+    diff = pre.weight - weight6weeks
+  ) %>%
+  group_by(Diet) %>%
+  slice(1:5) %>%
+  ungroup() %>%
+  rownames_to_column(var = "id") %>%
+  mutate(
+    subject = as.numeric(id))
+```
+
+```{r}
+ggplot(diet, aes(subject, diff)) +
+  geom_point() +
+  geom_hline(yintercept = mean(diet$diff)) +
+  geom_rect(aes(xmin = subject,
+                xmax = subject + (abs(diff - mean(diff))),
+                ymin = diff,
+                ymax = mean(diff),
+                fill = as.factor(Diet),
+                alpha = .1),
+            data = diet) +
+  guides(fill = FALSE, alpha = FALSE) +
+  theme_bw() +
+  coord_fixed() +
+  scale_fill_manual(values = c("#009392", "#eeb479", "#cf597e"))
+```
+
+
+```{r}
+group_means <- diet %>%
+  group_by(Diet) %>%
+  summarise(group_mean = mean(diff))
+  
+diet <- diet %>%
+  left_join(group_means, by = "Diet")
+
+(ss_between <- sum((diet$group_mean - mean(diet$diff))**2))
+
+ggplot(diet, aes(subject, group_mean)) +
+  geom_point()  +
+  geom_hline(yintercept = mean(diet$diff)) +
+  geom_rect(aes(xmin = subject,
+                xmax = subject + abs(diet$group_mean - mean(diet$diff)),
+                ymin = diet$group_mean,
+                ymax = mean(diet$diff),
+                fill = as.factor(Diet),
+                alpha = .01),
+            data = diet) +
+  guides(fill = FALSE, alpha = FALSE) +
+  theme_bw() +
+  coord_fixed() +
+  scale_fill_manual(values = c("#009392", "#eeb479", "#cf597e"))
+```
+
+
+```{r}
+diet_dataset <- diet_dataset %>%
+  arrange(Diet) %>%
+  mutate(
+    mean_group = c(rep(-3.3, 24), rep(-3.03, 27), rep(-5.15, 27))
+  )
+
+ggplot(diet, aes(subject, diff)) +
+  geom_point() +
+  geom_hline(yintercept = mean(diet$diff), color = "grey") +
+  geom_segment(aes(x = 0, xend = 5, y = 3.24, yend = 3.24)) +
+  geom_segment(aes(x = 6, xend = 10, y = 0.32, yend = 0.32)) +
+  geom_segment(aes(x = 11, xend = 15, y = 6.12, yend = 6.12)) +
+  geom_rect(aes(xmin = subject,
+                xmax = subject + abs(diff - group_mean),
+                ymin = diff,
+                ymax = group_mean,
+                fill = as.factor(Diet),
+                alpha = .01),
+            data = diet) +
+  theme_bw() +
+  guides(fill = FALSE, alpha = FALSE) +
+  coord_fixed() +
+  scale_fill_manual(values = c("#009392", "#eeb479", "#cf597e"))
+```
+
+
+## Anwendungsaufgabe
+
+```{r}
+data <- tibble(
+  value = c(1, 2, 3, 
+            3, 4, 5,
+            5, 6, 7),
+  group = c(rep(1, 3),
+            rep(2, 3),
+            rep(3, 3))
+)
+
+ss_total <- 
+```
+
