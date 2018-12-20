@@ -1,0 +1,188 @@
+---
+title: "Untitled"
+author: "Christian Burkhart"
+date: "18 Dezember 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+# Pakete laden
+library(tidyverse)
+library(jmv)
+```
+
+```{r}
+# Datensatz laden
+cohviz <- read_csv("cohviz.csv")
+```
+
+
+# Explorative Datenanalyse
+
+```{r}
+glimpse(cohviz)
+```
+
+wie viele Personen sind in den Gruppen? 
+
+```{r}
+cohviz %>% count(treatment)
+```
+
+Wie verteilt sich die globale Kohäsion? 
+
+```{r}
+cohviz %>%
+  ggplot(., aes(x = global_cohesion_revision)) +
+  geom_bar() +
+  labs(
+    x = "Global cohesion",
+    y = "Häufigkeit",
+    title = "Globale Kohäsion der Texte bei der Revision"
+  )
+```
+
+```{r}
+cohviz %>%
+  ggplot(., aes(x = global_cohesion_revision)) +
+  geom_bar() +
+  labs(
+    x = "Global cohesion",
+    y = "Häufigkeit",
+    title = "Globale Kohäsion der Texte bei der Revision"
+  ) +
+  facet_wrap(~ treatment)
+```
+
+```{r}
+cohviz %>%
+  ggplot(., aes(x = accuracy_global_osmosis_draft, 
+                y = accuracy_global_osmosis_revision)) +
+  geom_point(aes(color = treatment), size = 1.5)
+```
+
+```{r}
+cohviz %>%
+  count(treatment) %>%
+  ggplot(aes(x = treatment, y = n)) +
+  geom_col(aes(fill = treatment), show.legend = FALSE) +
+  scale_fill_viridis_d()
+```
+
+```{r}
+cohviz %>%
+  group_by(treatment) %>%
+  summarise(
+    mean_global = mean(global_cohesion_revision)
+  ) %>%
+  ggplot(aes(x = treatment, y = mean_global)) +
+  geom_col()
+```
+
+
+# Hypothese testen
+
+Unterscheidet sich die globale Kohäsion zwischen den Versuchsgruppen? 
+
+* abhängige Variable (AV): globale Kohäsion
+* unabhängige Variable (UV): Versuchsgruppen
+
+
+## Schritt 1: Aufstellen eines statistischen Hypothesenpaars
+
+* H0: Es gibt keinen Unterschied zwischen den Versuchsgruppen in der globalen Kohäsion der Revision.
+* H1: Es gibt einen Unterschied zwischen den Versuchsgruppen in der globalen Kohäsion der Revision.
+
+## Schritt 2: Bestimmung der statistischen Kennwerte
+
+
+```{r}
+# Anova rechnen
+jmv::anova(
+    data = cohviz,
+    dep = "global_cohesion_revision",
+    factors = "treatment",
+    effectSize = "eta",
+    homo = TRUE,
+    qq = TRUE,
+    emMeans = list(
+        NULL))
+
+```
+
+## Schritt 3: Bestimmung der Stichprobenkennwerteverteilung für Nullhypothese 
+
+```{r}
+F <- 1.33
+
+ggplot(NULL, aes(x = c(0, 5))) +
+  stat_function(fun = df,
+                geom = "area",
+                fill = "steelblue",
+                args = list(
+                  df1 = 3,
+                  df2 = 76
+                )) +
+  stat_function(fun = df,
+                geom = "area",
+                fill = "red",
+                args = list(
+                  df1 = 3,
+                  df2 = 76
+                ),
+                xlim = c(qf(0.95, df1 = 3, df2 = 76), 7)) +
+  geom_vline(xintercept = F) +
+  labs(
+    title = "F-Verteilung mit Freiheitsgrad 3 und 76",
+    subtitle = "Kritischer Bereich (5%) rot markiert",
+    x = "F",
+    y = "Dichte"
+  )
+```
+
+
+## Schritt 4: Bestimmung der Wahrscheinlichkeit p(E|H0) für Auftreten von Stichprobenergebnis E unter H0
+
+```{r}
+# TODO: Wahrscheinlichkeit für p(E|H0) berechnen
+```
+
+
+## Schritt 5: Deutung der Wahrscheinlichkeit
+
+Ein einfaktorielle Varianzanalyse ergab ein nicht-signifikantes Ergebnis der Versuchsgruppen auf die globale Kohäsion der Texte, F(3, 76) = 1.33, p = .272, eta-squared = .05. 
+
+
+## Post-Hoc Tests
+
+```{r}
+# Post-Hoc Test für Variable Akkuratheit
+jmv::anova(
+    data = cohviz,
+    dep = "accuracy_global_osmosis_draft",
+    factors = "treatment",
+    effectSize = "eta",
+    homo = TRUE,
+    postHoc = list(
+      "treatment"
+    ),
+    postHocCorr = c("tukey", "bonf"),
+    emMeans = list(
+        NULL))
+```
+
+
+```{r}
+cohviz %>%
+  group_by(treatment) %>%
+  summarise(
+    mean = mean(accuracy_global_osmosis_draft, na.rm = TRUE)
+  ) %>%
+  ggplot(aes(x = treatment, y = mean)) + geom_col()
+```
+
+
