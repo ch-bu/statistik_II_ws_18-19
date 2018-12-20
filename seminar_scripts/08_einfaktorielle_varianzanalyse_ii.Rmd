@@ -1,0 +1,228 @@
+---
+title: "Einfaktorielle Varianzanalyse II"
+author: "Christian Burkhart"
+date: "17 Dezember 2018"
+output:
+  pdf_document: default
+  word_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r message=FALSE, warning=FALSE}
+library(tidyverse)
+library(jmv)
+```
+
+Verständliche Texte zeichnen sich unter anderem dadurch aus, dass sie kohäsiv sind. Ein kohäsiver Text verbindet Ideen und Konzepte innerhalb eines Textes explizit. Beispielsweise benutzen wir Wortwiederholungen, Konnektive und Pronomina, um Beziehungen zwischen Sätzen aufzuzeigen. Diese Kohäsionsmittel nennt man auch lokale Kohäsionsmittel. Globale Kohäsionsmittel sind dadurch gekennzeichnet, dass ein Text logisch aufgebaut ist und das Genre des Textes bedient. Beispielsweise hat ein argumentativer Text immer den gleichen Aufbau: Behauptung, Gründe, Schlussfolgerung. 
+
+In dem folgenden Experiment wurden verschiedene Feedbackarten für die Verbesserung der Textkohäsion untersucht. Das Feedback war in allen Gruppen ein automatisiertes Feedback und wurde in Form einer grafischen Rückmeldung dargeboten:
+
+![Feedback](feedback.png)
+
+In der heutigen Sitzung untersuchen wir daher anhand einer einfaktoriellen Varianzanalyse, ob es Unterschiede in der globalen Kohäsion zwischen den Gruppen gab. 
+
+```{r message=FALSE, warning=FALSE}
+cohviz <- read_csv("cohviz.csv") %>%
+  mutate(
+    treatment = as.factor(treatment)
+  )
+```
+
+Der Datensatz hat folgende Variablen:
+
+* id: id der Versuchsperson
+* treatment: 4 Versuchsgruppen (Cmap, cmap-signaling, treatment, control)
+* accuracy_global_draft: Akkuratheit der Selbsteinschätzung der globalen Kohäsion beim nicht-überarbeiteten Text. 
+* acccuracy_global_revision: Akkuratheit der Selbsteinschätzung der globalen Kohäsion nach der Überarbeitung des Textes
+* global_cohesion_draft: Globale Kohäsion des nicht-überarbeiteten Textes
+* global_cohesion_revision: Globale Kohäsion des überarbeiteten Textes. 
+* prior_knowledge_osmosis: Vorwissen zum Thema Osmose
+* levenshtein: Anzahl der Änderungen durch die Revision
+
+Die Studierende in dem Experiment schreiben zunächst einen Text zum Thema (15 Minuten) und überarbeiteten diesen Text anschließend unter den verschiedenen Feedbackbedingungen (15 Minuten). 
+
+Schauen wir uns zunächst anhand eines Boxplots grafisch an, wie sich die AV in den Gruppen unterscheidet. 
+
+```{r}
+ggplot(cohviz, aes(x = treatment, y = global_cohesion_revision)) +
+  geom_jitter() +
+  geom_boxplot(aes(fill = treatment), show.legend = FALSE,
+               alpha = .8) +
+  labs(
+    x = "Gruppe",
+    y = "Globale Kohäsion Revision",
+    title = "Boxplots globale Kohäsion pro Gruppe"
+  )
+```
+
+## Einfaktorielle Varianzanalyse am Beispiel globale Kohäsion
+
+Mit Hilfe des Pakets Jamovi können wir direkt eine einfaktorielle Varianzanalyse berechnen. Unsere AV ist die Variable `global_cohesion_revision` und unsere UV ist der Faktor `treatment`. 
+
+```{r}
+(model <- jmv::anova(
+    data = cohviz,
+    dep = "global_cohesion_revision",
+    factors = "treatment",
+    effectSize = c("eta"),
+    emMeans = list(
+        NULL),
+    homo = TRUE,
+    qq = TRUE,
+    emmPlots = FALSE))
+```
+
+
+## Voraussetzungen für Varianzanalyse 
+
+Jeder statistischer Test hat unterschiedliche Voraussetzungen. Die einfaktorielle Varianzanalyse hat zwei zentrale:
+
+* **Homoskedastizität**: Residualwerte sind personen-spezifisch und deshalb innerhalb von Gruppen und zwischen Gruppen unabhängig voneinander (z.B. verletzt, wenn Gruppen Schulklassen sind, in denen sich SuS ähnlicher sein können) -> Levene Test (siehe Output jmv). Homosekedastitzität ist gegeben, wenn die Varianzen zwischen den Gruppen in etwa gleich sind. Typischerweise wird die Homoskedastizität anhand des Levene Tests berechnet. Der Levene Test selbst ist eine besondere Form der einfaktoriellen Varianzanalyse. Ist das Ergebnis des Tests signifikant, ist die Voraussetzungen der gleichen Varianzen zwischen den Gruppen nicht erfüllt. Der Test ist robust, sofern die Stichprogen gleich groß ist. Robust bedeutet, dass es keine großen Unterschiede im Ergebnis macht, wenn eine Voraussetzung gebrochen ist. 
+* **Normalverteilung**: Merkmal (und Fehler) muss in Population normalverteilt sein. [Robust bei nicht ganz normalverteilten Fehlern](https://econtent.hogrefe.com/doi/pdf/10.1027/1614-2241/a000016). -> Siehe Normal Q-Q Plot beim Output jmv. Robust, wenn Stichproben > 30 sind. 
+
+
+## Prüfen der Hypothese
+
+### Schritt 1: Aufstellen eines statistischen Hypothesenpaars
+
+Inhaltlische Hypothese: Die vier Feedbackgruppen unterscheiden sich in ihrer globale Kohäsion voneinander. 
+
+* H0: Die Texte der Versuchsgruppen unterscheiden sich **nicht** in der globalen Kohäsion. ODER: Alle Stichproben stammen aus derselben Population. 
+* H1: Die Texte der Versuchsgruppen unterscheiden sich in der globalen Kohäsion. ODER: Mindestens zwei Stichproben stammen aus unterschiedlichen Populationen. 
+
+
+### Schritt 2: Bestimmung der statistischen Kennwerte
+
+* p = 4 Stufen der UV
+* n = 20 Personen pro Stufe
+* QS_zwischen
+* QS_innerhalb
+* Mean Squares_zwischen
+* Mean_Squares_innerhalb
+* F-Wert
+
+Aus der letzten Sitzung wissen wir, dass die totale Varianz die Summe aus der Quadratsumme zwischen den Summen und der Quadratsumme innerhalb der Gruppen ist: QS_total = QS_zwischen + QS_innerhalb. 
+
+Nach unserer Formel test statistic (hier F) = systematische Unterschiede / unsystematische Unterschiede, könnten wir die Quadratsumme zwischen den Gruppen durch die Quadratsumme innerhalb der Gruppen teilen. Dies wäre allerdings **nicht korrekt**, da wir diese Sum of Squares abhängig der Anzahl der Gruppen standardisieren müssen: 
+  
+* **df (degrees of freedom) zwischen den Gruppen**: Anzahl der Gruppen - 1: 4 - 1 = 3
+* **df (degreees of freedom) innerhalb der Gruppen**: N - Anzahl der Gruppen = 80 - 4 = 76
+
+Wir erhalten daher folgende Kennwerte:
+
+  
+  |           | Sum of Squares | degrees of freedom | Mean Squares        |
+  |-----------|:--------------:|--------------------|---------------------|
+  | treatment | 3.11           | 4 - 1 = 3          | 3.11 / 3 = 1.036    |
+  | Residuals | 59.39          | 80 - 4 = 76        | 59.39 / 76 = 0.781  |
+  
+  
+Zuletzt können wir unsere test statistic (hier F) berechnen (systematische / unsystematische Varianz): F = 1.036 / 0.781 = 1.33
+
+
+### Schritt 3: Bestimmung der Stichprobenkennwerteverteilung für Nullhypothese 
+
+Die Varianzanalyse nutzt als Stichprobenkennwertverteilung die F-Verteilung. Erinnere dich, dass die Stichprobenkennwertverteilung so zu Stande kommt: Wir wiederholen ein Experiment hundertausendfach und merken uns unsere test statistic (z.B. t oder F). Diese Test Statistics stellen wir anschließend in einem Histogramm dar und wandeln sie in eine Dichtefunktion um. Die Fläche dieser Stichprobenkennwertverteilung bestimmt die Wahrscheinlichkeit für ein Ereignis unter der Nullhypothese. 
+
+Wie bei der T-Verteilung gibt es mehrere F-Verteilungen. Die F-Verteilung ist abhängig von den Freiheitsgraden. 
+
+```{r}
+F <- 1.33
+
+ggplot(NULL, aes(x = c(0, 5))) +
+  stat_function(fun = df,
+                geom = "area",
+                fill = "steelblue",
+                args = list(
+                  df1 = 3,
+                  df2 = 76
+                )) +
+  stat_function(fun = df,
+                geom = "area",
+                fill = "red",
+                args = list(
+                  df1 = 3,
+                  df2 = 76
+                ),
+                xlim = c(qf(0.95, df1 = 3, df2 = 76), 7)) +
+  geom_vline(xintercept = F) +
+  labs(
+    title = "F-Verteilung mit Freiheitsgrad 3 und 76",
+    subtitle = "Kritischer Bereich (5%) rot markiert",
+    x = "F",
+    y = "Dichte"
+  )
+```
+
+
+## Schritt 4: Bestimmung der Wahrscheinlichkeit p(E|H0) für Auftreten von Stichprobenergebnis E unter H0
+
+Als nächstes müssen wir die Fläche unter dem empirischen F-Wert bestimmen. Ist die Fläche kleiner als 5% handelt es sich um ein signifikantes, d.h. unwahrscheinliches Ereignis: 
+  
+Wahrscheinlichkeit für p(E|H0):
+  
+```{r}
+(p <- 1 - pf(F, df1 = 3, df2 = 76))
+```
+
+
+## Schritt 5: Deutung der Wahrscheinlichkeit
+
+Das Ergebnis ist nicht signifkikant. Das bedeutet, dass dieses Ereignis (die Ratio dieser Varianzen) unter der H0 nicht außergewöhnlich ist. Wir nehmen daher weiterhin die H0 an. In einem Journalartikel würden wir daher schreiben:
+  
+"Die Varianzanalyse zeigte keinen statistisch signifikanten Effekt für die Feedbackart auf die globale Kohäsion, $F$(3, 76) = 1.33, $p$ = .27, $\eta^2$ = .05 (kleiner Effekt)."
+
+
+## Unterscheiden sich die Gruppen in der Akkuratheit ihrer Selbsteinschätzung? 
+
+In einem weiteren Test fragen wir uns, ob Studierende die Akkuratheit der globalen Kohäsion gut einschätzen können? Erneut haben wir 4 Gruppen, die wir miteinander vergleichen. 
+
+```{r}
+jmv::anova(
+  data = cohviz,
+  dep = "accuracy_global_osmosis_draft",
+  factors = "treatment",
+  effectSize = c("eta"),
+  emMeans = list(
+    NULL),
+  homo = TRUE,
+  emmPlots = FALSE)
+```
+
+Die einfaktorielle Varianzanalyse zeigt ein statistisch signifikantes Ergebnis (großer Effekt). Wir wissen durch diesen Test allerdings nicht, **welche Gruppen** sich voneinander unterscheiden. Um diese zu prüfen benötigen wir Post-Hoc Tests.
+
+### Post-Hoc Tests
+
+Allen Post-Hoc Tests ist gemein, dass Sie mehrere T-Tests rechnen und den p-Wert adjustieren. Der einzige Unterschied besteht darin, wie die Post-Hoc Tests die kritischen p-Werte adjustieren. Ein gängiges Verfahren, um die kritischen p-Werte den Anzahl der Tests anzupassen ist die Bonferroni Korrektur:
+  
+$$
+ \alpha^{*} = \alpha * \frac{k!}{2!(k - 2)!}
+$$
+    
+Um die Gruppen paarweise miteinander zu vergleichen, müssen wir in jmv lediglich `postHocCorr = c("bonf")` und `postHoc = list("treatment")` setzen:
+    
+```{r}
+model <- jmv::anova(
+  data = cohviz,
+  dep = "accuracy_global_osmosis_draft",
+  factors = "treatment",
+  effectSize = "eta",
+  postHoc = list(
+    "treatment"),
+  postHocCorr = c("bonf"),
+  homo = TRUE,
+  qq = TRUE,
+  emMeans = list(
+    NULL))
+  
+  
+model$postHoc
+```
+  
+Anhand der p-Werte können wir nun erkennen, welche Gruppen sich signifikant voneinander unterscheiden. In disem Fall wäre dies die Gruppen cmap-integrated und die control-group. 
+
+

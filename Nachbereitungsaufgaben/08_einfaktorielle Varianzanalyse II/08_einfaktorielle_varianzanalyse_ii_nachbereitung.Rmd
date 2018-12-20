@@ -1,0 +1,171 @@
+---
+title: "Statistik II - Nachbereitungsaufgabe"
+subtitle: "08 - einfaktorielle Varianzanalyse II"
+author: ""
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+# Revision deines Lerntagebuchs zum Thema einfaktorielle Varianzanalyse II
+
+Als Vorbereitungsaufgaben hast du ein Lerntagebuch zum Thema einfaktorielle Varianzanalyse II. Nun sollst du dieses Lerntagebuch revidieren. Revidieren bedeutet, dass du (1) deine Erklärung auf Richtigkeit und Korrektheit überprüfst, und (2) deine Erklärung nach den Kriterien der Richtigkeit und Korrektheit überarbeitest.
+
+> Verwende für die Revision das **visuelle Feedback**, welches dir über Slack zur Verfügung gestellt wird. Versuche aus dem visuellen Feedback folgende Leitfragen zu beantworten und in deiner Revision einzupflegen:
+
+* Hast du die relevanten Konzepte des Lerntagebuchs benannt und ausreichend erklärt? 
+* Hast du die relevanten Konzepte des Lerntagebuchs logisch und sinnvoll miteinander verbunden? 
+* Hast du die relevanten Konzepte des Lerntagebuchs durch gute Beispiele illustriert? 
+
+Nimm dir für die Revision deines Lerntagebuchs in etwa 45 Minuten Zeit und versuche auf dein Lerntagebuch hinsichtlich dieser Leitfragen und auf Grundlage des Feedbacks zu überarbeiten. 
+
+> TODO: Füge hier deine revidierte Version des Lerntagebuchs hier ein.
+
+## Fragen zur Revision
+
+Hast du das Lerntagebuch mit Hilfe des visuellen Feedbacks revidiert? (0: nein, 1: ja)
+
+> TODO: Bitte Antwort hier eintragen
+
+Wie intensiv hast du das visuelle Feedback verwendet, um dein Lerntagebuch zu revidieren? (1: sehr intensiv; 9: gar nicht intensiv)?  
+
+> TODO: Bitte Antwort hier eintragen
+
+Wie verständlich fandest du das visuelle Feedback? (1: Sehr verständlich; 5 gar nicht verständlich)? 
+
+> TODO: Bitte Antwort hier eintragen
+
+Wie schwierig war es für dich anhand des visuellen Feedback, deine Revision zu revidieren? (1: Sehr schwierig; 5 gar nicht schwierig)? 
+
+> TODO: Bitte Antwort hier eintragen
+
+Wie lange hast du an der Revision geschrieben? 
+
+> TODO: Bitte in Minuten angeben
+
+Wie stark hast du dich gerade bei der Revisions des Lerntagebuchs angestrengt (1: Sehr stark angestrengt; 9: gar nicht angestrengt)?  
+
+> TODO: Bitte Antwort hier eintragen
+
+Wie schwierig war es für dich das Lerntagebuch zu revidieren (1: Sehr schwierig, 9 gar nicht schwierig)? 
+
+> TODO: Bitte Antwort hier eintragen
+
+Wie verständlich schätzt du dein revidiertes Lerntagebuch ein (1: Sehr verständlich; 5 gar nicht verständlich)? 
+
+> TODO: Bitte Antwort hier eintragen
+
+
+# R-Anwendungsaufgabe
+
+
+Die Levenshtein-Distanz ist ein Maß, welches verwendet wird, um Änderungen von Texten zu messen. Wenn du zum Beispiel das Wort "Tier" in "Tor" änderst, welche Veränderungen nimmst du vor? Zunächst musst du einen Buchstaben löschen: "Ter" oder "Tir". Danach musst du einen Buchstaben durch ein "o" ersetzen: "Ter" -> "Tor". Die Levenshtein-Distanz misst die Summe solcher Änderungen an einem Text. Eine hohe Levenshtein-Distanz bedeutet, dass ein Test sehr stark verändert wurde. 
+
+In dieser Übung sollst du anhand einer einfaktoriellen Varianzanalyse testen, ob sich die Levenshteindistance zwischen den 4 Versuchsgruppen unterscheidet. Die Daten sind in der Datei `cohviz.csv` hinterlegt.  
+
+```{r}
+# TODO: Lade tidyverse
+# TODO: Lade jmv
+```
+
+```{r}
+# TODO: Lade den Datensatz cohviz.csv
+```
+
+## Explorative Datenanalse
+
+Schaue dir den Datensatz mit glimpse an:
+
+```{r}
+# TODO: Datensatz mit glimpse betrachten
+```
+
+Wie lauten die Variablennamen des Datensatzes?
+
+```{r}
+# TODO: Variablennamen des Datensatzes
+```
+
+Wie viele Probanden haben am Experiment teilgenommen? 
+
+```{r}
+# TODO: Wie viele Probanden haben am Experiment teilgenommen? 
+```
+
+Wie verteilen sich die Probanden auf die Gruppen? Verwende hierfür die Funktion `count`.
+
+```{r}
+# TODO: Wie verteilen sich die Probanden auf die Gruppen? 
+```
+
+Wie verteilt sich die Variable levenshtein? 
+
+```{r}
+# TODO: Erstelle ein Histogram der Variable levenshtein
+# TODO: Füge dem Histogram einen Titel und eine sinnvolle x und y Achsenbeschriftung bei. 
+```
+
+TODO: Ist die Variable levenshtein unsere unabhängige oder abhängige Variable? Warum? 
+
+```{r}
+# TODO: Erstelle einen Boxplot der Variable levenshtein abhängig der 
+#       Versuchsgruppen
+```
+
+Berechne den Mittelwert und die Standardabweichung der Variable levenshtein pro Gruppe. Verwende hierfür `group_by` und `summarise`. Benenne den Mittelwert mit `mean_levenshtein` und die Standardabweichung mit `sd_levenshtein` und speichere den Output in der Variable `mean_sd_levenshtein`. Verwende bei der Funktion mean und sd die Attribute `na.rm = TRUE`: `mean(levenshtein, na.rm = TRUE)`. Da wir teilweise fehlende Werte haben, müssen wir diese entfernen, um den Mittelwert und die Standardabweichung zu berechnen. 
+
+```{r}
+# TODO: Berechne den Mittelwert und die Standardabweichung der Variable levenshtein pro Gruppe
+```
+
+Anhand der Mittelwerte und der Standardabweichungen pro Gruppe können wir uns anschließend die Konfidenzintervalle in einem Balkendiagram ausgeben lassen:
+
+```{r}
+mean_sd_levenshtein %>%
+  mutate(
+    ci_upper = mean_levenshtein + 2.093 * (sd_levenshtein / sqrt(20)),
+    ci_lower = mean_levenshtein - 2.093 * (sd_levenshtein / sqrt(20))
+  ) %>%
+  ggplot(aes(x = treatment, y = mean_levenshtein)) +
+  geom_col(aes(fill = treatment), alpha = .7, show.legend = FALSE)  +
+  geom_errorbar(aes(ymin = ci_lower, ymax = ci_upper), width = 0.2) +
+  geom_point() +
+  scale_fill_viridis_d() +
+  labs(
+    title = "Mittelwerte der Variable Levenshtein pro Gruppe",
+    caption = "Fehlerbalken als Konfidenzintervalle",
+    x = "Gruppe",
+    y = "Mittelwert Levenshtein-Distanz"
+  )
+```
+
+Wir sehen bereits, dass sich die Konfidenzintervalle überschneiden. Das bedeutet bei einer einfaktoriellen Varianzanalyse, dass wir es mit einem nicht-signifkanten Ergebnis zu tun haben.
+
+## Prüfung der Hypothese
+
+TODO: Stelle zunächst die inhaltiche und statistische Hypothese für unsere Fragestellung auf
+
+```{r}
+# TODO: Berechne die einfaktorielle Varianzanalyse mit den Variablen 
+#       levenshtein und treatment. Gebe dir folgende Werte aus:
+#       - Levene-Test (homo = TRUE)
+#       - Normal Q-Q Plot (qq = TRUE)
+#       - Eta-Quadrat
+```
+
+Beatworte als nächstes folgende Fragen:
+
+1. Wie ist das Ergebnis in Hinblick auf deine Hypothese zu deuten? 
+2. Was bedeutet der F-Wert von 0.493 in Bezug zum Verhältnis der Quadratsumme zwischen den Gruppen und der Quadratsumme innerhalb der Gruppen? 
+3. Wie wird eta-Squared berechnet? Interpretiere du die Effektstärke (eta-Squared) für unser Experiment? 
+4. Schreibe zuletzt auf, wie du das Ergebnis in einem wissenschaftlichen Journal berichten würdest (siehe Skript Vorlesung): "Hier eingeben"
+
+
+
+
