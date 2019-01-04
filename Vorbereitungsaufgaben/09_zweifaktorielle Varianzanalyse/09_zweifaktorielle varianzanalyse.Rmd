@@ -1,0 +1,187 @@
+---
+title: "Statistik II - Vorbereitungsaufgabe"
+subtitle: "09 - Zweifaktorielle Varianzanalyse"
+author: ""
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+```
+
+
+# Die Titanic-Katastrophe
+
+Das Schiffsunglück der Titanic war eines der schlimmsten Unglücke in der modernen Schifffahrt. In dieser Vorbereitungsaufgabe analyisierst du den Datensatz, um ihn in der Nachbereitungsaufgabe anhand verschiedener inferenzstatistischer Verfahren hypothesengeleitet zu untersuchen. Der Datensatz stammt von [Geoyi](https://github.com/Geoyi/Cleaning-Titanic-Data). 
+
+Lese zunächst den Datensatz `titanic.csv` ein: 
+
+```{r}
+# TODO: Lade den Datensatz und tidyverse und speichere
+#       den Dataframe in der Variable titanic
+```
+
+Der Datensatz umfasst folgende für uns wichtige Variablen:
+
+* X1: ID der Person
+* pclass: Bootsklasse, die die Person gebucht hat. 
+* survived: 0 == gestorben, 1 == überlebt
+* name: Name der Person
+* sex: Geschlecht der Person
+* age: Alter der Person
+* sibsp: Anzahl der Verwanden an Bord
+* fare: Wie viel Pfund die Person für das Ticket ausgegeben hat
+
+Damit wir nur mit diesen Variablen arbeiten, filtere den Datensatz mit Hilfe der Funktion `select` zu diesen Variablen. Benenne den gefilterten Datensatz `titanic_selected`: 
+
+```{r}
+# TODO: Selektiere die wichtigen Variablen und
+#       speichere den Datensatz in der Variable titanic_selected
+```
+
+## Explorative Datenanalyse
+
+Wie viele Personen waren auf der Titanic an Bord? Löse die Frage programmatisch mit R. 
+
+```{r}
+# TODO: Zähle die Anzahl der Personen an Bord
+```
+
+Wie viele Personen waren in den einzelnen Klassen? 
+
+```{r}
+# TODO: Zähle die Personen pro Klasse
+# TIPP: Verwende count
+```
+
+Wie viele Menschen haben überlegt, bzw, sind gestorben?
+
+```{r}
+# TODO: Zähle die Personen, die gestorben bzw. überlebt haben
+```
+
+Berechne den Mittelwert des Alters der Personen für die Faktoren Klasse und Geschlecht:
+
+```{r}
+# TODO: Berechne den Mittelwert pro pclass und age
+# TIPP: Verwende group_by
+# TIPP: Verwende summarise
+# TIPP: Verwende bei mean(EINZUFUEGEN, na.rm = TRUE)
+```
+
+
+Verwende jamovi, um dir das Alter der Personen pro Kabinenklasse ausgeben zu lassen: 
+
+* Datensatz in Jamovi laden
+* Exploration -> Descriptives
+* N + Mean + std.deviation ausgeben lassen
+* Syntax mode (oben rechts die drei weißen Punkte klicken)
+* Syntax kopieren
+
+```{r}
+# TODO: Alter pro Kabine ausgeben lassen
+# TIPP: Du musst das Attribut data anpassen und titanic_selected einfügen
+```
+
+Erstelle ein Histogram mit ggplot2 und zeige dir das Alter aller Personen an:
+
+```{r}
+# TODO: Erstelle ein Histogram der Variable age
+# TODO: Fülle die Balken mit der Farbe mit Hilfe von fill = "steelblue"
+# TODO: Färbe die Ränder der Balken mit Hilfe von color = "black"
+# TODO: Verwende labs und füge einen Titel der Grafik hinzu
+#       https://ggplot2.tidyverse.org/reference/labs.html
+```
+
+
+Wer waren die ältesten Menschen auf der Titanic und wer hat von ihnen überlebt? 
+
+```{r}
+titanic_selected %>%
+  arrange(desc(age)) %>%
+  mutate(
+    survived = as.factor(survived)
+  ) %>%
+  slice(1:20) %>%
+  ggplot(aes(x = fct_reorder(name, age), y = age)) +
+  geom_col(aes(fill = survived)) +
+  labs(
+    x = "Name der Person", 
+    y = "Alter",
+    title = "Welche der 20 ältesten Menschen auf der Titanic haben überlebt?"
+  ) +
+  coord_flip()
+```
+
+
+## Wie viele Personen pro Klasse haben prozentual überlebt?
+
+Diese Aufgabe ist ein wenig komplexer, daher stückeln wir sie in mehrere Teile auf. Ich werde einen großen Teil selber vorgeben, versuche aber nachzuvollziehen, was ich pro Schritt mache. 
+
+Zählen wir zunächst die Anzahl der Personen, die pro Klasse überlebt bzw. nicht überlebt haben:
+
+```{r}
+titanic_selected %>%
+  count(pclass, survived)
+```
+
+Es gibt einen fehlenden Wert, entfernen wir diesen:
+
+```{r}
+titanic_selected %>%
+  count(pclass, survived) %>%
+  drop_na()
+```
+
+Nun haben wir die ganzen Zahlen, uns interessiert allerdings der prozentuale Wert der Personen die überlebt haben. Wir können uns dafür einem Trick bedienen die Daten in der Breite ausdehnen:
+
+```{r}
+titanic_selected %>%
+  count(pclass, survived) %>%
+  drop_na() %>%
+  spread(survived, n)
+```
+
+Nun müssen wir nichts anderes machen, die überlebenden und die nicht überlebenden Personen zusammen zählen und den Prozentwert der überlebenden Personen berechnen:
+
+```{r}
+titanic_selected %>%
+  count(pclass, survived) %>%
+  drop_na() %>%
+  spread(survived, n) %>%
+  mutate(
+    n = `0` + `1`,
+    percent_survived = `1` / n
+  )
+```
+
+Nun, da wir diesen Prozentwert haben, können wir ein Balkendiagram daraus anfertigen. Versuche das nun selber. Fertige ein Balkendiagram auf Grundlage des obigen Code-Snippets an (Ich habe noch zusätzlich die Variable pclass in einen Faktor umgewandelt):
+
+```{r}
+# TODO: Vervollständige folgenden Datensatz und fertige ein
+#       Balkendiagram an
+#       x-Achse: pclass
+#       y-Achse: percent_survived
+# TODO: Füge einen title mit labs hinzu
+# TODO: Schreibe die x- und y-Achse mit labs um (auf Deutsch)
+# TIPP: Verwende geom_col(), um das Balkendiagram anzufertigen
+#       https://ggplot2.tidyverse.org/reference/geom_bar.html
+```
+
+
+Fertige ein ähnliches Balkendiagram an, nur untersuche nun die Überlebenswahrscheinlichkeit zwischen Männer und Frauen:
+
+```{r}
+# TODO: Balkendiagram der Überlebenswahrscheinlichkeit
+#       zwischen Männern und Frauen erzeugen
+```
+
+
+
