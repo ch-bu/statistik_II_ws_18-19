@@ -24,7 +24,7 @@ Lade zunächst, tidyverse, jamovi und den Datensatz (benenne den Datensatz mit `
 
 ## t-Test für unabhängige Stichproben
 
-Um diese Frage zu beantworten, können wir einen t-Test für unabhängige Stichproben berechnen. Gebe zunächst an, was die abhängige und die unabhängige Variable diese Fragestellung ist:
+Zunächst fragst du dich, ob die Ticketpreise (Variable `fair`) für die Titanic zwischen Männern und Frauen unterschiedlich groß ausgefallen sind. Um diese Frage zu beantworten, können wir einen t-Test für unabhängige Stichproben berechnen. Gebe zunächst an, was die abhängige und die unabhängige Variable diese Fragestellung ist:
 
 * unabhängige Variable: **TODO**
 * abhängige Variable: **TODO**
