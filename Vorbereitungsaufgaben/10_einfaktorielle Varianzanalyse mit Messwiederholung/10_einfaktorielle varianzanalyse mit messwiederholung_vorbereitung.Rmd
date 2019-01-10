@@ -1,0 +1,219 @@
+---
+title: "Statistik II - Vorbereitungsaufgabe"
+subtitle: "10 - Einfaktorielle Varianzanalyse mit Messwiederholung"
+author: ""
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+# Lernstrategien
+
+Du hast eine Studie durchgeführt, in der du Studierenden ein Training zu Elaborationsstrategien gegeben hast. Die Studierenden sollen jeden Tag ein kurzes Training zu Elaborationsstrategien von 5 Minuten anwenden. In dem Training sollen sich Studierende Swahili-Vokabeln (die du Ihnen jeden Tag gibst) anhand von Elaborationsstrategien einprägen. Beispielsweise erhalten die Studierenden einen Tag nach dem Training das Wort *rafiki*, welches auf Deutsch Freund bedeutet. Als Elaborationsstrategie könnte bei dem Wort an Rafiki aus König der Löwen denken und als Elaborationsstrategie sich merken, dass Rafiki ein Freund von Simba, dem neuen König, ist. Jeder Test umfasst 10 Fragen. Die Probanden werden vor dem Training, 4 Wochen und 8 Wochen nach dem Training getestet.
+
+In der Nachbereitungsaufgabe wirst du die Daten anhand einer einfaktoriellen Varianzanalyse mit Messwiederholung analysieren. In dieser Vorbereitungsaufgabe analysierst du die Daten bereits deskriptiv. 
+
+Lade die Pakete tidyverse und jamovi und den Datensatz. Speichere den Datensatz in der Variable `learning_strategies`:
+
+```{r}
+# TODO: tidyverse, jamovi und den Datensatz laden
+```
+
+Wie viele Probanden sind im Datensatz? 
+
+```{r}
+# TODO: Zähle die Anzahl der Probanden
+```
+
+Berechne als nächstes folgende deskriptiven Statistiken mit Hilfe von Jamovi und kopiere die Syntax aus Jamovi in die nächste Zelle: 
+
+* Mittelwert
+* Standardabweichung
+* Minimum
+* Maximum
+
+```{r}
+# TODO: Deskriptive Statistiken durch Jamovi berechnen
+```
+
+
+Der Output der deskriptiven Statistik eignen sich zwar, um die Werte schnell einzusehen, allerdings nicht, Grafiken aus den Werten zu erstellen. Daher berechnen wir als nächstes die deskriptiven Werte selbstständig anhand von tidyverse. Zunächst müssen wir den Datensatz von einem weitem Format in ein langes Format überführen. Dafür können wir die Funktion `gather` verwenden:
+
+```{r}
+learning_strategies %>%
+  select(-prior_knowledge) %>%
+  gather(time, value, -id)
+```
+
+Berechne als nächstes den Mittelwert und die Standardabweichung der Variable pro Messzeitpunkt mit Hilfe der Funktionen `group_by` und `summarise`. Speichere den Output in der Variable `time_means`: 
+
+```{r}
+# TODO: Mittelwerte und Standardabweichungen pro Messzeitpunkt berechnen
+```
+
+
+## Balkendiagram der Mittelwerte erstellen
+
+Als nächstes sollst du ein Balkendiagram der Mittelwert erstellen und die Standardabweichung als Fehlerbalken hinzu nehmen. Ziel dieser Aufgabe ist es, dass du die Funktion `ggplot` besser verstehst. Jede Grafik, die wir mit ggplot2 erstellen beginnt mit dem Befehl `ggplot`. Führe die nächste Zeile aus und schaue dir an, welcher Output erzeugt wird:
+
+```{r}
+ggplot()
+```
+
+Eine leere Grafik. Die zentrale Aufgabe in der Datenvisualisierung liegt darin, aus Daten Visualisierungen zu erstellen. Das bedeutet, wir müssen Daten *verschiedene* Visualisierungen zuordnen. Beispielsweise kann ich eine Zahl in folgende Werte visualisieren:
+
+* **Scale*: Die Zahl kann als Punkt dargestellt werden. Je größer die Zahl desto größer der Punkt
+* **Color**: Die Zahl kann als Farbe dargestellt werden. 5 == grün beispielsweise. 
+* **Achse**. Die Zahl kann einen Wert auf einer X oder Y-Achse erhalten. Geht die Achse von 0 bis 10, wird die Visualisierung der Zahl 5 in der Mitte der Achse angezeigt.
+* **Füllung**: Ich kann eine Zahl/einen Wert mit einer bestimmten Farbe füllen, abhängig der Zahl. 6 == rot
+
+Dieses Mapping zwischen einem Wert / einer Zahl und einer Visualisuerng nennt man bei ggplot2 **aestethics**. Sie werden mit der Funktion `aes` erzeugt. Erstellen wir einmal eine leere Aesthetics:
+
+```{r}
+aes()
+```
+
+Fügen wir anschließend ein Mapping zwischen den Zahlen 1 bis 3 und einer Farbe hinzu:
+
+```{r}
+aes(color = c(1, 2, 3))
+```
+
+Nun kannst du erkennen, dass die Zahlen einer Farbe zugeordnet sind. 
+
+Um eine Grafik zu erstellen, müssen wir nun diese Aesthetics der Funktion ggplot anfügen:
+
+```{r}
+ggplot(time_means, aes(x = time, y = mean))
+```
+
+Zwei Sachen haben wir getan, wir verbinden die Variable `time` mit der X-Achse und die Variable `mean` mit der Y-Achse. Wir erhalten einen Plot mit den Achsenbeschriftungen. Zudem haben wir am Anfang ggplot den Datensatz übergeben. Wenn wir `?ggplot` in der Konsole eingeben, sehen wir, warum. Das erste Argument ist `data`, das zweite ist `mapping`:
+
+```
+
+ggplot {ggplot2}	R Documentation
+Create a new ggplot
+
+Description
+
+ggplot() initializes a ggplot object. It can be used to declare the input data frame for a graphic and to specify the set of plot aesthetics intended to be common throughout all subsequent layers unless specifically overridden.
+
+Usage
+
+ggplot(data = NULL, mapping = aes(), ...,
+  environment = parent.frame())
+```
+
+Wir hätten diese beiden Argumente auch direkt angeben können. Da wir im vorherigen Beispiel allerdings die Reihenfolge beachtet haben, ist dies nicht notwendig gewesen. 
+
+```{r}
+ggplot(data = time_means, mapping = aes(x = time, y = mean))
+```
+
+Als nächstes brauchen wir die eigentlichen Visualisierungen. Hierfür fügen wir der Funktion sogenannte `geoms` an. Beispielsweise können wir für jeden Messwert einen Punkt anzeigen lassen:
+
+```{r}
+ggplot(time_means, aes(x = time, y = mean)) +
+  geom_point()
+```
+
+
+Mit Hilfe weiterer **aesthetics** können wir die Punkte visuell anders darstellen:
+
+```{r}
+ggplot(time_means, aes(x = time, y = mean)) +
+  geom_point(aes(size = mean, color = mean))
+```
+
+Wir könnten anstatt einem Punkt genausogut den Wert des Mittelwerts visualisieren:
+
+```{r}
+ggplot(time_means, aes(x = time, y = mean)) +
+  geom_text(aes(label = mean))
+```
+
+Der Trick ist nun, dass wir mehrere `geoms` verbinden können. Jedes geom liegt auf den vorherigen geoms, ähnlich als wenn man mehrere Blätter aufeinander legt:
+
+```{r}
+ggplot(time_means, aes(x = time, y = mean)) +
+  geom_text(aes(label = mean)) +
+  geom_point(aes(size = mean))
+```
+
+Versuchen wir aber einen anständige Visualisuerng zu schreiben. Hier siehst du ein Balkendiagram der Mittelwerte der drei Messzeitpunkte: 
+
+```{r}
+ggplot(time_means, aes(x = time, y = mean)) +
+  geom_col()
+```
+
+Wir sollten jeder Grafik sinnvolle Beschriftungen hinzufügen:
+
+```{r}
+ggplot(time_means, aes(x = time, y = mean)) +
+  geom_col() +
+  labs(
+    x = "Messzeitpunkt",
+    y = "Anzahl richtig gelöster Aufgaben",
+    title = "Anzahl richtig gelöster Aufgaben pro Messzeitpunkt",
+    caption = "Im Caption könnt ihr zusätzliche Notizen anfügen. "
+  ) +
+  theme_minimal() # siehe https://ggplot2.tidyverse.org/reference/ggtheme.html
+```
+
+Erstelle nun ein Balkendiagram dieser Mittelwerte und füge die Standardabweichung als Fehlerbalken ein. Um diese Grafik zu erstellen, brauchst du das Geom `geom_col`. Zusätzlich musst du die Balkenauf der x-Achse aufteilen, das kannst du machen, indem du innerhalb von `geom_col` das Attribut `position = position_dodge()` hinzu fügst. 
+
+* Gebe der Grafik einen Titel und beschrifte die x- und y-Achse mit `labs`. 
+* Füge den Fehlerbalken mit `geom_errorbar` hinzu (siehe zweiten Link). Verwende `width = .2`für die Fehlerbalken.
+
+* https://ggplot2.tidyverse.org/reference/geom_bar.html
+* https://ggplot2.tidyverse.org/reference/geom_linerange.html
+
+Die Aufgabe ist ein wenig schwieriger, bei Fragen im Slack Forum melden. 
+
+```{r}
+# TODO: Balkendiagram erstellen
+# TIPP: Das geom_col benötigt als aesthetic fill, 
+#       damit die Balken eine unterschiedliche Füllung haben
+# TIPP: Mit position = position_dodge() kannst du die Gruppen
+#       auf der x-Achse verteilen: https://ggplot2.tidyverse.org/reference/position_dodge.html
+```
+
+Wir können den Effekt genausogut in einer Zeitreihe anzeigen lassen. Unsere Grafik hat allerdings gerade noch das Problem, dass die Ausprägungen des Faktors time zeitlich falsch angeordnet sind. Dies können wir mit Hilfe von `fct_relevel` korrigieren:
+
+```{r}
+time_means_corrected <- time_means %>%
+  mutate(
+    time = time %>% fct_relevel("before", "after4weeks", "after8weeks")
+  ) 
+time_means_corrected$time
+```
+
+Du siehst nun, dass die Ausprägungen der Faktoren richtig angeordnet sind: "before" -> "after4weeks" -> "afer8weeks". Erstelle nun eine Grafik, aufgrundlage der Variable `time_means_corrected` mit folgenden geoms:
+
+* geom_point: https://ggplot2.tidyverse.org/reference/geom_point.html
+* geom_line: https://ggplot2.tidyverse.org/reference/geom_path.html
+* geom_errorbar: https://ggplot2.tidyverse.org/reference/geom_linerange.html
+
+Gebe der Grafik einen Titel und beschrifte die x- und y-Achse mit `labs`.
+
+```{r}
+# TODO: Zeitreihe visualisieren
+# TIPP: ggplot aes benötigt `group = 1` als Attribut: 
+#       ggplot(aes(x = NULL, y = NULL, group = 1))
+# TIPP: Die geom_errorbar kannst du von oben kopieren
+# TIPP: Vergrößere die Größe des Punktes mit size
+```
+
+
+Weitere Informationen zur Visualisuerngen mit Hilfe von ggplot findest du hier: https://r4ds.had.co.nz/data-visualisation.html. 
+
+
+
+

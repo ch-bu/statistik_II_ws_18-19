@@ -1,0 +1,154 @@
+---
+title: "Statistik II - Nachbereitungsaufgabe"
+subtitle: "09 - zweifaktorielle Varianzanalyse"
+author: ""
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+In der Vorbereitungsaufgabe hast du bereits den Titanic-Datensatz analysiert. In dieser Nachbereitungsaufgabe wirst du den Datensatz anhand der bisherigen Inferenzstatistischen Verfahren untersuchen. Es ist sinnvoll, dass du neben R-Studio auch Jamovi lädst und dort den Datensatz Titanic einliest. Du wirst im Verlauf der nächsten Aufgaben immer wieder zwischen R-Studio und Jamovi wechseln, um den Code für die verschiedenen Verfahren zu generieren. 
+
+Lade zunächst, tidyverse, jamovi und den Datensatz (benenne den Datensatz mit `titanic`):
+
+```{r}
+# TODO: tidyverse, jamovi und titanic-Datensatz laden
+```
+
+
+## t-Test für unabhängige Stichproben
+
+Um diese Frage zu beantworten, können wir einen t-Test für unabhängige Stichproben berechnen. Gebe zunächst an, was die abhängige und die unabhängige Variable diese Fragestellung ist:
+
+* unabhängige Variable: **TODO**
+* abhängige Variable: **TODO**
+
+Wie lautet die Null- und Alternativhypothese der Fragestellung? 
+
+* Nullhypothese: **TODO**
+* Alternativhypothese: **TODO**
+
+Berechne nun einen t-Test für abhängige Stichproben anhand der Software Jamovi. Kopiere die Syntax in die nächste R-Zelle hinein und korrigiere die Benennung des Datensatzes:
+
+```{r}
+# TODO: t-Test für unabhängige Stichproben
+# TODO: Gebe dir die Effektgröße aus (Cohen's D)
+# TODO: Wähle größer gleich oder kleiner gleich als Hypothese
+# TODO: Lasse dir die deskriptiven Daten ausgeben
+```
+
+Berichte dein Ergebnis, indem du folgenden Text vervollständigst (hier NULL):
+
+> Es gab NULL signifikanten Unterschiede im Alter zwischen Männern (M = NULL, SD = NULL) und Frauen (M = NULL, SD = NULL) auf der Titanic, t(NULL) = NULL, p NULL NULL, d =. 
+
+
+## Einfaktorielle Varianzanalyse 
+
+Man dürfte davon ausgehen, dass ein 1te-Klasse-Ticket mehr Geld kostet, als ein 2te-Klasse-Ticket oder ein 3te-Klasse-Ticket. Eine solche Frage können wir anhand einer einfaktoriellen Varianzanalyse testen. Aber warum? 
+
+* Weshalb können wir für diese Fragestellung keinen t-test für unabhängige Stichproben rechnen? **TODO**
+* Weshalb können wir nicht einfach mehrere t-Tests für unabhängige Stichproben rechnen und dann gucken, welche Gruppen sich unterscheiden. Wir bräuchten ja nur 3 t-Tests rechnen (1 vs 2., 2 vs. 3 und 1 vs. 3). **TODO**
+
+Was ist die unabhängige und abhängige Variable: 
+
+* unabhängige Variable: **TODO**
+* abhängige Variable: **TODO**
+
+Wie lautet die Null- und Alternativhypothese der Fragestellung? 
+
+* Nullhypothese: **TODO**
+* Alternativhypothese: **TODO**
+
+Berechne nun eine einfaktorielle Varianzanalyse mit Hilfe der Software Jamovi. Kopiere die Syntax in die nächste R-Zelle hinein und korrigiere die Benennung des Datensatzes:
+
+```{r}
+# TODO: Einfaktorielle Varianzanalyse berechnen
+# TODO: Gebe die Effektgröße eta-Squared aus
+# TODO: Plotte die Marginal Means mit ihren Konfidenzintervallen
+# TODO: Gebe dir Post-Hoc Tests aus (bonferroni + tukey)
+# TODO: Gebe dir simple Kontrasts aus
+# TODO: Prüfe die Voraussetzungen der Varianzhomogenität und der 
+#       Normalverteilung
+```
+
+Wie du siehst, sind die Voraussetzungen für den Test gebrochen. Wenn keine Normalverteilung vorliegt, ist dies nicht allzuschlimm (https://econtent.hogrefe.com/doi/abs/10.1027/1614-2241/a000016?journalCode=med), da der Test hierfür robust ist. Wenn allerdings die Varianzhomogenität nicht gegeben ist, müssten wir stattdessen einen Welch-Test rechnen (https://statistics.laerd.com/statistical-guides/one-way-anova-statistical-guide-3.php). Dies sprengt allerdings den Rahmen für diese Nachbereitungsaufgabe. Wir nehmen daher an, dass diese Voraussetzung erfüllt ist. 
+
+Wir haben in diesem Beispiel post-Hoc-Tests gerechnet. Sauberer wäre es Konstraste zu rechnen, da wir bereits Annahmen über die Verteilung der Faktoren haben (1te Klasse ist teurer als 3te Klasse z.B.). In Jamovi können wir dies mit dem Reiter Contrasts einstellen:
+
+
+Berichte dein Ergebnis, indem du folgenden Text vervollständigst (hier NULL):
+
+> Eine einfaktorielle Varianzanalyse ergab, dass sich die Fahrkarten pro Klasse NULL signifikant unterschieden, F(NULL, NULL) = NULL, p NULL NULL, eta-squared = NULL (großer Effekt). Post-Hoc Analysen ergaben, dass Passagiere der ersten Klasse signifikant mehr für die Tickets ausgaben, als Passagiere der dritten Klasse, t(NULL) = NULL, p NULL = NULL (korrigiert nach Tukey). 
+
+
+## Zweifaktoriele Varianzanlyse mit Interaktion
+
+Zuletzt möchten wir den Einfluss des Faktors Klasse und Geschlecht untersuchen. Sprich, haben Personen der einzelnen Klassen (1 und 3) unterschiedlich viel Geld für die Tickets ausgegeben, haben Frauen und Männer unterschiedlich viel Geld für die Tickets ausgegeben und hängt der Ticketpreis von der Klasse und dem Geschlecht ab? 
+
+Da wir eine zweifaktorielle Varianzanalyse rechnen möchten, müssen wir den Datensatz um eine die Ausprägung 2 beim Faktor pclass filtern. Hierdurch erhalten wir ein 2x2 Design. Führe daher folgenden Code aus. Du solltest anschließend eine Datei in dem Ordner dieser Datei mit dem Namen (titanic_filtered.csv) finden.
+
+```{r}
+titanic %>%
+  filter(pclass != 2) %>%
+  write.csv("titanic_filtered.csv", row.names = FALSE)
+```
+
+Laden diesen Datensatz in R und in Jamovi. 
+
+```{r}
+# TODO: Datensatz in R laden -> titanic_filtered
+```
+
+
+Was ist die unabhängige und abhängige Variable: 
+
+* unabhängige Variable: **TODO**
+* abhängige Variablen: **TODO**
+
+Wie lautet die Null- und Alternativhypothese unserer drei Fragestellungen? 
+
+* Nullhypothese (Faktor Klasse): **TODO**
+* Alternativhypothese (Faktor Klasse): **TODO**
+
+* Nullhypothese (Faktor Geschlecht): **TODO**
+* Alternativhypothese (Faktor Geschlecht): **TODO**
+
+* Nullhypothese (Interaktion): **TODO**
+* Alternativhypothese (Interaktion): **TODO**
+
+
+Berechne nun eine zweifaktorielle Varianzanalyse anhand der Software Jamovi. Kopiere die Syntax in die nächste R-Zelle hinein und korrigiere die Benennung des Datensatzes:
+
+```{r}
+# TODO: Zweifaktorielle Varianzanalyse berechnen
+# TODO: Gebe dir das partielle Eta-Quadrat aus
+# TODO: Gebe dir Post-Hoc Analysen aus
+# TODO: Gebe dir die marginal Means für die Faktoren 
+#       pclass und sex aus.
+#       Gebe dir zwei Terms aus. Einmal pclass oben, dann unten
+# TODO: Prüfe die Voraussetzungen des Tests, aber gebe
+#       diese nicht aus
+```
+
+
+* Welcher Haupteffekt tritt auf? **TODO**
+* Haben wir einen Interaktionseffekt? **TODO**
+* Welche Art der Interaktion liegt vor? **TODO**
+* Ist der/die Haupteffekt/e auf Grundlage der Interaktion interpretierbar? **TODO**
+
+
+Berichte dein Ergebnis, indem du folgenden Text vervollständigst (hier NULL):
+
+> Eine zweifaktorielle Varianzanalyse ergab einen Haupteffekt für den Faktor Geschlecht, F(NULL, NULL) = NULL, p NULL NULL, partielles Eta-Squared = NULL, einen Haupteffekt für den Faktor KLasse, F(NULL, NULL) = NULL, p NULL NULL, sowie einen Interaktionseffekt, F(NULL, NULL) = NULL, p NULL NULL. Der Haupteffekt des Geschlechts war abhängig von der Zugehörigeit der Klasse. Post-Hoc Analysen ergaben, dass Frauen in der ersten KLasse signifikant mehr Geld ausgaben als Männer in der ersten Klasse, t(NULL) = NULL, p NULL NULL. 
+
+
+
+
+
+
