@@ -1,0 +1,290 @@
+---
+title: "Statistik II - Vorbereitungsaufgabe"
+subtitle: "11 - Regressionsanalyse"
+author: ""
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+```
+
+
+# World Happinesss
+
+Der World Happiness Report ist ein  Überblick über den Zustand des globalen Glücks. Der erste Bericht wurde 2012 veröffentlicht, der zweite 2013, der dritte 2015 und der vierte im Update 2016. Das Welt-Glück 2017, das 155 Länder nach ihrem Glücksgrad zählt, wurde bei den Vereinten Nationen bei einer Veranstaltung anlässlich des Internationalen Glückstages am 20. März veröffentlicht. Der Bericht gewinnt weiterhin weltweite Anerkennung, da Regierungen, Organisationen und die Zivilgesellschaft zunehmend Glückskennzahlen verwenden, um ihre politischen Entscheidungen zu beeinflussen. Führende Experten aus den Bereichen Wirtschaft, Psychologie, Umfrageanalyse, nationale Statistiken, Gesundheit, öffentliche Ordnung und mehr beschreiben, wie Wohlbefindensmessungen effektiv genutzt werden können, um den Fortschritt der Nationen zu bewerten. Die Berichte geben einen Überblick über den Zustand des Glücks in der heutigen Welt und zeigen, wie die neue Wissenschaft des Glücks persönliche und nationale Unterschiede im Glück erklärt (übersetzt von: https://www.kaggle.com/unsdsn/world-happiness/home). 
+
+In dieser Vorbereitungsaufgabe wirst du den Datensatz `world_happiness.csv` explorativ untersuchen und in der Nachbereitungsaufgabe einige Regressionsanalysen berechnen. Lade zunächst den Datensatz und bezeichne die Variable des Datensatzes mit `happy`: 
+
+```{r}
+# TODO: Datensatz laden
+```
+
+Schaue dir die Variablennamen mit glimpse an:
+
+```{r}
+# TODO: Variablen mit glimpse anzeigen lassen
+```
+
+Wie viele Länder sind im Datensatz? 
+
+```{r}
+# TODO: Anzahl der Länder zählen
+```
+
+Wie viele Variablen sind im Datensatz? Verwende hierfür `ncol`:
+
+```{r}
+# TODO: Wie viele Variablen sind im Datensatz? 
+```
+
+
+## Histogramme
+
+Versuchen wir zunächst einige Visualisierungen zu erstellen. 
+
+Wie verteilt sich der Happiness Score zwischen den Ländern? 
+
+```{r}
+happy %>%
+  ggplot(aes(x = Happiness.Score)) + 
+  geom_histogram(fill = "steelblue", 
+                 color = "black",
+                 binwidth = 0.2) + # Damit wird die breite der Balken im Histogram angegeben
+  labs(
+    x = "Happiness Score",
+    y = "Anzahl",
+    title = "Histogram des Happiness Score"
+  )
+```
+
+Erstelle ein ähnliches Histogram für die Variable `Freedom`. Verwende erneut `labs`, um die X-Achse, die Y-Achse und den Titel der Grafik zu ändern. Passe zudem die breite der Bins durch `binwidth` an:
+
+```{r}
+# TODO: Histogram der Variable Freedom erstellen
+```
+
+
+## Steudiagramme
+
+Wir haben bisher Boxplots, Balkendiagramme und Histogramme erstellt. Für die Regressionsanalyse benötigen wir eine andere Form der Visualisierung. Hierfür eignen sich Streudiagramme. In ggplot2 werden Streudiagramme mit Hilfe des geoms `geom_point` erzeugt. Zudem ist es wichtig, dass die *aesthetics* x und y gesetzt werden. Bauen wir daher Stück für Stück ein Steudiagram auf.
+
+Wir möchten zunächst einen leeren Plot erstellen und als x-Achse die Freiheit und als y-Achse den Happiness Score definieren:
+
+```{r}
+happy %>%
+  ggplot(aes(x = Freedom, y = Happiness.Score))
+```
+
+Alternativ können wir ebenso den Datensatz direkt in die Funktion `ggplot` schreiben:
+
+```{r}
+ggplot(happy, aes(x = Freedom, y = Happiness.Score))
+```
+
+Du siehst, dass wir zunächst einen leeren Plot erhalten. Wir können auf diesen leeren Plot nun verschiedene *geoms* legen. Beispielsweise einzelne Punkte, für jedes Land:
+
+```{r}
+happy %>%
+  ggplot(aes(x = Freedom, y = Happiness.Score)) +
+  geom_point()
+```
+
+Es ist immer ratsam, die Achsen zu beschriften und dem Plot einen Titel zu geben:
+
+```{r}
+happy %>%
+  ggplot(aes(x = Freedom, y = Happiness.Score)) +
+  geom_point() +
+  labs(
+    x = "Freiheit",
+    y = "Happiness",
+    title = "Streudiagramm der Variablen Freedom und Happines"
+  )
+```
+
+Erinnere dich aus letzter Woche, dass wir für jedes *geom* die Möglichkeit haben, Zahlen Visualisierungen zuzuordnen. Zum Beispiel könnten wir die Größe der Punkte einer anderen Variable zuordnen. Wenn wir Zahlen Visualisierungen zuordnen möchten, müssen wir dies immer mit der Funktion `aes` umsetzen. Versuchen wir nun, die Größe der Punkte anhand der Variable `Generosity` zu visualisieren:
+
+```{r}
+happy %>%
+  ggplot(aes(x = Freedom, y = Happiness.Score)) +
+  geom_point(aes(size = Generosity)) +
+  labs(
+    x = "Freiheit",
+    y = "Happiness",
+    title = "Streudiagramm der Variablen Freedom und Happines"
+  )
+```
+
+Oder wir ändern die Transparenz (bzw. alpha) der Punkte abhängig der Variable Generosity: 
+
+```{r}
+happy %>%
+  ggplot(aes(x = Freedom, y = Happiness.Score)) +
+  geom_point(aes(alpha = Generosity)) +
+  labs(
+    x = "Freiheit",
+    y = "Happiness",
+    title = "Streudiagramm der Variablen Freedom und Happines"
+  )
+```
+
+Oder beides:
+
+```{r}
+happy %>%
+  ggplot(aes(x = Freedom, y = Happiness.Score)) +
+  geom_point(aes(alpha = Generosity, size = Generosity)) +
+  labs(
+    x = "Freiheit",
+    y = "Happiness",
+    title = "Streudiagramm der Variablen Freedom und Happines"
+  )
+```
+
+Versuchen wir als nächstes ein paar wichtige Länder in der Grafik zu visualisieren. Sagen wir, wir möchten das Land Deutschland und das Land Spanien in der Visualisierung betonen. Um das Problem zu lösen, könnten wir zunächst ein einfacheres Problem lösen. Versuchen wir alle Namen der Ländern auf der Visualisierung anzuzeigen. Hierfür benutzen wir das geom `geom_text`:
+
+```{r}
+happy %>%
+  ggplot(aes(x = Freedom, y = Happiness.Score)) +
+  geom_point() +
+  geom_text(aes(label = Country), nudge_y = .1) +
+  labs(
+    x = "Freiheit",
+    y = "Happiness",
+    title = "Streudiagramm der Variablen Freedom und Happines"
+  )
+```
+
+Das ist noch sehr unübersichtlich. Um nun einzelne Ländern zu betrachten, müssen wir unsere Daten ein wenig ändern:
+
+```{r}
+(happy_selected_countries <- happy %>%
+  mutate(
+    countries_of_interest = case_when(
+      Country == "Spain" ~ "Spain",
+      Country == "Germany" ~ "Germany",
+      TRUE ~ ""
+    )
+  ) %>%
+  select(Freedom, Happiness.Score, countries_of_interest))
+```
+
+Mit Hilfe von `case_when` können wir eine neue Variable erstellen und nur bei den beiden Ländern Deutschland und Spanien den Text lassen. Für alle anderen Ländern, übernehmen wir einen leeren Text. Nun können wir unsere Visualisierung wiederholen, nur mit der neuen Variable `countries_of_interest`:
+
+```{r}
+happy_selected_countries %>%
+  ggplot(aes(x = Freedom, y = Happiness.Score)) +
+  geom_point() +
+  geom_text(aes(label = countries_of_interest), nudge_y = .1) +
+  labs(
+    x = "Freiheit",
+    y = "Happiness",
+    title = "Streudiagramm der Variablen Freedom und Happines",
+    subtitle = "Germans are happier and have more freedom"
+  )
+```
+
+Erstelle als nächstes ein Streudiagram mit den Variablen `Generosity` auf der x-Achse und `Family` auf der y-Achse. Verändere die Größe der Punkte im Streudiagramm abhängig der Variable `Trust..Government.Corruption.` (Achte darauf die Variablen richtig zu benennen). Verwende wieder den Datensatz `happy`.
+
+```{r}
+# TODO: Eigenes Streudiagram erstellen
+```
+
+
+## Balkendiagramme
+
+Als nächstes möchten wir mehrere Ländern gegenüberstellen. Versuche als den Datensatz zu filtern, indem du nur die Ländern `Spain`, `Germany`, `Ecuador` und `Saudi Arabia` lässt. Um die Daten zu filtern, kannst du die Funktion `filter` verwenden. Hier ein Beispiel:
+
+```{r}
+happy %>%
+  filter(Country == "Brazil")
+```
+
+Wenn du mehrere Länder filtern möchtest, benötigst du den `%in%` Operator:
+
+```{r}
+happy %>%
+  filter(Country %in% c("Brazil", "Russia"))
+```
+
+Filtere nun den Datensatz um die 4 Länder. Speichere den Datensatz in der Variable `countries_selected`. 
+
+```{r}
+# TODO: Filter den Datensatz anhand der Ländern Spain, GErmany
+#       Ecuador und Saudi Arabia und speichere den Datensatz
+#       in der Variable countries_selected
+```
+
+Als nächstes möchten wir ein Balkendiagram des `Happiness.Score` der Ländern anzeigen. Hierfür benötigen wir das geom `geom_col`. Vervollständige den folgenden Code:
+
+```{r}
+# TODO: Vervollständige folgenden Befehl
+#       Ersetze alle NULL Stellen
+NULL %>%
+  ggplot(aes(x = NULL, y = NULL)) +
+  geom_col(aes(fill = NULL), show.legend = FALSE) +
+  labs(
+    x = "Land",
+    y = "Happiness",
+    title = "NULL",
+    subtitle = "Deutsche sind am glücklichsten"
+  )
+```
+
+
+## Facets
+
+Facets eignen sich sehr gut, um mehrere Visualisierungen für diskrete Variablen zu erstellen. Beispielsweise können wir mit Hilfe von Facets mehrere Histogramme für mehrere Länder erstellen. Versuchen wir einmal folgendes: Wir möchten zwei Histogramme des Happiness.Score für Länder europäische Länder und für alle anderen Ländern anzeigen lassen. Hierfür brauchen wir zunächst eine Liste der europäischen Länder:
+
+```{r}
+europe_countries <- c("Austria","Belgium","Bulgaria","Croatia","Cyprus",
+                   "Czech Republic","Denmark","Estonia","Finland","France",
+                   "Germany","Greece","Hungary","Ireland","Italy","Latvia",
+                   "Lithuania","Luxembourg","Malta","Netherlands","Poland",
+                   "Portugal","Romania","Slovakia","Slovenia","Spain",
+                   "Sweden","UK", "Switzerland", "Poland")
+```
+
+Mit Hilfe von mutate können wir nun eine neue Variable erstellen, die angibt, ob ein Land Europa angehört:
+
+```{r}
+(happy_europe <- happy %>%
+  mutate(
+    europe = Country %in% europe_countries
+  ) %>%
+  select(Country, europe, Happiness.Score))
+```
+
+Erstellen wir nun ein Histogram wie üblich:
+
+```{r}
+happy_europe %>%
+  ggplot(aes(x = Happiness.Score)) +
+  geom_histogram(fill = "steelblue", 
+                 color = "black",
+                 binwidth = 0.2)
+```
+
+Nun können wir die Funktion `facet_wrap` benutzen, um mehrere Histogramme abhängig der Variable `europe` zu erstellen:
+
+```{r}
+happy_europe %>%
+  ggplot(aes(x = Happiness.Score)) +
+  geom_histogram(fill = "steelblue", 
+                 color = "black",
+                 binwidth = 0.2) +
+  facet_wrap(~ europe) 
+```
+
+
+
+
+
