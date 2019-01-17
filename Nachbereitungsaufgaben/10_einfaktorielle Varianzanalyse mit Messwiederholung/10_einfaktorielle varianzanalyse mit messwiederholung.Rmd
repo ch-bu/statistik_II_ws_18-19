@@ -1,0 +1,121 @@
+---
+title: "Statistik II - Nachbereitungsaufgabe"
+subtitle: "10 - einfaktorielle Varianzanalyse mit Messwiederholung"
+author: ""
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+In der Vorbereitungsaufgabe hast du Lernstrategiedatensatz analysiert. In dieser Nachbereitungsaufgabe wirst du den Datensatz anhand der bisherigen Inferenzstatistischen Verfahren untersuchen. Es ist sinnvoll, dass du neben R-Studio auch Jamovi lädst und dort den Datensatz Titanic einliest. Du wirst im Verlauf der nächsten Aufgaben zwischen R-Studio und Jamovi wechseln, um den Code für die verschiedenen Verfahren zu generieren. 
+
+Lade zunächst, tidyverse, jamovi und den Datensatz (benenne den Datensatz mit `learning_strategies`):
+
+```{r}
+# TODO: tidyverse, jamovi und titanic-Datensatz laden
+```
+
+
+## Einfaktorielle Varianzanalyse mit Messwiederholung
+
+Bevor wir die Daten berechnen, beschreibe zunächst in eigenen Worten, worin der unterschied zwischen einer einfaktoriellen Varianzanalyse und einer einfaktoriellen Varianzanalyse mit Messwiederholung besteht: 
+
+> TODO: Unterschied beschreiben
+
+Schreibe als nächstes die Fragestellung für die Studie auf. Beispiele findest du [hier](https://www.methodenberatung.uzh.ch/de/datenanalyse_spss/unterschiede/zentral/evarianzmessw.html). 
+
+> TODO: Fragestellung aufschreiben
+
+Wie lautet die Null- und Alternativhypothese unserer Fragestellung? 
+
+* Nullhypothese: **TODO**
+* Alternativhypothese: **TODO**
+
+Was ist die unabhängige und abhängige Variable unserer Hypothese: 
+
+* unabhängige Variable: **TODO**
+* abhängige Variablen: **TODO**
+
+
+### in Jamovi und R berechnen
+
+Berechne als nächstes die einfaktorielle Varianzanalyse mit Messwiederholung in Jamovi. Kopiere die Syntax anschließend in die nächste R-Zelle. Achte auf folgendes:
+
+* Gebe dir das partielle Eta-Quadrat als Effektstärke aus
+* Teste auf die Unabhängigkeit der Residuen (Sphericity tests). Mehr Informationen hier: https://statistics.laerd.com/statistical-guides/sphericity-statistical-guide.php. Ist das Ergebnis signifikant, liegt keine Spherizität vor. Korrigiere in diesem Fall nach Greeenhouse-Geisser und Huynh-Feldt. 
+* Füge Post-Hoc Tests an: Bonferroni
+* Füge den Faktor als Marginal Means im Reiter Marginal Means bei. Gebe dir folgenden Output aus: marginal means plots, marginal means tables. 
+* Ändere `data = data` zu `data = learning_strategies`
+* Speichere den Output in der Variable `repeated_measures`
+
+```{r}
+# TODO: Syntax von Jamovi für einfaktorielle Varianzanalyse mit Messwiederhlung 
+#       hier einfügen
+```
+
+Wir speichern den Output, damit wir uns die Ergebnisse auf Bedarf ausgeben lassen können. Die Messwiederholungsergebnisse erhalten wir, indem wir `rmTable` ausgeben:
+
+```{r}
+repeated_measures$rmTable
+```
+
+Die Testvorraussetzungen mit:
+
+```{r}
+repeated_measures$assump
+```
+
+Und die Post-Hoc Ergebnisse mit:
+
+```{r}
+repeated_measures$postHoc
+```
+
+
+## Ergebnisse berichten
+
+Zuletzt wollen wir die Ergebnisse berichten, beispielsweise in einer Bachelorarbeit. Schreibe das Ergebnis deines Experiments auf. Orientiere dich dabei an folgendem Link (ganz unten auf der Webseite): https://www.methodenberatung.uzh.ch/de/datenanalyse_spss/unterschiede/zentral/evarianzmessw.html.  
+
+> TODO: Ergebnis aufschreiben
+
+Zuletzt möchten wir unsere Ergebnisse noch grafisch darstellen. Wir speichern die Marginal Means (https://stats.stackexchange.com/questions/4245/what-is-the-meaning-of-marginal-mean) in einer Varialbe mit dem Namen `mearginal_means` und ändern die Benennung der Variable `RM Factor 1` zu `factor`:
+
+```{r}
+(marginal_means <- repeated_measures$emm[[1]]$emmTable$asDF %>%
+  rename(factor = `RM Factor 1`) %>%
+  mutate(
+    factor = factor %>% fct_recode("vor dem Training" = "Level 1",
+                                   "4 Wochen nach dem Training" = "Level 2",
+                                   "8 Wochen nach dem Training" = "Level 3")
+  ))
+# TIPP: Mit Hilfe der umschließenden Klammer wird der Output gleich angezeigt
+#       auch wenn wir die Daten in einer Variable speichern
+```
+
+Erstelle zuletzt ein Balkendiagram mit folgenden Eigenschaften:
+
+* Erstelle ein Balkendiagram für jeden Messzeitpunkt.
+* Verwende `fill` als aesthetic bei geom_col, um die Balken farblich hervor zu heben.
+* Füge mit `labs` eine Beschreibung der x-Achse, der y-Achse, des Titels, ein Caption und eine Beschreibung für die Füllung (`fill`) hinzu. 
+* Füge die Fehlerbalken hinzu. Als oberen und unteren Werte gebe, bitte die oberen Konfidenzintevalle aus dem Dataframe marginal_means an. 
+* Füge am Ende der Visualisierung den Code an, der bereits in der R-Zelle steht. 
+
+```{r}
+# TODO: Balkendiagram erstellen
+```
+
+
+
+
+
+
+
+
+
+
+
