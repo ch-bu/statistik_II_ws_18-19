@@ -1,0 +1,137 @@
+---
+title: "Repeated Measures Anova one-Way"
+author: "Christian Burkhart"
+date: "9 Januar 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+library(jmv)
+```
+
+```{r}
+data <- tibble(
+  id = seq_len(60),
+  level_one = rnorm(60, mean = 100, sd = 15),
+  level_two = rnorm(60, mean = 90, sd = 10),
+  level_three = rnorm(60, mean = 120, sd = 5)
+)
+```
+
+
+## Einfaktorielle Varianzanalyse mit Messwiederholung
+
+```{r}
+jmv::anovaRM(
+    data = data,
+    rm = list(
+        list(
+            label="RM Factor 1",
+            levels=c(
+                "First Level",
+                "Second Level",
+                "Third Level"))),
+    rmCells = list(
+        list(
+            measure="level_one",
+            cell="First Level"),
+        list(
+            measure="level_two",
+            cell="Second Level"),
+        list(
+            measure="level_three",
+            cell="Third Level")),
+    rmTerms = list(
+        "RM Factor 1"),
+    # bsTerms = list(),
+    effectSize = "partEta",
+    emMeans = list(
+        "RM Factor 1"))
+```
+
+
+## Quadratsummenzerleung
+
+```{r}
+get_ss <- function(my_data) {
+  data_gathered <- my_data %>%
+  gather(level, value, -id) 
+
+  group_means <- data_gathered %>%
+    group_by(level) %>%
+    summarise(
+      mean_group = mean(value)
+    )
+  
+  person_means <- data_gathered %>%
+    group_by(id) %>%
+    summarise(
+      mean_person = mean(value)
+    )
+  
+  data_gathered_with_mean <- data_gathered %>%
+    left_join(group_means, by = c("level")) %>%
+    left_join(person_means, by = c("id")) %>%
+    mutate(residual = (value - mean_group - mean_person + mean(data_gathered$value))**2)
+  
+  ss_total <- sum((data_gathered$value - mean(data_gathered$value))**2)
+  
+  ss_group <- data_gathered_with_mean %>%
+                {sum((.$mean_group - mean(data_gathered$value))**2)}
+  
+  ss_residuals <- data_gathered_with_mean %>%
+      {sum(.$residual)}
+  
+  ss_person <- data_gathered_with_mean %>%
+    {sum((.$mean_person - mean(data_gathered$value))**2)}
+  
+  return(c("ss_total" = ss_total, 
+           "ss_group" = ss_group, 
+           "ss_residuals" = ss_residuals, 
+           "ss_person" = ss_person))
+}
+```
+
+
+```{r}
+d <- tibble(
+  id = c(1, 2, 3),
+  level_one = c(1, 2, 3),
+  level_two = c(3, 4, 5),
+  level_three = c(5, 6, 7)
+)
+
+get_ss(d)
+```
+
+
+```{r}
+jmv::anovaRM(
+    data = d,
+    rm = list(
+        list(
+            label="RM Factor 1",
+            levels=c("Level 1", "Level 2", "Level 3"))),
+    rmCells = list(
+        list(
+            measure="level_one",
+            cell="Level 1"),
+        list(
+            measure="level_two",
+            cell="Level 2"),
+        list(
+            measure="level_three",
+            cell="Level 3")),
+    rmTerms = list(
+        "RM Factor 1"),
+    emMeans = list(
+        NULL))
+```
+
+
+
