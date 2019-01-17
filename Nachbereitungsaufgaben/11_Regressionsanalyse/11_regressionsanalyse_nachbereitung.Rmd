@@ -1,0 +1,258 @@
+---
+title: "Statistik II - Nachbereitung"
+subtitle: "11 - Regressionsanalyse"
+author: ""
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+In dieser Nachbereitungsaufgabe analysisert du den Happiness Datensatz und führst verschiedene lineare Regressionen mit Hilfe von R und Jamovi aus.
+
+Lade tidyverse, jmv und den Datensatz `world_happiness.csv`. Speichere den Datensatz in der Variable `happy`:
+
+```{r}
+# TODO: Jamovi laden, tidyverse laden und world_happiness.csv laden
+```
+
+## Einfache lineare Regression in R
+
+Zunächst möchten wir eine einfache lineare Regression in R berechnen. Wir möchten wissen, ob wir den Grad des Glücks eines Landes (`Happiness.Rank`) auf Grundlage der Freiheit eines Landes hervor sagen können. Aus der Vorbereitungsaufgabe haben wir uns bereits ein Streudiagram aus den Daten erstellt. Im folgenden findest du ein ähnliches Streudiagram, nur diesmal mit der Regressionsgerade, die wir als nächstes ermitteln werden. 
+
+```{r}
+bk_color <- "#252525"
+grey_color <- "#565656"
+
+happy %>%
+  ggplot(aes(x = Freedom, y = Happiness.Score)) +
+  geom_point(color = "beige", size = 3) +
+  geom_smooth(method = "lm", se = FALSE, color = "#14c3a5") +
+  labs(
+    x = "Freiheit",
+    y = "Happiness",
+    title = "Streudiagramm der Variablen Freedom und Happiness"
+  ) +
+  theme(
+    plot.subtitle = element_text(vjust = 1, color ="beige"), 
+    plot.caption = element_text(vjust = 1, color = grey_color),
+    plot.title = element_text(colour = "beige"),
+    axis.title = element_text(colour = "beige"), 
+    axis.text = element_text(colour = "beige"), 
+    legend.text = element_text(colour = "beige"), 
+    legend.title = element_text(colour = "beige"), 
+    plot.background = element_rect(fill = bk_color), 
+    panel.background = element_rect(fill = bk_color),
+    panel.grid.minor.x = element_line(colour = bk_color),
+    panel.grid.minor.y = element_line(colour = bk_color),
+    panel.grid.major.x = element_line(colour = "#393939"),
+    panel.grid.major.y = element_line(colour = "#393939"),
+    strip.text.x = element_blank(),
+    legend.background = element_rect(fill = bk_color, 
+        colour = bk_color),
+    legend.position = "none"
+  ) 
+```
+
+Bevor du die Regression berechnest, überlege dir, wie groß das R-Quadrat für diese Regression ausfallen wird? Überlege dir auch, weshalb du von diesem Wert ausgehst? 
+
+> TODO: R-Quadrat schätzen und erklären
+
+> TODO: Wie entsteht diese Regressionsgerade? Wie würdest du theoretisch vorgehen, um eine Regressionsgerade zu berechnen?
+
+
+Berechnen wir als nächstes die einfache Regression. Zunächst müssen wir unser Model mit Hilfe der Funktion `lm` erstellen:
+
+```{r}
+(model <- lm(Happiness.Score ~ Freedom, data = happy))
+```
+
+Die Funktion `lm` hat zwei Argumente (siehe `?lm`). Das erste Argument ist die Formel der linearen Regression (`lm(formula = Happiness.Score ~ Freedom, data = happy)`). Das zweite Argument ist der Dataframe (`data`). Innerhalb der Formel steht links des `~` Operators die abhängige Variable, rechts davon die unabhängige Variable. 
+
+> TODO: Die Ausgabe der Funktion gibt dir zwei Werte. Was bedeuten diese beiden Werte. Interpretiere diese Werte anhand der Regressionsgerade des Streudiagrams. 
+
+Um das R-Quadrat bzw. die Modellgüte zu erhalten müssen wir die Funktion `summary` auf den Output der Funktion `lm` anwenden: 
+
+```{r}
+lm(Happiness.Score ~ Freedom, data = happy) %>%
+  summary
+```
+
+Vergleiche das R-Quadrat im Output mit deinem R-Quadrat. 
+
+> TODO: Wie müssten sich die Punkte ändern, damit das R-Quadrat größer wird? 
+
+
+## Visualisierung SS-T
+
+Die totale Varianz ist hier dargestellt:
+
+```{r}
+happy %>%
+  ggplot(aes(x = Freedom , y = Happiness.Score)) +
+  geom_point(color = "beige", size = 3) +
+  geom_smooth(method = "lm", se = FALSE, color = "#14c3a5") +
+  labs(
+    x = "Freiheit",
+    y = "Happiness",
+    title = "Visualisierung von SS-T"
+  ) +
+  geom_rect(aes(xmin = Freedom,
+                xmax = abs(Freedom - mean_happiness),
+                ymin = Happiness.Score,
+                ymax = mean_happiness),
+            data = rectangles,
+            alpha = .1) +
+  geom_hline(yintercept = mean_happiness, color = "#e86fb3") +
+  theme(
+    plot.subtitle = element_text(vjust = 1, color ="beige"), 
+    plot.caption = element_text(vjust = 1, color = grey_color),
+    plot.title = element_text(colour = "beige"),
+    axis.title = element_text(colour = "beige"), 
+    axis.text = element_text(colour = "beige"), 
+    legend.text = element_text(colour = "beige"), 
+    legend.title = element_text(colour = "beige"), 
+    plot.background = element_rect(fill = bk_color), 
+    panel.background = element_rect(fill = bk_color),
+    panel.grid.minor.x = element_line(colour = bk_color),
+    panel.grid.minor.y = element_line(colour = bk_color),
+    panel.grid.major.x = element_line(colour = "#393939"),
+    panel.grid.major.y = element_line(colour = "#393939"),
+    strip.text.x = element_blank(),
+    legend.background = element_rect(fill = bk_color, 
+        colour = bk_color),
+    legend.position = "none"
+  ) 
+```
+
+Hier siehst du SS-T. SS-T ist die Summe der Quarate, welche durch den Abstand der Einzelpunkte zum Mittelwert der abhängigen Variable berechnet werden. Die totale Varianz setzt sich zusammen aus der Varianz SS-R und SS-E:
+
+SS-T = SS-E + SS-R
+
+R-Quadrat berechnet sich aus dem Quotienten von SS-R / SS-T. 
+
+## Visualisierung SS-R
+
+Hier siehst du die Quadratsumme SS-R, welche im Zähler des R-Quadrat steht: 
+
+```{r}
+mean_happiness <- mean(happy$Happiness.Score)
+
+rectangles <- happy %>%
+  select(Happiness.Score, Freedom) %>%
+  mutate(
+    predicted = predict(model, happy),
+    residuals = model$residuals
+  ) 
+
+
+happy %>%
+  ggplot(aes(x = Freedom , y = Happiness.Score)) +
+  geom_point(color = "beige", size = 3, alpha = .02) +
+  labs(
+    x = "Freiheit",
+    y = "Happiness",
+    title = "Visualisierung von SS-R"
+  ) +
+  geom_rect(aes(xmin = Freedom,
+                xmax = Freedom + residuals,
+                ymin = predicted,
+                ymax = mean_happiness),
+            data = rectangles,
+            alpha = .1) +
+  geom_smooth(method = "lm", se = FALSE, color = "#14c3a5") +
+  geom_hline(yintercept = mean_happiness, color = "#e86fb3") +
+  theme(
+    plot.subtitle = element_text(vjust = 1, color ="beige"), 
+    plot.caption = element_text(vjust = 1, color = grey_color),
+    plot.title = element_text(colour = "beige"),
+    axis.title = element_text(colour = "beige"), 
+    axis.text = element_text(colour = "beige"), 
+    legend.text = element_text(colour = "beige"), 
+    legend.title = element_text(colour = "beige"), 
+    plot.background = element_rect(fill = bk_color), 
+    panel.background = element_rect(fill = bk_color),
+    panel.grid.minor.x = element_line(colour = bk_color),
+    panel.grid.minor.y = element_line(colour = bk_color),
+    panel.grid.major.x = element_line(colour = "#393939"),
+    panel.grid.major.y = element_line(colour = "#393939"),
+    strip.text.x = element_blank(),
+    legend.background = element_rect(fill = bk_color, 
+        colour = bk_color),
+    legend.position = "none"
+  ) 
+```
+
+Die einzelnen Quadrate (hier nicht als Quadrate dargestellt, da die Axen nicht vereinheitlicht sind) sind als graue Kästchen visualisiert. Die Summe der Fläche dieser Quadrate ist SS-R. Du siehst anhand der Visualisierung, dass wir den Abstand der geschätzten Punkte zum Mittelwert der abhängiven Variable berechnen. 
+
+
+## Visualisierung SS-E
+
+Zuletzt fehlt uns noch SS-E. SS-E sind die einzelnen Schätzfehler. Wenn wir zum Beispiel ein Land haben, bei dem wir einen Happiness.Score von 6 haben, jedoch auf Grundlage unserer linearen Regression einen Happiness.Score von 8 hervorsagen, ist unser Fehler (6 - 8)**2 = 4.
+
+```{r}
+happy %>%
+  ggplot(aes(x = Freedom , y = Happiness.Score)) +
+  geom_point(color = "beige", size = 3) +
+  labs(
+    x = "Freiheit",
+    y = "Happiness",
+    title = "Visualisierung von SS-E"
+  ) +
+  geom_rect(aes(xmin = Freedom,
+                xmax = abs(Freedom - residuals),
+                ymin = predicted,
+                ymax = Happiness.Score),
+            data = rectangles,
+            alpha = .1) +
+  geom_hline(yintercept = mean_happiness, color = "#e86fb3") +
+  geom_smooth(method = "lm", se = FALSE, color = "#14c3a5") +
+  theme(
+    plot.subtitle = element_text(vjust = 1, color ="beige"), 
+    plot.caption = element_text(vjust = 1, color = grey_color),
+    plot.title = element_text(colour = "beige"),
+    axis.title = element_text(colour = "beige"), 
+    axis.text = element_text(colour = "beige"), 
+    legend.text = element_text(colour = "beige"), 
+    legend.title = element_text(colour = "beige"), 
+    plot.background = element_rect(fill = bk_color), 
+    panel.background = element_rect(fill = bk_color),
+    panel.grid.minor.x = element_line(colour = bk_color),
+    panel.grid.minor.y = element_line(colour = bk_color),
+    panel.grid.major.x = element_line(colour = "#393939"),
+    panel.grid.major.y = element_line(colour = "#393939"),
+    strip.text.x = element_blank(),
+    legend.background = element_rect(fill = bk_color, 
+        colour = bk_color),
+    legend.position = "none"
+  ) 
+```
+
+
+## z-Standardisierung der einfachen Regression
+
+Versuchen wir als nächstes die Daten z-zu standardisieren und erneut eine einfache Regression zu berechnen: 
+
+```{r}
+lm(scale(Happiness.Score) ~ scale(Freedom), data = happy) %>%
+  summary
+```
+
+> TODO: Wir erhalten einen ß-Wert von .57. Was ist dieser Wert? (Tipp: Schaue in die Folien)
+
+
+## Einfache lineare Regression in Jamovi berechnen
+
+Bereche als nächstes die gleiche lineare Regression in Jamovi und vergleiche, ob die Daten mit dem Output der Funktion `lm` übereinstimmen: 
+
+```{r}
+# TODO: lineare Regression in Jamovi berechnen
+```
+
+
+> TODO: Stelle die Ergebnisse deiner einfachen linearen Regression dar. Orientiere dich an den Folien des Seminars. 
+
